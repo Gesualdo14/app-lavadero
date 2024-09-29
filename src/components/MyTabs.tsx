@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { File, ListFilter, MoreHorizontal, PlusCircle } from "lucide-react";
+import { File, ListFilter, MoreHorizontal } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -27,8 +27,12 @@ import {
   TableRow,
 } from "./ui/table";
 import { Badge } from "./ui/badge";
+import { FormDialog } from "./FormDialog";
+import { actions } from "astro:actions";
+import { useToast } from "@/hooks/use-toast";
 
 const MyTabs = () => {
+  const { toast } = useToast();
   return (
     <Tabs defaultValue="active">
       <div className="flex items-center">
@@ -66,12 +70,7 @@ const MyTabs = () => {
               Export
             </span>
           </Button>
-          <Button size="sm" className="h-7 gap-1">
-            <PlusCircle className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Add Product
-            </span>
-          </Button>
+          <FormDialog />
         </div>
       </div>
       <TabsContent value="active">

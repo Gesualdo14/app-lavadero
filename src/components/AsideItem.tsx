@@ -23,7 +23,7 @@ const AsideItem = ({ text, icon }: Props) => {
 
   return (
     <TooltipProvider>
-      <Tooltip>
+      <Tooltip delayDuration={200}>
         <TooltipTrigger asChild>
           <a
             href="#"
