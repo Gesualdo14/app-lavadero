@@ -1,7 +1,6 @@
 import { turso } from "@/database/config";
 import { formSchema } from "@/schemas/User";
 import { defineAction } from "astro:actions";
-import { z, ZodError } from "astro:schema";
 
 export const server = {
   createUser: defineAction({

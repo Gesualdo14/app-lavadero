@@ -28,11 +28,8 @@ import {
 } from "./ui/table";
 import { Badge } from "./ui/badge";
 import { FormDialog } from "./FormDialog";
-import { actions } from "astro:actions";
-import { useToast } from "@/hooks/use-toast";
 
 const MyTabs = () => {
-  const { toast } = useToast();
   return (
     <Tabs defaultValue="active">
       <div className="flex items-center">
