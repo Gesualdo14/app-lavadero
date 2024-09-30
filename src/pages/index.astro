@@ -1,5 +1,4 @@
 ---
-import { getVehicles } from '../database/config';
 import AsideItem from "@/components/AsideItem.tsx"
 import SheetItem from "@/components/SheetItem.tsx"
 import MyBreadcrumbs from "@/components/MyBreadcrumbs.tsx"
@@ -18,9 +17,9 @@ export const description =
 
 import '@/styles/globals.css'
 import Layout from '@/layouts/Layout.astro';
+import MyTable from '@/components/MyTable.astro';
 
-const vehicles = await getVehicles(1)
-console.log({vehicles})
+
 ---
 	<Layout title='Main page'>
 		<div class="flex min-h-screen w-full flex-col bg-muted/40">
@@ -51,7 +50,9 @@ console.log({vehicles})
 			  <UserMenu client:load />
 			</header>
 			<main class="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 w-full" style="width: 100% !important;">
-				<MyTabs client:load/>
+				<MyTabs client:load>
+					<MyTable />
+				</MyTabs>
 			</main>	
 		  </div>
 		</div>
