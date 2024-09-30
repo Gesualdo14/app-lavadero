@@ -1,5 +1,5 @@
 import { turso } from "@/database/config";
-import { formSchema } from "@/schemas/User.ts";
+import { formSchema } from "@/schemas/user";
 import { defineAction } from "astro:actions";
 
 export const server = {
