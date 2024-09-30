@@ -1,0 +1,57 @@
+---
+
+import { Badge } from "./ui/badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
+import type { User } from "@/schemas/user"
+import { actions } from "astro:actions";
+import MyDropdown from "./MyDropdown";
+
+const {data, error} = await actions.getUsers()
+let users
+if(data) {
+ users = data.data
+}
+
+---
+
+<Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="hidden w-[100px] sm:table-cell">
+                    <span class="sr-only">Imagen</span>
+                  </TableHead>
+                  <TableHead>Nombre</TableHead>
+                  <TableHead>Apellido</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>
+                    <span class="sr-only">Actions</span>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {users?.map((u) => (
+                  <TableRow>
+                    <TableCell className="hidden sm:table-cell">
+                      <img
+                        alt="Product"
+                        class="aspect-square rounded-md object-cover"
+                        height="64"
+                        src="/user.png"
+                        width="64"
+                      />
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {u.firstname}
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="outline">{u.lastname}</Badge>
+                    </TableCell>
+                    <TableCell>{u.email}</TableCell>
+                    <TableCell>
+                      <MyDropdown client:load/>
+                    </TableCell>
+                  </TableRow>
+                ))}
+
+              </TableBody>
+            </Table>

@@ -5,3 +5,5 @@ export const formSchema = z.object({
   lastname: z.string(),
   email: z.string().email("Email inválido"),
 });
+
+export type User = z.infer<typeof formSchema>;

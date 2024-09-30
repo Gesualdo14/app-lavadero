@@ -25,6 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { LoadingSpinner } from "./Spinner";
+import { navigate } from "astro:transitions/client";
 
 const defValues = {
   firstname: "",
@@ -48,6 +49,7 @@ export function FormDialog() {
       description: result.data?.message,
     });
     setOpen(false);
+    await navigate("/");
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
