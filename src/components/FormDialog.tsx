@@ -15,7 +15,7 @@ import { PlusCircle } from "lucide-react";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { formSchema } from "@/schemas/User.ts";
+import { formSchema } from "@/schemas/user";
 import { z } from "zod";
 import {
   Form,
