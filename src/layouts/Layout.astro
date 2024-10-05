@@ -1,6 +1,8 @@
 ---
+import AsideItem from "@/components/AsideItem";
 import { Toaster } from "@/components/ui/toaster"
 import { ClientRouter } from "astro:transitions";
+import { Home } from "lucide-react";
 interface Props {
 	title: string;
 }
@@ -21,7 +23,28 @@ const { title } = Astro.props;
 		<ClientRouter />
 	</head>
 	<body>
+		<div class="flex min-h-screen w-full flex-col bg-muted/40">
+			<aside class="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
+			  <nav class="flex flex-col items-center gap-4 px-2 py-4">
+				<a
+				  href="/"
+				  class="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+				>
+				  <Home className="h-4 w-4 transition-all group-hover:scale-110" />
+				  <span class="sr-only">Lavadero</span>
+				</a>
+		  
+			  <AsideItem text='Ventas' href="/" icon='washes' client:visible/>
+			  <AsideItem text='Servicios' icon='services' client:visible/>
+			  <AsideItem text='Clientes' icon='clients' client:visible/>
+			  <AsideItem text='Informes' icon='dashboard' client:visible/>
+			  </nav>
+			  <nav class="mt-auto flex flex-col items-center gap-4 px-2 py-4">
+				  <AsideItem text='Configuración' icon='settings' client:visible/>
+			  </nav>
+			</aside>
 		<slot />
+		</div>
 	</body>
 </html>
 <style is:global>

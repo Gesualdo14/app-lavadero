@@ -16,7 +16,6 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { formSchema } from "@/schemas/user";
-import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -26,6 +25,7 @@ import {
 } from "@/components/ui/form";
 import { LoadingSpinner } from "./Spinner";
 import { navigate } from "astro:transitions/client";
+import type { SelectUser } from "@/db/schema";
 
 const defValues = {
   firstname: "",
@@ -34,14 +34,14 @@ const defValues = {
 };
 
 export function FormDialog() {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<SelectUser>({
     resolver: zodResolver(formSchema),
     defaultValues: defValues,
   });
   const { formState, reset, handleSubmit, control } = form;
   const [open, setOpen] = useState(false);
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: SelectUser) => {
     const result = await actions.createUser(values);
     reset(defValues);
     toast({

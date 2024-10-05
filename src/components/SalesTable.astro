@@ -2,34 +2,33 @@
 
 import { Badge } from "./ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
-import type { User } from "@/schemas/user"
+
 import { actions } from "astro:actions";
 import MyDropdown from "./MyDropdown";
 
-const {data, error} = await actions.getUsers()
-let users
+const {data, error} = await actions.getSales()
+let sales
 if(data) {
- users = data.data
+  sales = data.data
 }
 
 ---
 
-<Table>
+          <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead className="hidden w-[100px] sm:table-cell">
                     <span class="sr-only">Imagen</span>
                   </TableHead>
-                  <TableHead>Nombre</TableHead>
-                  <TableHead>Apellido</TableHead>
-                  <TableHead>Email</TableHead>
+                  <TableHead>Fecha creación</TableHead>
+                  <TableHead className="flex-auto">Monto</TableHead>
                   <TableHead>
-                    <span class="sr-only">Actions</span>
+                    <span class="sr-only">Acciones</span>
                   </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {users?.map((u) => (
+                {sales?.map((s) => (
                   <TableRow>
                     <TableCell className="hidden sm:table-cell">
                       <img
@@ -41,12 +40,11 @@ if(data) {
                       />
                     </TableCell>
                     <TableCell className="font-medium">
-                      {u.firstname}
+                      {s.created_at}
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline">{u.lastname}</Badge>
+                      <Badge variant="outline">{s.total_amount}</Badge>
                     </TableCell>
-                    <TableCell>{u.email}</TableCell>
                     <TableCell>
                       <MyDropdown client:load/>
                     </TableCell>

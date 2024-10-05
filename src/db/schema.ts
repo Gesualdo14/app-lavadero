@@ -7,11 +7,11 @@ export const usersTable = sqliteTable("users", {
   email: text("email").unique().notNull(),
 });
 
-export const postsTable = sqliteTable("posts", {
+export const vehiclesTable = sqliteTable("Vehicles", {
   id: integer("id").primaryKey(),
-  title: text("title").notNull(),
-  content: text("content").notNull(),
-  userId: integer("user_id")
+  brand: text("brand").notNull(),
+  model: text("model").notNull(),
+  user_id: integer("user_id")
     .notNull()
     .references(() => usersTable.id, { onDelete: "cascade" }),
   createdAt: text("created_at")
@@ -21,9 +21,28 @@ export const postsTable = sqliteTable("posts", {
     () => new Date()
   ),
 });
+export const salesTable = sqliteTable("Sales", {
+  id: integer("id").primaryKey(),
+  total_amount: integer("total_amount").notNull(),
+  user_id: integer("user_id")
+    .notNull()
+    .references(() => usersTable.id, { onDelete: "cascade" }),
+  vehicle_id: integer("vehicle_id")
+    .notNull()
+    .references(() => vehiclesTable.id, { onDelete: "cascade" }),
+  created_at: text("created_at")
+    .default(sql`(CURRENT_TIMESTAMP)`)
+    .notNull(),
+  updated_at: integer("updated_at", { mode: "timestamp" }).$onUpdate(
+    () => new Date()
+  ),
+});
 
-export type InsertPost = typeof postsTable.$inferInsert;
-export type SelectPost = typeof postsTable.$inferSelect;
+export type InsertVehicle = typeof vehiclesTable.$inferInsert;
+export type SelectVehicle = typeof vehiclesTable.$inferSelect;
+
+export type InsertSale = typeof salesTable.$inferInsert;
+export type SelectSale = typeof salesTable.$inferSelect;
 
 export type InsertUser = typeof usersTable.$inferInsert;
 export type SelectUser = typeof usersTable.$inferSelect;

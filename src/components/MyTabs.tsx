@@ -19,7 +19,7 @@ import {
 } from "./ui/card";
 
 import { FormDialog } from "./FormDialog";
-import MyTable from "./MyTable.astro";
+import MyTable from "./UsersTable.astro";
 import type React from "react";
 
 const MyTabs = ({ children }: { children: React.ReactNode }) => {

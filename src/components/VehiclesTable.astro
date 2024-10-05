@@ -1,0 +1,57 @@
+---
+
+import { Badge } from "./ui/badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
+
+import { actions } from "astro:actions";
+import MyDropdown from "./MyDropdown";
+
+const {data, error} = await actions.getVehicles()
+let vehicles
+if(data) {
+  vehicles = data.data
+}
+
+---
+
+          <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="hidden w-[100px] sm:table-cell">
+                    <span class="sr-only">Imagen</span>
+                  </TableHead>
+                  <TableHead>Nombre</TableHead>
+                  <TableHead className="flex-auto">Apellido</TableHead>
+                  <TableHead className="min-w-24">Email</TableHead>
+                  <TableHead>
+                    <span class="sr-only">Actions</span>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {vehicles?.map((v) => (
+                  <TableRow>
+                    <TableCell className="hidden sm:table-cell">
+                      <img
+                        alt="Product"
+                        class="aspect-square rounded-md object-cover"
+                        height="64"
+                        src="/user.png"
+                        width="64"
+                      />
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {v.brand}
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="outline">{v.model}</Badge>
+                    </TableCell>
+                    <TableCell className="text-ellipsis max-w-1 sm:text-inherit md:overflow-visible overflow-hidden">{v.createdAt}</TableCell>
+                    <TableCell>
+                      <MyDropdown client:load/>
+                    </TableCell>
+                  </TableRow>
+                ))}
+
+              </TableBody>
+            </Table>

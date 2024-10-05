@@ -1,6 +1,14 @@
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
-import { usersTable, type InsertUser, type SelectUser } from "./schema";
+import {
+  salesTable,
+  usersTable,
+  vehiclesTable,
+  type InsertUser,
+  type SelectSale,
+  type SelectUser,
+  type SelectVehicle,
+} from "./schema";
 import { desc } from "drizzle-orm";
 
 export const turso = createClient({
@@ -19,5 +27,20 @@ export const getUsers = async (): Promise<SelectUser[]> => {
     .select()
     .from(usersTable)
     .orderBy(desc(usersTable.id))
+    .limit(5);
+};
+
+export const getVehicles = async (): Promise<SelectVehicle[]> => {
+  return await db
+    .select()
+    .from(vehiclesTable)
+    .orderBy(desc(vehiclesTable.id))
+    .limit(5);
+};
+export const getSales = async (): Promise<SelectSale[]> => {
+  return await db
+    .select()
+    .from(salesTable)
+    .orderBy(desc(salesTable.id))
     .limit(5);
 };
