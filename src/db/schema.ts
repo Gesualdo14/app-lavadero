@@ -7,7 +7,7 @@ export const usersTable = sqliteTable("users", {
   email: text("email").unique().notNull(),
 });
 
-export const vehiclesTable = sqliteTable("Vehicles", {
+export const vehiclesTable = sqliteTable("vehicles", {
   id: integer("id").primaryKey(),
   brand: text("brand").notNull(),
   model: text("model").notNull(),
@@ -33,9 +33,7 @@ export const salesTable = sqliteTable("Sales", {
   created_at: text("created_at")
     .default(sql`(CURRENT_TIMESTAMP)`)
     .notNull(),
-  updated_at: integer("updated_at", { mode: "timestamp" }).$onUpdate(
-    () => new Date()
-  ),
+  updated_at: text("updated_at").$onUpdate(() => sql`(CURRENT_TIMESTAMP)`),
 });
 
 export type InsertVehicle = typeof vehiclesTable.$inferInsert;
