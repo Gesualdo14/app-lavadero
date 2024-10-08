@@ -46,6 +46,7 @@ export function SaleFormDialog() {
 
   const { formState, reset, handleSubmit, control } = form;
   const [open, setOpen] = useState(false);
+  const [openSelect, setOpenSelect] = useState(false);
 
   const onSubmit = async (values: Sale) => {
     console.log({ values });
@@ -79,7 +80,7 @@ export function SaleFormDialog() {
           </span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] top-[30%]">
         <DialogHeader>
           <DialogTitle>Nueva venta</DialogTitle>
         </DialogHeader>
@@ -151,12 +152,33 @@ export function SaleFormDialog() {
                 <FormItem>
                   <FormControl>
                     <Select
+                      open={openSelect}
                       onValueChange={(value) => {
                         form.setValue(field.name, +value);
                       }}
                     >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Servicios..." />
+                      <SelectTrigger
+                        className="w-full"
+                        onClick={() => setOpenSelect(!openSelect)}
+                      >
+                        {!field.value ? (
+                          <span className="text-gray-400">Servicios...</span>
+                        ) : (
+                          <div className="flex items-start gap-2 max-w-[250px] overflow-hidden">
+                            {[
+                              { id: 2, name: "Lavado" },
+                              { id: 3, name: "Pulido" },
+                              { id: 3, name: "Pulido" },
+                              { id: 3, name: "Pulido" },
+                              { id: 3, name: "Pulido" },
+                              { id: 3, name: "Pulido" },
+                            ].map((s) => (
+                              <span className="rounded-md bg-gray-100 px-3">
+                                {s.name}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
@@ -172,6 +194,14 @@ export function SaleFormDialog() {
                           <Separator className="my-1 w-full" />
                           <SelectItem
                             value="2"
+                            onClick={(e) => {
+                              console.log("SELECTED");
+                              e.preventDefault();
+                            }}
+                            onSelect={(e) => {
+                              console.log("SELECTED");
+                              e.preventDefault();
+                            }}
                             className="hover:bg-gray-100 !rounded-md outline-none"
                           >
                             Lavado
