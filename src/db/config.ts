@@ -1,14 +1,7 @@
 import { createClient } from "@libsql/client";
+import * as schema from "./schema";
 import { drizzle } from "drizzle-orm/libsql";
-import {
-  salesTable,
-  usersTable,
-  vehiclesTable,
-  type InsertUser,
-  type SelectSale,
-  type SelectUser,
-  type SelectVehicle,
-} from "./schema";
+import { sales, users, vehicles, services } from "./schema";
 import { desc } from "drizzle-orm";
 
 export const turso = createClient({
@@ -16,31 +9,45 @@ export const turso = createClient({
   authToken: import.meta.env.TURSO_AUTH_TOKEN ?? "",
 });
 
-export const db = drizzle(turso);
+export const db = drizzle(turso, { schema });
 
-export async function createUser(data: InsertUser) {
-  await db.insert(usersTable).values(data);
+export async function createUser(data: schema.InsertUser) {
+  return await db.insert(users).values(data);
 }
 
-export const getUsers = async (): Promise<SelectUser[]> => {
-  return await db
-    .select()
-    .from(usersTable)
-    .orderBy(desc(usersTable.id))
-    .limit(5);
+export const getUsers = async (): Promise<schema.SelectUser[]> => {
+  return await db.query.users.findMany({
+    limit: 5,
+    orderBy: [desc(users.id)],
+  });
 };
 
-export const getVehicles = async (): Promise<SelectVehicle[]> => {
-  return await db
-    .select()
-    .from(vehiclesTable)
-    .orderBy(desc(vehiclesTable.id))
-    .limit(5);
+export const getVehicles = async (): Promise<schema.SelectVehicle[]> => {
+  return await db.query.vehicles.findMany({
+    limit: 5,
+    orderBy: [desc(vehicles.id)],
+  });
 };
-export const getSales = async (): Promise<SelectSale[]> => {
-  return await db
-    .select()
-    .from(salesTable)
-    .orderBy(desc(salesTable.id))
-    .limit(5);
+
+export const getSales = async (): Promise<schema.TSale[]> => {
+  return await db.query.sales.findMany({
+    limit: 5,
+    with: { user: true, vehicle: true },
+    orderBy: [desc(sales.id)],
+  });
 };
+
+export async function createSale(data: schema.InsertSale) {
+  return await db.insert(sales).values(data);
+}
+
+export const getServices = async (): Promise<schema.SelectService[]> => {
+  return await db.query.services.findMany({
+    limit: 5,
+    orderBy: [desc(services.id)],
+  });
+};
+
+export async function createService(data: schema.InsertService) {
+  return await db.insert(services).values(data);
+}

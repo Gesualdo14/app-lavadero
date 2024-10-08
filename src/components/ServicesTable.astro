@@ -1,5 +1,4 @@
 ---
-import { Badge } from "./ui/badge";
 import {
   Table,
   TableBody,
@@ -18,30 +17,30 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { SaleFormDialog } from "./SaleFormDialog";
 
-const { data, error } = await actions.getSales();
-let sales;
+import { ServiceFormDialog } from "@/components/ServiceFormDialog";
+
+const { data, error } = await actions.getServices();
+let services;
 if (data) {
-  sales = data.data;
+  services = data.data;
 }
-console.log({ sales });
+console.log({ services });
 ---
 
 <Card x-chunk="dashboard-06-chunk-0">
   <CardHeader className="pb-2">
     <div class="flex justify-between">
-      <CardTitle>Ventas</CardTitle>
-      <SaleFormDialog client:load />
+      <CardTitle>Servicios</CardTitle>
+      <ServiceFormDialog client:load />
     </div>
   </CardHeader>
-  <CardContent>
-    <Table>
+  <CardContent
+    ><Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Cliente</TableHead>
-          <TableHead>Vehículo</TableHead>
-          <TableHead className="flex-auto">Monto</TableHead>
+          <TableHead>Denominación</TableHead>
+          <TableHead className="flex-auto">Precio</TableHead>
           <TableHead>
             <span class="sr-only">Acciones</span>
           </TableHead>
@@ -49,20 +48,15 @@ console.log({ sales });
       </TableHeader>
       <TableBody>
         {
-          sales?.map((s) => (
+          services?.map((s) => (
             <TableRow>
-              <TableCell className="font-medium w-48">
-                {`${s.user.firstname} ${s.user.lastname}`}
-              </TableCell>
-              <TableCell className="font-medium w-48">
-                {`${s.vehicle.brand.toUpperCase()} - ${s.vehicle.model}`}
-              </TableCell>
+              <TableCell className="font-medium w-48">{s.name}</TableCell>
               <TableCell className="w-48">
                 {Intl.NumberFormat("es-AR", {
                   style: "currency",
                   currency: "ARS",
                   maximumFractionDigits: 0,
-                }).format(s.total_amount)}
+                }).format(s.price)}
               </TableCell>
               <TableCell>
                 <MyDropdown client:load />
