@@ -1,0 +1,75 @@
+---
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./ui/table";
+
+import { actions } from "astro:actions";
+import MyDropdown from "./MyDropdown";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+
+import { ServiceFormDialog } from "@/components/ServiceFormDialog";
+
+const { data, error } = await actions.getServices();
+let services;
+if (data) {
+  services = data.data;
+}
+console.log({ services });
+---
+
+<Card x-chunk="dashboard-06-chunk-0">
+  <CardHeader className="pb-2">
+    <div class="flex justify-between">
+      <CardTitle>Servicios</CardTitle>
+      <ServiceFormDialog client:load />
+    </div>
+  </CardHeader>
+  <CardContent
+    ><Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Denominación</TableHead>
+          <TableHead className="flex-auto">Precio</TableHead>
+          <TableHead>
+            <span class="sr-only">Acciones</span>
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {
+          services?.map((s) => (
+            <TableRow>
+              <TableCell className="font-medium w-48">{s.name}</TableCell>
+              <TableCell className="w-48">
+                {Intl.NumberFormat("es-AR", {
+                  style: "currency",
+                  currency: "ARS",
+                  maximumFractionDigits: 0,
+                }).format(s.price)}
+              </TableCell>
+              <TableCell>
+                <MyDropdown client:load />
+              </TableCell>
+            </TableRow>
+          ))
+        }
+      </TableBody>
+    </Table></CardContent
+  >
+  <CardFooter>
+    <div class="text-xs text-muted-foreground">
+      Showing <strong>1-10</strong> of <strong>32</strong> products
+    </div>
+  </CardFooter>
+</Card>

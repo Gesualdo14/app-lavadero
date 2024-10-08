@@ -10,9 +10,10 @@ import { TooltipContent } from "./ui/tooltip";
 interface Props {
   text: string;
   icon: "washes" | "services" | "clients" | "dashboard" | "settings";
+  href?: string;
 }
 
-const AsideItem = ({ text, icon }: Props) => {
+const AsideItem = ({ text, href, icon }: Props) => {
   const icons = {
     washes: <CarFront className="h-5 w-5" />,
     services: <Bell className="h-5 w-5" />,
@@ -26,7 +27,7 @@ const AsideItem = ({ text, icon }: Props) => {
       <Tooltip delayDuration={200}>
         <TooltipTrigger asChild>
           <a
-            href="#"
+            href={`${href ?? "/" + text.toLocaleLowerCase()}`}
             className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
           >
             {icons[icon]}

@@ -1,8 +1,13 @@
 ---
-import { Toaster } from "@/components/ui/toaster"
+import AsideItem from "@/components/AsideItem";
+import MySearchBar from "@/components/MySearchBar";
+import SheetItem from "@/components/SheetItem";
+import { Toaster } from "@/components/ui/toaster";
+import UserMenu from "@/components/UserMenu";
 import { ClientRouter } from "astro:transitions";
+import { Home } from "lucide-react";
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -10,45 +15,77 @@ const { title } = Astro.props;
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<Toaster client:load/>
-		<ClientRouter />
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <Toaster client:load />
+    <ClientRouter />
+  </head>
+  <body>
+    <div class="flex min-h-screen w-full flex-col bg-muted/40">
+      <aside
+        class="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex"
+      >
+        <nav class="flex flex-col items-center gap-4 px-2 py-4">
+          <a
+            href="/"
+            class="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+          >
+            <Home className="h-4 w-4 transition-all group-hover:scale-110" />
+            <span class="sr-only">Lavadero</span>
+          </a>
+
+          <AsideItem text="Ventas" href="/" icon="washes" client:visible />
+          <AsideItem text="Servicios" icon="services" client:visible />
+          <AsideItem text="Clientes" icon="clients" client:visible />
+          <AsideItem text="Informes" icon="dashboard" client:visible />
+        </nav>
+        <nav class="mt-auto flex flex-col items-center gap-4 px-2 py-4">
+          <AsideItem text="Configuración" icon="settings" client:visible />
+        </nav>
+      </aside>
+      <div class="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+        <header
+          class="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6"
+        >
+          <SheetItem client:load />
+          <MySearchBar client:load />
+          <UserMenu client:load />
+        </header>
+        <main
+          class="flex-1 items-start gap-4 !px-0 py-4 sm:px-6 sm:py-0 md:gap-8 w-full"
+        >
+          <slot />
+        </main>
+      </div>
+    </div>
+  </body>
 </html>
 <style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
+  :root {
+    --accent: 136, 58, 234;
+    --accent-light: 224, 204, 250;
+    --accent-dark: 49, 10, 101;
+    --accent-gradient: linear-gradient(
+      45deg,
+      rgb(var(--accent)),
+      rgb(var(--accent-light)) 30%,
+      white 60%
+    );
+  }
+  html {
+    font-family: system-ui, sans-serif;
+    background: #13151a;
+  }
+  main {
+    margin: auto;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
 </style>

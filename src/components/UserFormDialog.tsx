@@ -15,8 +15,7 @@ import { PlusCircle } from "lucide-react";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { formSchema } from "@/schemas/user";
-import { z } from "zod";
+import { userFormSchema, type User } from "@/schemas/user";
 import {
   Form,
   FormControl,
@@ -26,30 +25,49 @@ import {
 } from "@/components/ui/form";
 import { LoadingSpinner } from "./Spinner";
 import { navigate } from "astro:transitions/client";
+import type { SelectUser } from "@/db/schema";
+import type { z } from "zod";
+import { saleFormSchema } from "@/schemas/sale";
 
-const defValues = {
+export type Entities = "user" | "sale";
+
+export const schemas = {
+  user: userFormSchema,
+  sale: saleFormSchema,
+} as const;
+
+type SchemaMap = typeof schemas;
+type InferDefaultValues<T extends z.Schema> = z.infer<T>;
+
+export type FormConfig = {
+  [K in keyof SchemaMap]: {
+    schema: SchemaMap[K];
+    defaultValues: InferDefaultValues<SchemaMap[K]>;
+    crud: { create: "createUser" | "createSale" };
+  };
+};
+
+const defaultValues = {
   firstname: "",
   lastname: "",
   email: "",
 };
 
-export function FormDialog() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: defValues,
+export function UserFormDialog() {
+  const form = useForm<User>({
+    resolver: zodResolver(userFormSchema),
+    defaultValues: defaultValues,
   });
+
   const { formState, reset, handleSubmit, control } = form;
   const [open, setOpen] = useState(false);
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: User) => {
     const result = await actions.createUser(values);
-    reset(defValues);
-    toast({
-      title: "Cliente creado",
-      description: result.data?.message,
-    });
+    reset(defaultValues);
+    await navigate("/clientes");
+    toast({ title: "Cliente creado", description: "Cliente creado con éxito" });
     setOpen(false);
-    await navigate("/");
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>

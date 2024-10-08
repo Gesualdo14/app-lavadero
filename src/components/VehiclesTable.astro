@@ -2,34 +2,34 @@
 
 import { Badge } from "./ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
-import type { User } from "@/schemas/user"
+
 import { actions } from "astro:actions";
 import MyDropdown from "./MyDropdown";
 
-const {data, error} = await actions.getUsers()
-let users
+const {data, error} = await actions.getVehicles()
+let vehicles
 if(data) {
- users = data.data
+  vehicles = data.data
 }
 
 ---
 
-<Table>
+          <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead className="hidden w-[100px] sm:table-cell">
                     <span class="sr-only">Imagen</span>
                   </TableHead>
                   <TableHead>Nombre</TableHead>
-                  <TableHead>Apellido</TableHead>
-                  <TableHead>Email</TableHead>
+                  <TableHead className="flex-auto">Apellido</TableHead>
+                  <TableHead className="min-w-24">Email</TableHead>
                   <TableHead>
                     <span class="sr-only">Actions</span>
                   </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {users?.map((u) => (
+                {vehicles?.map((v) => (
                   <TableRow>
                     <TableCell className="hidden sm:table-cell">
                       <img
@@ -41,12 +41,12 @@ if(data) {
                       />
                     </TableCell>
                     <TableCell className="font-medium">
-                      {u.firstname}
+                      {v.brand}
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline">{u.lastname}</Badge>
+                      <Badge variant="outline">{v.model}</Badge>
                     </TableCell>
-                    <TableCell>{u.email}</TableCell>
+                    <TableCell className="text-ellipsis max-w-1 sm:text-inherit md:overflow-visible overflow-hidden">{v.createdAt}</TableCell>
                     <TableCell>
                       <MyDropdown client:load/>
                     </TableCell>

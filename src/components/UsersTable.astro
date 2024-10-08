@@ -1,0 +1,74 @@
+---
+import { Badge } from "./ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./ui/table";
+
+import { actions } from "astro:actions";
+import MyDropdown from "./MyDropdown";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import { UserFormDialog } from "./UserFormDialog";
+
+const { data, error } = await actions.getUsers();
+let users;
+if (data) {
+  users = data.data;
+}
+---
+
+<Card x-chunk="dashboard-06-chunk-0">
+  <CardHeader className="pb-2">
+    <div class="flex justify-between">
+      <CardTitle>Clientes</CardTitle>
+      <UserFormDialog client:load />
+    </div>
+  </CardHeader>
+  <CardContent>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Nombre</TableHead>
+          <TableHead>Apellido</TableHead>
+          <TableHead className="min-w-24">Email</TableHead>
+          <TableHead>
+            <span class="sr-only">Actions</span>
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {
+          users?.map((u) => (
+            <TableRow>
+              <TableCell className="font-medium">{u.firstname}</TableCell>
+              <TableCell>
+                <Badge variant="outline">{u.lastname}</Badge>
+              </TableCell>
+              <TableCell className="text-ellipsis max-w-1 sm:text-inherit md:overflow-visible overflow-hidden">
+                {u.email}
+              </TableCell>
+              <TableCell>
+                <MyDropdown client:load />
+              </TableCell>
+            </TableRow>
+          ))
+        }
+      </TableBody>
+    </Table></CardContent
+  >
+  <CardFooter>
+    <div class="text-xs text-muted-foreground">
+      Showing <strong>1-10</strong> of <strong>32</strong> products
+    </div>
+  </CardFooter>
+</Card>
