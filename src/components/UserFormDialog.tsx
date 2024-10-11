@@ -25,7 +25,6 @@ import {
 } from "@/components/ui/form";
 import { LoadingSpinner } from "./Spinner";
 import { navigate } from "astro:transitions/client";
-import type { SelectUser } from "@/db/schema";
 import type { z } from "zod";
 import { saleFormSchema } from "@/schemas/sale";
 

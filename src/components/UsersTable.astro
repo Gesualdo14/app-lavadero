@@ -20,7 +20,10 @@ import {
 } from "./ui/card";
 import { UserFormDialog } from "./UserFormDialog";
 
-const { data, error } = await actions.getUsers();
+const { data, error } = await actions.getUsers({
+  searchText: "",
+  asItems: false,
+});
 let users;
 if (data) {
   users = data.data;

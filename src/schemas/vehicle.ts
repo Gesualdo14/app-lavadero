@@ -1,0 +1,33 @@
+import { z } from "zod";
+import { relations, sql } from "drizzle-orm";
+import { integer, sqliteTable, text, real } from "drizzle-orm/sqlite-core";
+import { users } from "./user";
+
+export const vehicles = sqliteTable("Vehicles", {
+  id: integer("id").primaryKey(),
+  brand: text("brand").notNull(),
+  model: text("model").notNull(),
+  patent: text("patent").notNull(),
+  user_id: integer("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  createdAt: text("created_at")
+    .default(sql`(CURRENT_TIMESTAMP)`)
+    .notNull(),
+  updateAt: integer("updated_at", { mode: "timestamp" }).$onUpdate(
+    () => new Date()
+  ),
+});
+
+export const vehicleFormSchema = z.object({
+  brand: z.string(),
+  model: z.string(),
+  user_id: z.number(),
+  created_at: z.date().optional(),
+  updated_at: z.date().optional(),
+});
+
+export type InsertVehicle = typeof vehicles.$inferInsert;
+export type SelectVehicle = typeof vehicles.$inferSelect;
+
+export type Vehicle = z.infer<typeof vehicleFormSchema>;
