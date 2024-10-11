@@ -63,7 +63,7 @@ export function ServiceFormDialog() {
           </span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] top-[30%]">
         <DialogHeader>
           <DialogTitle>Crear servicio</DialogTitle>
         </DialogHeader>
