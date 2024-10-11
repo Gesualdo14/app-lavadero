@@ -87,6 +87,7 @@ export function SaleFormDialog() {
     toast({
       title: result.data?.ok ? "Venta creada" : "Hubo un error",
       description: result.data?.message,
+      className: "top-0 right-0",
     });
 
     openDialog.set("");

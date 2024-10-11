@@ -5,7 +5,7 @@ import user from "./user";
 import vehicle from "./vehicle";
 
 export const server = {
-  createServices: service.create,
+  createService: service.create,
   getServices: service.get,
   createSale: sale.create,
   getSales: sale.get,

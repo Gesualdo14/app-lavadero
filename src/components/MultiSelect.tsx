@@ -81,14 +81,6 @@ const MultiSelect = ({
 
   const { singular, plural, placeholder } = CONFIG[entity];
 
-  if (isPending) {
-    return <span>Cargando {plural}...</span>;
-  }
-
-  if (isError) {
-    return <span>Error al cargar los {plural}</span>;
-  }
-
   const isOpen = $openSelect.includes(field.name);
   const quantitySelected = field.value.length;
 
@@ -187,7 +179,7 @@ const MultiSelect = ({
               </SelectItem>
             );
           })}
-          {data.length === 0 && (
+          {data?.length === 0 && (
             <span className="block text-muted-foreground p-4 text-sm">
               No se encontró ningún {singular}
             </span>
