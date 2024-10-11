@@ -20,7 +20,7 @@ import {
 
 import { ServiceFormDialog } from "@/components/ServiceFormDialog";
 
-const { data, error } = await actions.getServices();
+const { data, error } = await actions.getServices({});
 let services;
 if (data) {
   services = data.data;
