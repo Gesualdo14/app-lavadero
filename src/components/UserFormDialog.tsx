@@ -83,7 +83,7 @@ export function UserFormDialog() {
           </span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] top-[30%]">
         <DialogHeader>
           <DialogTitle>Crear cliente</DialogTitle>
           <DialogDescription>
