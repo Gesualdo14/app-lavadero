@@ -1,18 +1,18 @@
 import { Search } from "lucide-react";
 import { Input } from "./ui/input";
+import { useStore } from "@/stores/user";
 
 const MySearchBar = () => {
+  const { update } = useStore();
   return (
     <div className="relative  flex-1 w-full">
       <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
       <form
         onSubmit={(e) => {
-          e.preventDefault();
-          console.log({ search: "wow" });
-          const url = new URL(window.location.origin);
-          window.location.href =
-            "http://localhost:4321/clientes?search=" +
-            (document.getElementById("input") as HTMLInputElement)?.value;
+          update(
+            "globalSearchText",
+            (document.getElementById("input") as HTMLInputElement).value
+          );
         }}
       >
         <Input

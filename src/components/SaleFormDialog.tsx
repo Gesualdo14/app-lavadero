@@ -25,9 +25,8 @@ import { LoadingSpinner } from "./Spinner";
 import { navigate } from "astro:transitions/client";
 import { saleFormSchema, type Sale, type TSelect } from "@/schemas/sale";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useStore } from "@nanostores/react";
-import { openDialog } from "@/stores";
 import MultiSelect from "./MultiSelect";
+import { useStore } from "@/stores/user";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -49,7 +48,7 @@ export function SaleFormDialog() {
     resolver: zodResolver(saleFormSchema),
     defaultValues: defaultValues,
   });
-  const $openDialog = useStore(openDialog);
+  const { update, openDialog } = useStore();
 
   const {
     formState: { errors, isSubmitting },
@@ -90,16 +89,16 @@ export function SaleFormDialog() {
       className: "top-0 right-0",
     });
 
-    openDialog.set("");
+    update("openDialog", "");
   };
 
   useEffect(() => {
-    if (!$openDialog) {
+    if (!openDialog) {
       setTimeout(() => {
         document.body.style.pointerEvents = "";
       }, 500);
     }
-  }, [$openDialog]);
+  }, [openDialog]);
 
   const services = watch("services");
   useEffect(() => {
@@ -112,15 +111,15 @@ export function SaleFormDialog() {
 
   return (
     <Dialog
-      open={$openDialog === "sale"}
-      onOpenChange={(open) => openDialog.set(!open ? "" : "sale")}
+      open={openDialog === "sale"}
+      onOpenChange={(open) => update("openDialog", !open ? "" : "sale")}
     >
       <DialogTrigger asChild>
         <Button
           size="sm"
           variant="default"
           className="h-7 gap-1"
-          onClick={() => openDialog.set("sale")}
+          onClick={() => update("openDialog", "sale")}
         >
           <PlusCircle className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">

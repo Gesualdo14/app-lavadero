@@ -4,6 +4,9 @@ import { create } from "zustand";
 type Store = {
   user: User;
   openDialog: string;
+  openSelect: string;
+  searchText: string;
+  globalSearchText: string;
   creating: boolean;
   update: (prop: string, value: any) => void;
 };
@@ -19,6 +22,9 @@ export const useStore = create<Store>((set) => ({
     patent: "",
   },
   openDialog: "",
+  openSelect: "",
+  searchText: "",
+  globalSearchText: "",
   creating: false,
   update: (prop, value) => set((state) => ({ ...state, [prop]: value })),
 }));

@@ -10,13 +10,12 @@ import {
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
-import { useStore } from "@nanostores/react";
-import { openSelect, _searchText } from "@/stores";
 import type { ControllerRenderProps, UseFormReturn } from "react-hook-form";
 import { CheckIcon, X } from "lucide-react";
 import { Button } from "./ui/button";
 import type { User } from "@/schemas/user";
 import type { Sale } from "@/schemas/sale";
+import { useStore } from "@/stores/user";
 
 type Props = {
   filterId?: number;
@@ -77,26 +76,23 @@ const MultiSelect = ({
   justOne = false,
   autoFocus = false,
 }: Props) => {
-  console.log(field.name, { filterId });
+  const { searchText, update, openSelect } = useStore();
   const { data, refetch } = useQuery({
-    queryKey: [entity, filterId],
+    queryKey: [entity, filterId, searchText],
     queryFn: async () => {
-      const text = _searchText.get();
       const data = await actions.getSelectItems({
-        searchText: text || "",
+        searchText: searchText || "",
         filterId,
         entity,
       });
       return data?.data?.data || [];
     },
   });
-  const $openSelect = useStore(openSelect);
-  const $searchText = useStore(_searchText);
 
   const { singular, plural, placeholder } = CONFIG[entity];
 
-  const isOpen = $openSelect.includes(field.name);
-  const quantitySelected = field.value?.length;
+  const isOpen = openSelect === field.name;
+  const quantitySelected = field.value?.length as number;
 
   return (
     <Select open={isOpen}>
@@ -107,7 +103,8 @@ const MultiSelect = ({
           setTimeout(() => {
             document.getElementById("my-input")?.focus();
           }, 200);
-          openSelect.set(isOpen ? "" : field.name);
+          update("openSelect", isOpen ? "" : field.name);
+          update("searchText", "");
         }}
       >
         {quantitySelected === 0 ? (
@@ -116,7 +113,7 @@ const MultiSelect = ({
           <div className="flex items-start gap-2 max-w-[250px] overflow-hidden">
             {quantitySelected > 0 &&
               quantitySelected < 3 &&
-              field.value.map((fv) => (
+              field?.value?.map((fv) => (
                 <span key={fv.id} className="rounded-md bg-gray-100 px-3">
                   {fv.name}
                 </span>
@@ -141,18 +138,18 @@ const MultiSelect = ({
                   }
                   if (e.code === "Enter") refetch();
                 }}
-                value={_searchText.get()}
-                onChange={(e) => _searchText.set(e.target.value)}
+                value={searchText}
+                onChange={(e) => update("searchText", e.target.value)}
                 id="my-input"
                 className="focus-visible:ring-0 border-0 outline-none pl-8 shadow-none"
                 placeholder={placeholder}
               />
-              {!!$searchText && (
+              {!!searchText && (
                 <X
                   size={16}
                   className="text-muted-foreground cursor-pointer mr-3"
                   onClick={() => {
-                    _searchText.set("");
+                    update("searchText", "");
                     refetch();
                   }}
                 />
@@ -175,7 +172,8 @@ const MultiSelect = ({
                   form.setValue(field.name, newValue);
 
                   if (justOne) {
-                    openSelect.set("");
+                    update("openSelect", "");
+                    update("searchText", "");
                   }
                   if (!!resetOnSelect) {
                     form.resetField(resetOnSelect);
@@ -209,7 +207,10 @@ const MultiSelect = ({
                   type="button"
                   variant="destructive"
                   size="sm"
-                  onClick={() => openSelect.set("")}
+                  onClick={() => {
+                    update("openSelect", "");
+                    update("searchText", "");
+                  }}
                 >
                   Cerrar
                 </Button>

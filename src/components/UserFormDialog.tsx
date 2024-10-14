@@ -28,7 +28,6 @@ import { navigate } from "astro:transitions/client";
 import { saleFormSchema } from "@/schemas/sale";
 import { QueryClientProvider, useQueryClient } from "@tanstack/react-query";
 import MultiSelect from "./MultiSelect";
-import { _creating, openDialog } from "@/stores";
 import { useStore } from "@/stores/user";
 
 export type Entities = "user" | "sale";

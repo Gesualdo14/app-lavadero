@@ -1,4 +1,3 @@
-import { _creating, _globalSearchText, openDialog } from "@/stores";
 import MyDropdown from "./MyDropdown";
 import { Badge } from "./ui/badge";
 import {
@@ -44,12 +43,12 @@ const UserCard = () => {
 };
 
 const UserTable = () => {
-  const { update } = useStore();
+  const { update, globalSearchText } = useStore();
   const { data: users } = useQuery(
     {
-      queryKey: ["users"],
+      queryKey: ["users", globalSearchText],
       queryFn: async () => {
-        const text = _globalSearchText.get();
+        const text = globalSearchText;
         console.log("HOLI", { text });
         const data = await actions.getUsers({
           searchText: text || "",
