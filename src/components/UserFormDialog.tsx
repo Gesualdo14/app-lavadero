@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { actions } from "astro:actions";
 import { PlusCircle } from "lucide-react";
-import { useState } from "react";
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { userFormSchema, type User } from "@/schemas/user";
@@ -24,9 +24,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { LoadingSpinner } from "./Spinner";
-import { navigate } from "astro:transitions/client";
-import type { z } from "zod";
 import { saleFormSchema } from "@/schemas/sale";
+import { QueryClientProvider, useQueryClient } from "@tanstack/react-query";
+import MultiSelect from "./MultiSelect";
+import { useStore } from "@/stores";
 
 export type Entities = "user" | "sale";
 
@@ -35,47 +36,45 @@ export const schemas = {
   sale: saleFormSchema,
 } as const;
 
-type SchemaMap = typeof schemas;
-type InferDefaultValues<T extends z.Schema> = z.infer<T>;
-
-export type FormConfig = {
-  [K in keyof SchemaMap]: {
-    schema: SchemaMap[K];
-    defaultValues: InferDefaultValues<SchemaMap[K]>;
-    crud: { create: "createUser" | "createSale" };
-  };
-};
-
-const defaultValues = {
-  firstname: "",
-  lastname: "",
-  email: "",
-};
-
 export function UserFormDialog() {
+  const queryClient = useQueryClient();
+  const { update, openDialog, creating, user } = useStore();
   const form = useForm<User>({
     resolver: zodResolver(userFormSchema),
-    defaultValues: defaultValues,
+    defaultValues: user,
   });
 
   const { formState, reset, handleSubmit, control } = form;
-  const [open, setOpen] = useState(false);
+  console.log({ openDialog, creating, user, formState: form.getValues() });
 
   const onSubmit = async (values: User) => {
-    const result = await actions.createUser(values);
-    reset(defaultValues);
-    await navigate("/clientes");
+    console.log({ values });
+    const action = creating ? "createUser" : "updateUser";
+    const result = await actions[action](values);
     toast({ title: "Cliente creado", description: "Cliente creado con éxito" });
-    setOpen(false);
+    queryClient.refetchQueries({ queryKey: ["users"] });
+    update("openDialog", "");
   };
+  console.log("DIOSSS");
+
+  useEffect(() => {
+    reset(user);
+  }, [user]);
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={openDialog === "user"}
+      onOpenChange={(open) => update("openDialog", !open ? "" : "user")}
+    >
       <DialogTrigger asChild>
         <Button
           size="sm"
           variant="default"
           className="h-7 gap-1"
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            update("openDialog", "user");
+            update("creating", true);
+          }}
         >
           <PlusCircle className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
@@ -91,7 +90,13 @@ export function UserFormDialog() {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4"
+            onError={() => {
+              console.log("ERROR");
+            }}
+          >
             <FormField
               control={control}
               name="firstname"
@@ -128,9 +133,62 @@ export function UserFormDialog() {
                 </FormItem>
               )}
             />
+            {creating && (
+              <>
+                <FormField
+                  control={control}
+                  name="brand"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <QueryClientProvider client={queryClient}>
+                          <MultiSelect
+                            form={form}
+                            field={field}
+                            entity={field.name}
+                            justOne
+                          />
+                        </QueryClientProvider>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={control}
+                  name="model"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input placeholder="Modelo..." {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={control}
+                  name="patent"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input placeholder="Patente..." {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </>
+            )}
             <DialogFooter>
               <Button type="submit">
-                {formState.isSubmitting ? <LoadingSpinner /> : "Crear"}
+                {formState.isSubmitting ? (
+                  <LoadingSpinner />
+                ) : creating ? (
+                  "Crear"
+                ) : (
+                  "Editar"
+                )}
               </Button>
             </DialogFooter>
           </form>

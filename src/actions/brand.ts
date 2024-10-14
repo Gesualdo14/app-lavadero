@@ -1,18 +1,18 @@
-import { createService, getServices } from "@/db/config";
-import { serviceFormSchema } from "@/schemas/service";
+import { createBrand, getBrands } from "@/db/config";
+import { brandFormSchema } from "@/schemas/brand";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
 
-const service = {
-  getServices: defineAction({
+const brand = {
+  getBrands: defineAction({
     input: z.object({ searchText: z.string().nullish() }),
     handler: async ({ searchText }) => {
       try {
-        const services = await getServices(searchText, false);
+        const brands = await getBrands(searchText, false);
 
         return {
           ok: true,
-          data: services,
+          data: brands,
           message: "",
         };
       } catch (error) {
@@ -21,16 +21,16 @@ const service = {
       }
     },
   }),
-  createService: defineAction({
-    input: serviceFormSchema,
+  createBrand: defineAction({
+    input: brandFormSchema,
     handler: async (data) => {
       try {
-        const result = await createService(data);
+        const result = await createBrand(data);
         console.log(result);
         return {
           ok: true,
           data: { id: 1 },
-          message: "Usuario creado con éxito",
+          message: "Marca creada con éxito",
         };
       } catch (error) {
         console.log({ error });
@@ -41,4 +41,4 @@ const service = {
   }),
 };
 
-export default service;
+export default brand;

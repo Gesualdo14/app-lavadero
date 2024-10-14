@@ -22,37 +22,21 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { LoadingSpinner } from "./Spinner";
-import { navigate } from "astro:transitions/client";
-import { saleFormSchema, type Sale, type TSelect } from "@/schemas/sale";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useStore } from "@nanostores/react";
-import { openDialog } from "@/stores";
+import { saleFormSchema, type Sale } from "@/schemas/sale";
 import MultiSelect from "./MultiSelect";
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: Infinity,
-    },
-  },
-});
-const EMPTY_SELECT_ITEM: TSelect = [];
-
-const defaultValues = {
-  services: EMPTY_SELECT_ITEM,
-  user: EMPTY_SELECT_ITEM,
-  vehicle: EMPTY_SELECT_ITEM,
-};
+import { useStore } from "@/stores";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function SaleFormDialog() {
+  const queryClient = useQueryClient();
+  const { update, openDialog, globalSearchText, sale, creating } = useStore();
   const form = useForm<Sale>({
     resolver: zodResolver(saleFormSchema),
-    defaultValues: defaultValues,
+    defaultValues: sale,
   });
-  const $openDialog = useStore(openDialog);
 
   const {
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     getFieldState,
     setError,
     reset,
@@ -63,64 +47,68 @@ export function SaleFormDialog() {
   } = form;
 
   const onSubmit = async (values: Sale) => {
-    if (values.services.length === 0) {
+    if (values.services?.length === 0) {
       setError("services", {
         message: "Debes seleccionar al menos 1 servicio",
       });
     }
-    if (values.user.length === 0) {
+    if (values.user?.length === 0) {
       setError("user", {
         message: "Debes seleccionar al cliente",
       });
     }
-    if (values.vehicle.length === 0) {
+    if (values.vehicle?.length === 0) {
       setError("vehicle", {
         message: "Debes seleccionar un vehículo",
       });
       return;
     }
-    const result = await actions.createSale(values);
+    const action = creating ? "createSale" : "updateSale";
+    const result = await actions[action](values);
     console.log({ result });
-    reset(defaultValues);
-    await navigate("/");
+    reset({});
+    queryClient.refetchQueries({ queryKey: ["sales", globalSearchText] });
 
     toast({
-      title: result.data?.ok ? "Venta creada" : "Hubo un error",
-      description: result.data?.message,
-      className: "top-0 right-0",
+      title: result.data?.message,
     });
 
-    openDialog.set("");
+    update("openDialog", "");
   };
 
   useEffect(() => {
-    if (!$openDialog) {
+    if (!openDialog) {
       setTimeout(() => {
         document.body.style.pointerEvents = "";
       }, 500);
     }
-  }, [$openDialog]);
-
-  const services = watch("services");
-  useEffect(() => {
-    const totalAmount = services.reduce((p, c) => p + (c.value ?? 0), 0);
-    form.setValue("total_amount", totalAmount);
-  }, [services]);
+    if (openDialog === "sale") {
+      form.setValue("id", sale.id);
+      form.setValue("user", sale.user);
+      form.setValue("services", sale.services);
+      form.setValue("vehicle", sale.vehicle);
+      form.setValue("total_amount", sale.total_amount);
+    }
+  }, [openDialog]);
 
   const user = form.watch("user");
   console.log({ user });
 
   return (
     <Dialog
-      open={$openDialog === "sale"}
-      onOpenChange={(open) => openDialog.set(!open ? "" : "sale")}
+      open={openDialog === "sale"}
+      onOpenChange={(open) => update("openDialog", !open ? "" : "sale")}
     >
       <DialogTrigger asChild>
         <Button
           size="sm"
           variant="default"
           className="h-7 gap-1"
-          onClick={() => openDialog.set("sale")}
+          onClick={() => {
+            update("creating", true);
+            update("openDialog", "sale");
+            update("sale", {});
+          }}
         >
           <PlusCircle className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
@@ -130,7 +118,7 @@ export function SaleFormDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] top-[30%]">
         <DialogHeader>
-          <DialogTitle>Nueva venta</DialogTitle>
+          <DialogTitle>{creating ? "Nueva" : "Editando"} venta</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -140,16 +128,14 @@ export function SaleFormDialog() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <QueryClientProvider client={queryClient}>
-                      <MultiSelect
-                        form={form}
-                        field={field}
-                        resetOnSelect="vehicle"
-                        entity={field.name}
-                        justOne
-                        autoFocus
-                      />
-                    </QueryClientProvider>
+                    <MultiSelect
+                      form={form}
+                      field={field}
+                      resetOnSelect="vehicle"
+                      entity={field.name}
+                      justOne
+                      autoFocus
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -161,15 +147,13 @@ export function SaleFormDialog() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <QueryClientProvider client={queryClient}>
-                      <MultiSelect
-                        form={form}
-                        field={field}
-                        filterId={user.length > 0 ? user[0].id : 0}
-                        entity={field.name}
-                        justOne
-                      />
-                    </QueryClientProvider>
+                    <MultiSelect
+                      form={form}
+                      field={field}
+                      filterId={user?.length > 0 ? user[0].id : 0}
+                      entity={field.name}
+                      justOne
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -184,9 +168,7 @@ export function SaleFormDialog() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <QueryClientProvider client={queryClient}>
-                      <MultiSelect form={form} field={field} entity="service" />
-                    </QueryClientProvider>
+                    <MultiSelect form={form} field={field} entity="service" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -212,13 +194,14 @@ export function SaleFormDialog() {
               )}
             />
             <DialogFooter>
-              <Button
-                type="submit"
-                onClick={() => {
-                  console.log({ state: getFieldState("services") });
-                }}
-              >
-                {isSubmitting ? <LoadingSpinner /> : "Crear"}
+              <Button type="submit">
+                {isSubmitting ? (
+                  <LoadingSpinner />
+                ) : creating ? (
+                  "Crear"
+                ) : (
+                  "Editar"
+                )}
               </Button>
             </DialogFooter>
           </form>

@@ -4,14 +4,23 @@ export const description =
 
 import "@/styles/globals.css";
 import Layout from "@/layouts/Layout.astro";
-import SalesPanel from "@/components/SalesPanel";
+import BrandsTable from "@/components/BrandsTable.astro";
 ---
 
 <Layout title="Main page">
-  <SalesPanel client:load />
+  <BrandsTable />
 </Layout>
 
 <style>
+  main {
+    margin: auto;
+    padding: 1rem;
+    width: 800px;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
   .astro-a {
     position: absolute;
     top: -32px;

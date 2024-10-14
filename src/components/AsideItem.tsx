@@ -11,9 +11,10 @@ interface Props {
   text: string;
   icon: "washes" | "services" | "clients" | "dashboard" | "settings";
   href?: string;
+  tooltip?: boolean;
 }
 
-const AsideItem = ({ text, href, icon }: Props) => {
+const AsideItem = ({ text, href, icon, tooltip = true }: Props) => {
   const icons = {
     washes: <CarFront className="h-5 w-5" />,
     services: <Bell className="h-5 w-5" />,
@@ -21,6 +22,17 @@ const AsideItem = ({ text, href, icon }: Props) => {
     dashboard: <ChartAreaIcon className="h-5 w-5" />,
     settings: <Settings className="h-5 w-5" />,
   };
+
+  if (!tooltip)
+    return (
+      <a
+        href={`${href ?? "/" + text.toLocaleLowerCase()}`}
+        className="flex gap-3 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+      >
+        {icons[icon]}
+        <span>{text}</span>
+      </a>
+    );
 
   return (
     <TooltipProvider>
