@@ -1,6 +1,6 @@
 import { createClient } from "@libsql/client";
 import schema from "@/schemas/index";
-import { and, desc, eq, like, or, sql, type DBQueryConfig } from "drizzle-orm";
+import { and, desc, eq, like, or, type DBQueryConfig } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/libsql";
 import { users, type InsertUser, type SelectUser } from "@/schemas/user";
 import {
@@ -8,13 +8,7 @@ import {
   type InsertVehicle,
   type SelectVehicle,
 } from "@/schemas/vehicle";
-import {
-  sales,
-  view_sales,
-  type Sale,
-  type SelectSale,
-  type TSelect,
-} from "@/schemas/sale";
+import { sales, view_sales, type Sale, type TSelect } from "@/schemas/sale";
 import {
   services,
   type InsertService,
