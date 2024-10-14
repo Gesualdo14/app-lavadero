@@ -104,7 +104,11 @@ export function SaleFormDialog() {
           size="sm"
           variant="default"
           className="h-7 gap-1"
-          onClick={() => update("openDialog", "sale")}
+          onClick={() => {
+            update("creating", true);
+            update("openDialog", "sale");
+            update("sale", {});
+          }}
         >
           <PlusCircle className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
@@ -114,7 +118,7 @@ export function SaleFormDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] top-[30%]">
         <DialogHeader>
-          <DialogTitle>Nueva venta</DialogTitle>
+          <DialogTitle>{creating ? "Nueva" : "Editando"} venta</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -190,12 +194,7 @@ export function SaleFormDialog() {
               )}
             />
             <DialogFooter>
-              <Button
-                type="submit"
-                onClick={() => {
-                  console.log({ state: getFieldState("services") });
-                }}
-              >
+              <Button type="submit">
                 {isSubmitting ? (
                   <LoadingSpinner />
                 ) : creating ? (

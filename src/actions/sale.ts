@@ -4,13 +4,11 @@ import { defineAction } from "astro:actions";
 import { z } from "zod";
 
 const sale = {
-  get: defineAction({
+  getSales: defineAction({
     input: z.object({ searchText: z.string().nullish() }),
     handler: async ({ searchText }) => {
       try {
         const sales = await getSales(searchText);
-
-        console.log(sales);
 
         return {
           ok: true,
@@ -23,7 +21,7 @@ const sale = {
       }
     },
   }),
-  create: defineAction({
+  createSale: defineAction({
     input: saleFormSchema,
     handler: async (data) => {
       try {
@@ -41,7 +39,7 @@ const sale = {
       }
     },
   }),
-  update: defineAction({
+  updateSale: defineAction({
     input: saleFormSchema,
     handler: async (data) => {
       try {

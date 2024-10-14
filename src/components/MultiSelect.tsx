@@ -16,6 +16,7 @@ import { Button } from "./ui/button";
 import type { User } from "@/schemas/user";
 import type { Sale } from "@/schemas/sale";
 import { useStore } from "@/stores";
+import type { Cashflow } from "@/schemas/cashflow";
 
 type Props = {
   filterId?: number;
@@ -46,6 +47,12 @@ type Props = {
       field: ControllerRenderProps<User, "brand">;
       resetOnSelect?: keyof User;
     }
+  | {
+      entity: "method";
+      form: any;
+      field: ControllerRenderProps<Cashflow, "method">;
+      resetOnSelect?: keyof Cashflow;
+    }
 );
 
 const CONFIG = {
@@ -65,6 +72,11 @@ const CONFIG = {
     singular: "marca",
     plural: "marcas",
   },
+  method: {
+    placeholder: "Método de pago...",
+    singular: "método de pago",
+    plural: "métodos de pago",
+  },
 };
 
 const MultiSelect = ({
@@ -80,7 +92,7 @@ const MultiSelect = ({
   const { data, refetch } = useQuery({
     queryKey: [entity, filterId, searchText],
     queryFn: async () => {
-      const data = await actions.getSelectItems({
+      const data = await actions.getItems({
         searchText: searchText || "",
         filterId,
         entity,
@@ -159,12 +171,14 @@ const MultiSelect = ({
           <Separator className="my-1 w-full" />
           {data?.map((i) => {
             let selectedItems = form.watch(field.name as any) as any;
-            const isSelected = selectedItems?.some((si: any) => si.id === i.id);
+            const isSelected = selectedItems?.some(
+              (si: any) => si.name === i.name
+            );
             return (
               <SelectItem
                 onClick={() => {
                   const newValue = isSelected
-                    ? selectedItems.filter((si: any) => si.id !== i.id)
+                    ? selectedItems.filter((si: any) => si.name !== i.name)
                     : justOne
                       ? [i]
                       : selectedItems.concat(i);

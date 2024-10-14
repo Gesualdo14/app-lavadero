@@ -9,7 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-import MyDropdown from "./MyDropdown";
+import { Edit2Icon } from "lucide-react";
+import { SaleCashflowsDialog } from "./SaleCashflowsDialog";
 
 const SalesTable = () => {
   const { update, globalSearchText } = useStore();
@@ -39,33 +40,7 @@ const SalesTable = () => {
       <TableBody>
         {Array.isArray(sales) &&
           sales?.map((s) => (
-            <TableRow
-              key={s.id}
-              className="cursor-pointer"
-              onClick={() => {
-                console.log("CLICK");
-                console.log({ s });
-                update("sale", {
-                  id: s.id,
-                  services: JSON.parse(s.services as string),
-                  user: [
-                    {
-                      id: s.user.id,
-                      name: `${s.user.firstname} ${s.user.lastname}`,
-                    },
-                  ],
-                  vehicle: [
-                    {
-                      id: s.vehicle.id,
-                      name: `${s.vehicle.brand} ${s.vehicle.model}`,
-                    },
-                  ],
-                  total_amount: s.total_amount,
-                });
-                update("openDialog", "sale");
-                update("creating", false);
-              }}
-            >
+            <TableRow key={s.id} className="cursor-pointer">
               <TableCell className="font-medium w-48">
                 {`${s.user.firstname} ${s.user.lastname}`}
               </TableCell>
@@ -79,8 +54,34 @@ const SalesTable = () => {
                   maximumFractionDigits: 0,
                 }).format(s.total_amount)}
               </TableCell>
-              <TableCell>
-                <MyDropdown />
+              <TableCell className="flex gap-3">
+                <SaleCashflowsDialog sale_id={s.id} />
+                <Edit2Icon
+                  className="h-5 w-5"
+                  onClick={() => {
+                    console.log("CLICK");
+                    console.log({ s });
+                    update("sale", {
+                      id: s.id,
+                      services: JSON.parse(s.services as string),
+                      user: [
+                        {
+                          id: s.user.id,
+                          name: `${s.user.firstname} ${s.user.lastname}`,
+                        },
+                      ],
+                      vehicle: [
+                        {
+                          id: s.vehicle.id,
+                          name: `${s.vehicle.brand} ${s.vehicle.model}`,
+                        },
+                      ],
+                      total_amount: s.total_amount,
+                    });
+                    update("openDialog", "sale");
+                    update("creating", false);
+                  }}
+                />
               </TableCell>
             </TableRow>
           ))}

@@ -3,7 +3,7 @@ import { defineAction } from "astro:actions";
 import { z } from "zod";
 
 const vehicle = {
-  get: defineAction({
+  getVehicles: defineAction({
     input: z.object({
       searchText: z.string().nullish(),
       asItems: z.boolean(),
@@ -25,7 +25,7 @@ const vehicle = {
       }
     },
   }),
-  create: defineAction({
+  createVehicle: defineAction({
     input: z.object({
       brand: z.string(),
       model: z.string(),

@@ -14,6 +14,7 @@ import { saleItems } from "./sale-item";
 export const sales = sqliteTable("Sales", {
   id: integer("id").primaryKey(),
   total_amount: integer("total_amount").notNull(),
+  gathered: integer("gathered").default(0),
   user_id: integer("user_id")
     .notNull()
     .references(() => users.id),
@@ -49,6 +50,7 @@ export const saleFormSchema = z.object({
   vehicle: selectSchema,
   services: selectSchema,
   total_amount: z.number(),
+  gathered: z.number().default(0),
 });
 
 export const salesRelations = relations(sales, ({ one, many }) => ({

@@ -1,3 +1,4 @@
+import type { Cashflow } from "@/schemas/cashflow";
 import type { Sale } from "@/schemas/sale";
 import type { User } from "@/schemas/user";
 import { create } from "zustand";
@@ -5,6 +6,7 @@ import { create } from "zustand";
 type Store = {
   user: User;
   sale: Sale;
+  cashflow: Cashflow;
   openDialog: string;
   openSelect: string;
   searchText: string;
@@ -27,7 +29,14 @@ export const useStore = create<Store>((set) => ({
     services: [],
     user: [],
     vehicle: [],
+    gathered: 0,
     total_amount: 0,
+  },
+  cashflow: {
+    id: 0,
+    sale_id: 0,
+    amount: 0,
+    method: [],
   },
   openDialog: "",
   openSelect: "",

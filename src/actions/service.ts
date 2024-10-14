@@ -4,7 +4,7 @@ import { defineAction } from "astro:actions";
 import { z } from "zod";
 
 const service = {
-  get: defineAction({
+  getServices: defineAction({
     input: z.object({ searchText: z.string().nullish() }),
     handler: async ({ searchText }) => {
       try {
@@ -21,7 +21,7 @@ const service = {
       }
     },
   }),
-  create: defineAction({
+  createService: defineAction({
     input: serviceFormSchema,
     handler: async (data) => {
       try {
