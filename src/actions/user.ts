@@ -5,16 +5,16 @@ import { z } from "zod";
 
 const user = {
   get: defineAction({
-    input: z.object({ searchText: z.string().nullish(), asItems: z.boolean() }),
-    handler: async ({ searchText, asItems }) => {
+    input: z.object({ searchText: z.string().nullish() }),
+    handler: async ({ searchText }) => {
       try {
         const users = await getUsers(searchText, false);
 
-        console.log(users);
+        console.log({ users });
 
         return {
           ok: true,
-          data: users,
+          data: users || [],
           message: "",
         };
       } catch (error) {
@@ -35,7 +35,7 @@ const user = {
             email: data.email,
           },
           {
-            brand: data.brand[0].name,
+            brand: Array.isArray(data.brand) ? data.brand[0].name : "",
             model: data.model as string,
             patent: data.patent as string,
           }

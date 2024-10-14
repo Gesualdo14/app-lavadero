@@ -1,16 +1,14 @@
 ---
-import TableWrapper from "@/components/TableWrapper";
-
 export const description =
   "An products dashboard with a sidebar navigation. The sidebar has icon navigation. The content area has a breadcrumb and search in the header. It displays a list of products in a table with actions.";
 
 import "@/styles/globals.css";
 import Layout from "@/layouts/Layout.astro";
-import SalesTable from "@/components/SalesTable.astro";
+import SalesPanel from "@/components/SalesPanel";
 ---
 
 <Layout title="Main page">
-  <SalesTable />
+  <SalesPanel client:load />
 </Layout>
 
 <style>

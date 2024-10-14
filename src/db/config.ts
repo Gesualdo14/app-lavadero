@@ -1,6 +1,6 @@
 import { createClient } from "@libsql/client";
 import schema from "@/schemas/index";
-import { and, desc, eq, like, or, type DBQueryConfig } from "drizzle-orm";
+import { and, desc, eq, like, or, sql, type DBQueryConfig } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/libsql";
 import { users, type InsertUser, type SelectUser } from "@/schemas/user";
 import {
@@ -8,7 +8,7 @@ import {
   type InsertVehicle,
   type SelectVehicle,
 } from "@/schemas/vehicle";
-import { sales, type Sale, type TSale, type TSelect } from "@/schemas/sale";
+import { sales, view_sales, type Sale, type TSelect } from "@/schemas/sale";
 import {
   services,
   type InsertService,
@@ -20,6 +20,7 @@ import {
   type SelectSaleItem,
 } from "@/schemas/sale-item";
 import { brands, type InsertBrand, type SelectBrand } from "@/schemas/brand";
+import { sqliteView } from "drizzle-orm/sqlite-core";
 
 export const turso = createClient({
   url: import.meta.env.TURSO_DATABASE_URL ?? "",
@@ -47,11 +48,10 @@ export async function updateUser(user: InsertUser, userId: number) {
 
 export const getUsers = async <T extends boolean>(
   searchText: string | null | undefined,
-  asItems: T,
-  filterId?: number
-): Promise<T extends true ? TSelect<"user"> : SelectUser[]> => {
+  asItems: T
+): Promise<T extends true ? TSelect<"users"> : SelectUser[]> => {
   const searchConfig: DBQueryConfig = {
-    limit: 5,
+    limit: 8,
     orderBy: desc(users.id),
   };
   if (!!searchText) {
@@ -59,7 +59,6 @@ export const getUsers = async <T extends boolean>(
       like(users.firstname, `%${searchText}%`),
       like(users.lastname, `%${searchText}%`)
     );
-    searchConfig.limit = undefined;
   }
   const result = await db.query.users.findMany(searchConfig);
   if (asItems) {
@@ -110,12 +109,30 @@ export const getVehicles = async <T extends boolean>(
   }
 };
 
-export const getSales = async (): Promise<TSale[]> => {
-  return await db.query.sales.findMany({
-    limit: 5,
-    with: { user: true, vehicle: true },
-    orderBy: [desc(sales.id)],
-  });
+export const getSales = async (searchText: string | null | undefined) => {
+  try {
+    let where;
+    if (!!searchText) {
+      where = or(
+        like(view_sales.user.firstname, `%${searchText}%`),
+        like(view_sales.user.lastname, `%${searchText}%`),
+        like(view_sales.vehicle.brand, `%${searchText}%`),
+        like(view_sales.vehicle.model, `%${searchText}%`),
+        like(view_sales.vehicle.patent, `%${searchText}%`)
+      );
+    }
+
+    const result = await db
+      .select()
+      .from(view_sales)
+      .where(where)
+      .limit(8)
+      .orderBy(desc(view_sales.id));
+
+    return result;
+  } catch (error) {
+    console.log({ error });
+  }
 };
 
 export async function createSale(data: Sale) {
@@ -129,6 +146,28 @@ export async function createSale(data: Sale) {
       services.map((s) => ({
         service_id: s.id,
         sale_id: Number(lastInsertRowid),
+        price: s.value as number,
+      }))
+    );
+  });
+}
+
+export async function updateSale(data: Sale) {
+  const { id, services, user, vehicle, total_amount } = data;
+  console.log({ id, user, vehicle });
+  return await db.transaction(async (tx) => {
+    const saleId = id as number;
+    await tx
+      .update(sales)
+      .set({ vehicle_id: vehicle[0].id, user_id: user[0].id, total_amount })
+      .where(eq(sales.id, saleId));
+
+    await tx.delete(saleItems).where(eq(saleItems.sale_id, saleId));
+
+    await tx.insert(saleItems).values(
+      services.map((s) => ({
+        sale_id: saleId,
+        service_id: s.id,
         price: s.value as number,
       }))
     );

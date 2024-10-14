@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { actions } from "astro:actions";
 import { PlusCircle } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { userFormSchema, type User } from "@/schemas/user";
@@ -24,11 +24,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { LoadingSpinner } from "./Spinner";
-import { navigate } from "astro:transitions/client";
 import { saleFormSchema } from "@/schemas/sale";
 import { QueryClientProvider, useQueryClient } from "@tanstack/react-query";
 import MultiSelect from "./MultiSelect";
-import { useStore } from "@/stores/user";
+import { useStore } from "@/stores";
 
 export type Entities = "user" | "sale";
 

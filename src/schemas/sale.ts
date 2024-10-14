@@ -1,9 +1,15 @@
 import { z } from "zod";
-import { relations, sql } from "drizzle-orm";
-import { integer, sqliteTable, text, real } from "drizzle-orm/sqlite-core";
+import { eq, relations, sql } from "drizzle-orm";
+import {
+  integer,
+  sqliteTable,
+  text,
+  sqliteView,
+} from "drizzle-orm/sqlite-core";
 import { users, type SelectUser, type User } from "./user";
 import { vehicles, type SelectVehicle, type Vehicle } from "./vehicle";
-import type { Service } from "./service";
+import { services, type Service } from "./service";
+import { saleItems } from "./sale-item";
 
 export const sales = sqliteTable("Sales", {
   id: integer("id").primaryKey(),
@@ -38,13 +44,14 @@ export interface TSelect<T> extends z.infer<typeof selectSchema> {
 }
 
 export const saleFormSchema = z.object({
+  id: z.number().optional(),
   user: selectSchema,
   vehicle: selectSchema,
   services: selectSchema,
   total_amount: z.number(),
 });
 
-export const salesRelations = relations(sales, ({ one }) => ({
+export const salesRelations = relations(sales, ({ one, many }) => ({
   user: one(users, {
     fields: [sales.user_id],
     references: [users.id],
@@ -53,7 +60,33 @@ export const salesRelations = relations(sales, ({ one }) => ({
     fields: [sales.vehicle_id],
     references: [vehicles.id],
   }),
+  services: many(saleItems),
 }));
+
+export const view_sales = sqliteView("view_Sales").as((qb) =>
+  qb
+    .select({
+      id: sales.id,
+      user: {
+        id: sales.user_id,
+        firstname: users.firstname,
+        lastname: users.lastname,
+      },
+      vehicle: {
+        id: sales.vehicle_id,
+        brand: vehicles.brand,
+        model: vehicles.model,
+        patent: vehicles.patent,
+      },
+      total_amount: sales.total_amount,
+      services: sql``.as("services"),
+    })
+    .from(sales)
+    .leftJoin(users, eq(users.id, sales.user_id))
+    .leftJoin(vehicles, eq(vehicles.id, sales.vehicle_id))
+    .leftJoin(saleItems, eq(saleItems.sale_id, sales.id))
+    .leftJoin(services, eq(saleItems.service_id, services.id))
+);
 
 export type InsertSale = typeof sales.$inferInsert;
 export type SelectSale = typeof sales.$inferSelect;

@@ -15,7 +15,7 @@ import { CheckIcon, X } from "lucide-react";
 import { Button } from "./ui/button";
 import type { User } from "@/schemas/user";
 import type { Sale } from "@/schemas/sale";
-import { useStore } from "@/stores/user";
+import { useStore } from "@/stores";
 
 type Props = {
   filterId?: number;
@@ -107,7 +107,7 @@ const MultiSelect = ({
           update("searchText", "");
         }}
       >
-        {quantitySelected === 0 ? (
+        {quantitySelected === 0 || !quantitySelected ? (
           <span className="text-gray-400">{placeholder}</span>
         ) : (
           <div className="flex items-start gap-2 max-w-[250px] overflow-hidden">
@@ -176,7 +176,16 @@ const MultiSelect = ({
                     update("searchText", "");
                   }
                   if (!!resetOnSelect) {
-                    form.resetField(resetOnSelect);
+                    console.log({ value: field.value, resetOnSelect });
+                    form.setValue(resetOnSelect, []);
+                  }
+
+                  if (field.name === "services") {
+                    const totalAmount = newValue.reduce(
+                      (p: number, c: any) => p + (c.value ?? 0),
+                      0
+                    );
+                    form.setValue("total_amount", totalAmount);
                   }
 
                   form.clearErrors(field.name);

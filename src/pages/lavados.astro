@@ -4,11 +4,11 @@ export const description =
 
 import "@/styles/globals.css";
 import Layout from "@/layouts/Layout.astro";
-import SalesTable from "@/components/SalesTable.astro";
+import SalesPanel from "@/components/SalesPanel";
 ---
 
 <Layout title="Main page">
-  <SalesTable />
+  <SalesPanel client:load />
 </Layout>
 
 <style>
