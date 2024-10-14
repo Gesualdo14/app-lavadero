@@ -1,9 +1,13 @@
 import { createClient } from "@libsql/client";
 import schema from "@/schemas/index";
-import { desc, eq, like, or, type DBQueryConfig } from "drizzle-orm";
+import { and, desc, eq, like, or, type DBQueryConfig } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/libsql";
 import { users, type InsertUser, type SelectUser } from "@/schemas/user";
-import { vehicles, type SelectVehicle } from "@/schemas/vehicle";
+import {
+  vehicles,
+  type InsertVehicle,
+  type SelectVehicle,
+} from "@/schemas/vehicle";
 import { sales, type Sale, type TSale, type TSelect } from "@/schemas/sale";
 import {
   services,
@@ -13,10 +17,9 @@ import {
 import {
   saleItems,
   type InsertSaleItem,
-  type SaleItem,
   type SelectSaleItem,
 } from "@/schemas/sale-item";
-import type { z } from "zod";
+import { brands, type InsertBrand, type SelectBrand } from "@/schemas/brand";
 
 export const turso = createClient({
   url: import.meta.env.TURSO_DATABASE_URL ?? "",
@@ -25,17 +28,31 @@ export const turso = createClient({
 
 export const db = drizzle(turso, { schema });
 
-export async function createUser(data: InsertUser) {
-  return await db.insert(users).values(data);
+export async function createUser(
+  user: InsertUser,
+  vehicle: Omit<InsertVehicle, "user_id">
+) {
+  return await db.transaction(async (tx) => {
+    const { lastInsertRowid } = await tx.insert(users).values(user);
+    if (!!vehicle) {
+      await tx
+        .insert(vehicles)
+        .values({ ...vehicle, user_id: Number(lastInsertRowid) });
+    }
+  });
+}
+export async function updateUser(user: InsertUser, userId: number) {
+  return await db.update(users).set(user).where(eq(users.id, userId));
 }
 
 export const getUsers = async <T extends boolean>(
   searchText: string | null | undefined,
   asItems: T,
   filterId?: number
-): Promise<T extends true ? TSelect : SelectUser[]> => {
+): Promise<T extends true ? TSelect<"user"> : SelectUser[]> => {
   const searchConfig: DBQueryConfig = {
     limit: 5,
+    orderBy: desc(users.id),
   };
   if (!!searchText) {
     searchConfig.where = or(
@@ -49,6 +66,7 @@ export const getUsers = async <T extends boolean>(
     return result.map((u) => ({
       id: u.id,
       name: `${u.firstname} ${u.lastname}`,
+      details: u,
     })) as any;
   } else {
     return result as any;
@@ -59,25 +77,33 @@ export const getVehicles = async <T extends boolean>(
   searchText: string | null | undefined,
   asItems: T,
   filterId?: number
-): Promise<T extends true ? TSelect : SelectVehicle[]> => {
+): Promise<T extends true ? TSelect<"vehicle"> : SelectVehicle[]> => {
   const searchConfig: DBQueryConfig = {
-    where: eq(vehicles.user_id, filterId as number),
     limit: 5,
     orderBy: [desc(vehicles.id)],
   };
+
+  let filterByIdQuery, findQuery;
+  if (!!filterId) {
+    filterByIdQuery = eq(vehicles.user_id, filterId as number);
+  }
   if (!!searchText) {
-    searchConfig.where = or(
+    findQuery = or(
       like(vehicles.brand, `%${searchText}%`),
       like(vehicles.model, `%${searchText}%`),
       like(vehicles.patent, `%${searchText}%`)
     );
   }
+
+  searchConfig.where = and(filterByIdQuery, findQuery);
   console.log({ filterId, searchText });
   const result = await db.query.vehicles.findMany(searchConfig);
+  console.log({ result, searchConfig });
   if (asItems) {
     return result.map((v) => ({
       id: v.id,
       name: `${v.brand} ${v.model}`,
+      details: v,
     })) as any;
   } else {
     return result as any;
@@ -119,12 +145,15 @@ export const getSaleItems = async (): Promise<SelectSaleItem[]> => {
 export async function createSaleItems(data: InsertSaleItem[]) {
   return await db.insert(saleItems).values(data);
 }
+export async function createVehicle(data: InsertVehicle) {
+  return await db.insert(vehicles).values(data);
+}
 
 export const getServices = async <T extends boolean>(
   searchText: string | null | undefined,
   asItems: T,
   filterId?: number
-): Promise<T extends true ? TSelect : SelectService[]> => {
+): Promise<T extends true ? TSelect<"service"> : SelectService[]> => {
   const searchConfig: DBQueryConfig = {
     limit: 5,
     orderBy: [desc(services.id)],
@@ -140,12 +169,40 @@ export const getServices = async <T extends boolean>(
       id: s.id,
       name: s.name,
       value: s.price,
+      details: s,
     })) as any;
   } else {
     return results as any;
   }
 };
 
+export const getBrands = async <T extends boolean>(
+  searchText: string | null | undefined,
+  asItems: T
+): Promise<T extends true ? TSelect<"brand"> : SelectBrand[]> => {
+  const searchConfig: DBQueryConfig = {
+    limit: 5,
+    orderBy: [desc(brands.id)],
+  };
+  if (!!searchText) {
+    searchConfig.where = like(brands.name, `%${searchText}%`);
+  }
+
+  const results = await db.query.brands.findMany(searchConfig);
+
+  if (asItems) {
+    return results.map((b) => ({
+      id: b.id,
+      name: b.name,
+    })) as any;
+  } else {
+    return results as any;
+  }
+};
+
+export async function createBrand(data: InsertBrand) {
+  return await db.insert(brands).values(data);
+}
 export async function createService(data: InsertService) {
   return await db.insert(services).values(data);
 }

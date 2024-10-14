@@ -29,19 +29,19 @@ import { useStore } from "@nanostores/react";
 import { openDialog } from "@/stores";
 import MultiSelect from "./MultiSelect";
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: Infinity,
     },
   },
 });
-const EMPTY_SELECT_ITEM: TSelect = [];
 
-const defaultValues = {
-  services: EMPTY_SELECT_ITEM,
-  user: EMPTY_SELECT_ITEM,
-  vehicle: EMPTY_SELECT_ITEM,
+const defaultValues: Sale = {
+  services: [],
+  user: [],
+  vehicle: [],
+  total_amount: 0,
 };
 
 export function SaleFormDialog() {

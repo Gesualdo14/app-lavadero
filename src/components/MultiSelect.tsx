@@ -13,30 +13,39 @@ import { Separator } from "./ui/separator";
 import { useStore } from "@nanostores/react";
 import { openSelect, _searchText } from "@/stores";
 import type { ControllerRenderProps, UseFormReturn } from "react-hook-form";
-import type { Sale } from "@/schemas/sale";
 import { CheckIcon, X } from "lucide-react";
 import { Button } from "./ui/button";
+import type { User } from "@/schemas/user";
+import type { Sale } from "@/schemas/sale";
 
 type Props = {
   filterId?: number;
   justOne?: boolean;
   autoFocus?: boolean;
-  resetOnSelect?: keyof Sale;
 } & (
-  | {
-      entity: "service";
-      form: UseFormReturn<Sale>;
-      field: ControllerRenderProps<Sale, "services">;
-    }
   | {
       entity: "vehicle";
       form: UseFormReturn<Sale>;
       field: ControllerRenderProps<Sale, "vehicle">;
+      resetOnSelect?: keyof Sale;
     }
   | {
       entity: "user";
       form: UseFormReturn<Sale>;
       field: ControllerRenderProps<Sale, "user">;
+      resetOnSelect?: keyof Sale;
+    }
+  | {
+      entity: "service";
+      form: UseFormReturn<Sale>;
+      field: ControllerRenderProps<Sale, "services">;
+      resetOnSelect?: keyof Sale;
+    }
+  | {
+      entity: "brand";
+      form: any;
+      field: ControllerRenderProps<User, "brand">;
+      resetOnSelect?: keyof User;
     }
 );
 
@@ -52,6 +61,11 @@ const CONFIG = {
     singular: "vehículo",
     plural: "vehículos",
   },
+  brand: {
+    placeholder: "Marcas...",
+    singular: "marca",
+    plural: "marcas",
+  },
 };
 
 const MultiSelect = ({
@@ -64,7 +78,7 @@ const MultiSelect = ({
   autoFocus = false,
 }: Props) => {
   console.log(field.name, { filterId });
-  const { data, isPending, isError, refetch } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: [entity, filterId],
     queryFn: async () => {
       const text = _searchText.get();
@@ -82,7 +96,7 @@ const MultiSelect = ({
   const { singular, plural, placeholder } = CONFIG[entity];
 
   const isOpen = $openSelect.includes(field.name);
-  const quantitySelected = field.value.length;
+  const quantitySelected = field.value?.length;
 
   return (
     <Select open={isOpen}>
@@ -147,23 +161,26 @@ const MultiSelect = ({
           </div>
           <Separator className="my-1 w-full" />
           {data?.map((i) => {
-            const selectedItems = form.watch(field.name);
-            const isSelected = selectedItems.some((si) => si.id === i.id);
+            let selectedItems = form.watch(field.name as any) as any;
+            const isSelected = selectedItems?.some((si: any) => si.id === i.id);
             return (
               <SelectItem
                 onClick={() => {
                   const newValue = isSelected
-                    ? selectedItems.filter((si) => si.id !== i.id)
+                    ? selectedItems.filter((si: any) => si.id !== i.id)
                     : justOne
                       ? [i]
                       : selectedItems.concat(i);
+
                   form.setValue(field.name, newValue);
+
                   if (justOne) {
                     openSelect.set("");
                   }
                   if (!!resetOnSelect) {
                     form.resetField(resetOnSelect);
                   }
+
                   form.clearErrors(field.name);
                 }}
                 key={i.id}

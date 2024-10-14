@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { relations, sql } from "drizzle-orm";
 import { integer, sqliteTable, text, real } from "drizzle-orm/sqlite-core";
-import { users, type SelectUser } from "./user";
-import { vehicles, type SelectVehicle } from "./vehicle";
+import { users, type SelectUser, type User } from "./user";
+import { vehicles, type SelectVehicle, type Vehicle } from "./vehicle";
+import type { Service } from "./service";
 
 export const sales = sqliteTable("Sales", {
   id: integer("id").primaryKey(),
@@ -32,7 +33,9 @@ export const selectSchema = z.array(
   z.object({ id: z.number(), name: z.string(), value: z.number().optional() })
 );
 
-export type TSelect = z.infer<typeof selectSchema>;
+export interface TSelect<T> extends z.infer<typeof selectSchema> {
+  details: T extends "service" ? Service : T extends "user" ? User : Vehicle;
+}
 
 export const saleFormSchema = z.object({
   user: selectSchema,

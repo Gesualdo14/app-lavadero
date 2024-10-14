@@ -1,4 +1,4 @@
-import { getServices, getUsers, getVehicles } from "@/db/config";
+import { getBrands, getServices, getUsers, getVehicles } from "@/db/config";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
 
@@ -6,7 +6,7 @@ const ui = {
   getItems: defineAction({
     input: z.object({
       searchText: z.string().nullish(),
-      entity: z.enum(["service", "vehicle", "user"]),
+      entity: z.enum(["service", "vehicle", "user", "brand"]),
       filterId: z.number().optional(),
     }),
     handler: async ({ searchText, entity, filterId }) => {
@@ -15,6 +15,7 @@ const ui = {
           service: getServices,
           user: getUsers,
           vehicle: getVehicles,
+          brand: getBrands,
         };
 
         const items = await actionToCall[entity](searchText, true, filterId);

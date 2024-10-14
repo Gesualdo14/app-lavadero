@@ -1,4 +1,4 @@
-import { createUser, getUsers } from "@/db/config";
+import { createUser, getUsers, updateUser } from "@/db/config";
 import { userFormSchema } from "@/schemas/user";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
@@ -27,8 +27,48 @@ const user = {
     input: userFormSchema,
     handler: async (data) => {
       try {
-        const result = await createUser(data);
-        console.log(result);
+        console.log({ data });
+        const result = await createUser(
+          {
+            firstname: data.firstname,
+            lastname: data.lastname,
+            email: data.email,
+          },
+          {
+            brand: data.brand[0].name,
+            model: data.model as string,
+            patent: data.patent as string,
+          }
+        );
+        console.log({ result });
+
+        return {
+          ok: true,
+          data: { id: 1 },
+          message: "Usuario creado con éxito",
+        };
+      } catch (error) {
+        console.log({ error });
+        if (error instanceof Error)
+          return { ok: false, message: error.message };
+      }
+    },
+  }),
+  update: defineAction({
+    input: userFormSchema,
+    handler: async (data) => {
+      try {
+        console.log({ data });
+        const result = await updateUser(
+          {
+            firstname: data.firstname,
+            lastname: data.lastname,
+            email: data.email,
+          },
+          data.id as number
+        );
+        console.log({ result });
+
         return {
           ok: true,
           data: { id: 1 },
