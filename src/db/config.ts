@@ -8,7 +8,13 @@ import {
   type InsertVehicle,
   type SelectVehicle,
 } from "@/schemas/vehicle";
-import { sales, view_sales, type Sale, type TSelect } from "@/schemas/sale";
+import {
+  sales,
+  view_sales,
+  type Sale,
+  type SelectSale,
+  type TSelect,
+} from "@/schemas/sale";
 import {
   services,
   type InsertService,
@@ -20,7 +26,6 @@ import {
   type SelectSaleItem,
 } from "@/schemas/sale-item";
 import { brands, type InsertBrand, type SelectBrand } from "@/schemas/brand";
-import { sqliteView } from "drizzle-orm/sqlite-core";
 
 export const turso = createClient({
   url: import.meta.env.TURSO_DATABASE_URL ?? "",
