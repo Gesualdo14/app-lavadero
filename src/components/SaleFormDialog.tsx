@@ -85,7 +85,7 @@ export function SaleFormDialog() {
     if (openDialog === "sale") {
       form.setValue("id", sale.id);
       form.setValue("user", sale.user);
-      form.setValue("services", sale.services);
+      form.setValue("services", sale.services || []);
       form.setValue("vehicle", sale.vehicle);
       form.setValue("total_amount", sale.total_amount);
     }
