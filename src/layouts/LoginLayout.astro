@@ -1,0 +1,59 @@
+---
+import AsideItem from "@/components/AsideItem";
+import MySearchBar from "@/components/MySearchBar";
+import SheetItem from "@/components/SheetItem";
+import { Toaster } from "@/components/ui/toaster";
+import UserMenu from "@/components/UserMenu";
+import { ClientRouter } from "astro:transitions";
+import { Home } from "lucide-react";
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <Toaster client:load />
+    <ClientRouter />
+  </head>
+  <body class="!p-0 md:!pt-5 sm:!pb-10 bg-gray-600 h-[100vh]">
+    <main
+      class="flex items-center justify-center h-[70%] gap-4 !px-0 py-4 sm:px-6 sm:py-0 md:gap-8 w-full overflow-y-auto"
+    >
+      <slot />
+    </main>
+  </body>
+</html>
+<style is:global>
+  :root {
+    --accent: 136, 58, 234;
+    --accent-light: 224, 204, 250;
+    --accent-dark: 49, 10, 101;
+    --accent-gradient: linear-gradient(
+      45deg,
+      rgb(var(--accent)),
+      rgb(var(--accent-light)) 30%,
+      white 60%
+    );
+  }
+  html {
+    font-family: system-ui, sans-serif;
+    background: #13151a;
+  }
+  main {
+    margin: auto;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+</style>
