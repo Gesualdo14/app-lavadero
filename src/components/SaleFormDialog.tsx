@@ -116,7 +116,7 @@ export function SaleFormDialog() {
           </span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] top-[30%]">
+      <DialogContent className="sm:max-w-[425px] top-[200px]">
         <DialogHeader>
           <DialogTitle>{creating ? "Nueva" : "Editando"} venta</DialogTitle>
         </DialogHeader>
