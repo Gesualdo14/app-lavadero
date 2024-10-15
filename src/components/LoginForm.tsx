@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Logo from "@/components/Logo";
 import { Label } from "@/components/ui/label";
+import { navigate } from "astro/virtual-modules/transitions-router.js";
 
 export function LoginForm() {
   return (
@@ -40,7 +41,9 @@ export function LoginForm() {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Iniciar sesión</Button>
+        <Button className="w-full" onClick={async () => await navigate("/")}>
+          Iniciar sesión
+        </Button>
       </CardFooter>
     </Card>
   );

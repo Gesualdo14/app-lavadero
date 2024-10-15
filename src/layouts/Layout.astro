@@ -25,12 +25,53 @@ const { title } = Astro.props;
     <Toaster client:load />
     <ClientRouter />
   </head>
-  <body class="!p-0 md:!pt-5 sm:!pb-10 bg-gray-600 h-[100vh]">
-    <main
-      class="flex items-center justify-center h-[70%] gap-4 !px-0 py-4 sm:px-6 sm:py-0 md:gap-8 w-full overflow-y-auto"
+  <body
+    class="!p-0 md:!pt-5 sm:!pb-10 bg-gray-600 !min-h-[100%] sm:!min-h-[90%]"
+  >
+    <div
+      class="flex min-h-[100vh] md:min-h-[94vh] sm:!max-h-[700px] md:!max-w-[720px] lg:!max-w-[1100px] mx-auto rounded-none md:rounded-lg overflow-hidden w-full shadow bg-muted/40 relative"
     >
-      <slot />
-    </main>
+      <aside
+        class="abosolute inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex"
+      >
+        <nav class="flex flex-col items-center gap-4 px-2 py-4">
+          <a
+            href="/"
+            class="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+          >
+            <Home className="h-4 w-4 transition-all group-hover:scale-110" />
+            <span class="sr-only">Lavadero</span>
+          </a>
+
+          <AsideItem text="Ventas" href="/" icon="washes" client:visible />
+          <AsideItem text="Servicios" icon="services" client:visible />
+          <AsideItem text="Clientes" icon="clients" client:visible />
+          <AsideItem text="Informes" icon="dashboard" client:visible />
+        </nav>
+        <nav class="mt-auto flex flex-col items-center gap-4 px-2 py-4">
+          <AsideItem
+            text="Configuración"
+            href="/config"
+            icon="settings"
+            client:visible
+          />
+        </nav>
+      </aside>
+      <div class="flex flex-col sm:gap-4 sm:py-4 sm:pl-5 w-full bg-gray-200">
+        <header
+          class="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6"
+        >
+          <SheetItem client:load />
+          <MySearchBar client:load />
+          <UserMenu client:load />
+        </header>
+        <main
+          class="flex-1 items-start gap-4 !px-0 py-4 sm:px-6 sm:py-0 md:gap-8 w-full overflow-y-auto"
+        >
+          <slot />
+        </main>
+      </div>
+    </div>
   </body>
 </html>
 <style is:global>
