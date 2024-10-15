@@ -11,10 +11,11 @@ import {
 } from "./ui/table";
 import { Edit2Icon } from "lucide-react";
 import { SaleCashflowsDialog } from "./SaleCashflowsDialog";
+import { TableSkeletonComponent } from "./table-skeleton";
 
 const SalesTable = () => {
   const { update, globalSearchText } = useStore();
-  const { data: sales } = useQuery({
+  const { data: sales, isPending } = useQuery({
     queryKey: ["sales", globalSearchText],
     queryFn: async () => {
       const data = await actions.getSales({
@@ -38,7 +39,10 @@ const SalesTable = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {Array.isArray(sales) &&
+        {isPending ? (
+          <TableSkeletonComponent />
+        ) : (
+          Array.isArray(sales) &&
           sales?.map((s) => (
             <TableRow key={s.id} className="cursor-pointer">
               <TableCell className="font-medium w-48">
@@ -84,7 +88,8 @@ const SalesTable = () => {
                 />
               </TableCell>
             </TableRow>
-          ))}
+          ))
+        )}
       </TableBody>
     </Table>
   );

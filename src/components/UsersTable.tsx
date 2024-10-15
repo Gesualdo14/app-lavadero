@@ -11,6 +11,7 @@ import {
 } from "./ui/table";
 import MyDropdown from "./MyDropdown";
 import { Badge } from "./ui/badge";
+import { TableSkeletonComponent } from "./table-skeleton";
 
 const UsersTable = () => {
   const { update, globalSearchText } = useStore();
@@ -23,8 +24,6 @@ const UsersTable = () => {
       return data?.data?.data || [];
     },
   });
-
-  if (isPending) return "Loading...";
 
   console.log({ users });
 
@@ -40,31 +39,35 @@ const UsersTable = () => {
           </TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
-        {users?.map((u) => (
-          <TableRow
-            key={u.id}
-            className="cursor-pointer"
-            onClick={() => {
-              console.log("CLICK");
-              update("user", u);
-              update("openDialog", "user");
-              update("creating", false);
-            }}
-          >
-            <TableCell className="font-medium">{u.firstname}</TableCell>
-            <TableCell>
-              <Badge variant="outline">{u.lastname}</Badge>
-            </TableCell>
-            <TableCell className="text-ellipsis max-w-1 sm:text-inherit md:overflow-visible overflow-hidden">
-              {u.email}
-            </TableCell>
-            <TableCell>
-              <MyDropdown />
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
+      {isPending ? (
+        <TableSkeletonComponent />
+      ) : (
+        <TableBody>
+          {users?.map((u) => (
+            <TableRow
+              key={u.id}
+              className="cursor-pointer"
+              onClick={() => {
+                console.log("CLICK");
+                update("user", u);
+                update("openDialog", "user");
+                update("creating", false);
+              }}
+            >
+              <TableCell className="font-medium">{u.firstname}</TableCell>
+              <TableCell>
+                <Badge variant="outline">{u.lastname}</Badge>
+              </TableCell>
+              <TableCell className="text-ellipsis max-w-1 sm:text-inherit md:overflow-visible overflow-hidden">
+                {u.email}
+              </TableCell>
+              <TableCell>
+                <MyDropdown />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      )}
     </Table>
   );
 };
