@@ -1,3 +1,4 @@
+import { navigate } from "astro:transitions/client";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -7,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { actions } from "astro:actions";
 
 const UserMenu = () => {
   return (
@@ -32,7 +34,14 @@ const UserMenu = () => {
         <DropdownMenuItem>Settings</DropdownMenuItem>
         <DropdownMenuItem>Support</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Logout</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={async () => {
+            await actions.logout();
+            await navigate("/login");
+          }}
+        >
+          Logout
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

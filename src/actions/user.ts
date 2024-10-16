@@ -35,6 +35,24 @@ const user = {
       };
     },
   }),
+  logout: defineAction({
+    handler: async (_, context) => {
+      const { cookies } = context;
+
+      cookies.set("jwt", "", {
+        httpOnly: true,
+        expires: new Date(),
+        maxAge: 0,
+        path: "/",
+        sameSite: "strict",
+      });
+
+      return {
+        ok: true,
+        message: "Logout exitoso",
+      };
+    },
+  }),
   getUsers: defineAction({
     input: z.object({ searchText: z.string().nullish() }),
     handler: async ({ searchText }) => {

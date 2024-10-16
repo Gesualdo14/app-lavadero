@@ -8,6 +8,7 @@ import Panels from "@/components/Panels";
 const jwt = Astro.cookies.get("jwt")?.value;
 console.log({ jwt });
 if (!jwt) {
+  console.log("REDIRECT");
   return Astro.redirect("/login");
 }
 ---
