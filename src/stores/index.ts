@@ -6,6 +6,7 @@ import { create } from "zustand";
 type Store = {
   user: User;
   sale: Sale;
+  panel: string;
   cashflow: Cashflow;
   openDialog: string;
   openSelect: string;
@@ -38,6 +39,7 @@ export const useStore = create<Store>((set) => ({
     amount: 0,
     method: [],
   },
+  panel: "ventas",
   openDialog: "",
   openSelect: "",
   searchText: "",

@@ -1,9 +1,58 @@
-import { createUser, getUsers, updateUser } from "@/db/config";
-import { userFormSchema } from "@/schemas/user";
+import { createUser, getUserByEmail, getUsers, updateUser } from "@/db/config";
+import { userFormSchema, type User } from "@/schemas/user";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
+import jwt from "jsonwebtoken";
 
 const user = {
+  login: defineAction({
+    input: z.object({ email: z.string().email(), password: z.string() }),
+    handler: async ({ email, password }, context) => {
+      const { cookies } = context;
+      console.log({ email });
+      const user = (await getUserByEmail(email)) as Partial<User>;
+      if (!user) {
+        return { ok: false, message: "No existe un usuario con ese correo" };
+      }
+
+      if (user.password !== password)
+        return { ok: false, message: "Contraseña incorrecta" };
+
+      delete user.password;
+
+      const token = jwt.sign(user, process?.env?.JWT_SECRET_KEY as string);
+
+      cookies.set("jwt", token, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60,
+        path: "/",
+        sameSite: "strict",
+      });
+
+      return {
+        ok: true,
+        message: "Login exitoso",
+      };
+    },
+  }),
+  logout: defineAction({
+    handler: async (_, context) => {
+      const { cookies } = context;
+
+      cookies.set("jwt", "", {
+        httpOnly: true,
+        expires: new Date(),
+        maxAge: 0,
+        path: "/",
+        sameSite: "strict",
+      });
+
+      return {
+        ok: true,
+        message: "Logout exitoso",
+      };
+    },
+  }),
   getUsers: defineAction({
     input: z.object({ searchText: z.string().nullish() }),
     handler: async ({ searchText }) => {

@@ -12,6 +12,7 @@ export const users = sqliteTable("Users", {
   firstname: text("firstname").notNull(),
   lastname: text("lastname").notNull(),
   email: text("email").unique().notNull(),
+  password: text("password"),
 });
 
 export const userFormSchema = z.object({
@@ -19,6 +20,7 @@ export const userFormSchema = z.object({
   firstname: z.string(),
   lastname: z.string(),
   email: z.string().email("Email inválido"),
+  password: z.string().optional(),
   brand: selectSchema,
   model: z.string().optional(),
   patent: z.string().optional(),

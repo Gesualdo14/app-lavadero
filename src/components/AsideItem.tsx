@@ -1,54 +1,55 @@
-import { CarFront, User, Bell, ChartAreaIcon, Settings } from "lucide-react";
-
 import {
-  Tooltip,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@radix-ui/react-tooltip";
-import { TooltipContent } from "./ui/tooltip";
+  Bell,
+  ChartAreaIcon,
+  Settings,
+  CircleDollarSign,
+  Users,
+} from "lucide-react";
+
+import { useStore } from "@/stores";
 
 interface Props {
   text: string;
   icon: "washes" | "services" | "clients" | "dashboard" | "settings";
-  href?: string;
+  panel: string;
   tooltip?: boolean;
 }
 
-const AsideItem = ({ text, href, icon, tooltip = true }: Props) => {
+const AsideItem = ({ text, panel, icon, tooltip = true }: Props) => {
+  const { update, panel: selectedPanel } = useStore();
+
+  const iconsClasses =
+    "h-5 w-5 transition-transform duration-300 cursor-pointer group-hover:scale-110";
+
   const icons = {
-    washes: <CarFront className="h-5 w-5" />,
-    services: <Bell className="h-5 w-5" />,
-    clients: <User className="h-5 w-5" />,
-    dashboard: <ChartAreaIcon className="h-5 w-5" />,
-    settings: <Settings className="h-5 w-5" />,
+    washes: <CircleDollarSign className={iconsClasses} />,
+    services: <Bell className={iconsClasses} />,
+    clients: <Users className={iconsClasses} />,
+    dashboard: <ChartAreaIcon className={iconsClasses} />,
+    settings: <Settings className={iconsClasses} />,
   };
 
   if (!tooltip)
     return (
       <a
-        href={`${href ?? "/" + text.toLocaleLowerCase()}`}
-        className="flex gap-3 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+        onClick={() => update("panel", text.toLocaleLowerCase())}
+        className="flex gap-3 items-center  cursor-pointer justify-center rounded-md text-muted-foreground transition-bg hover:text-foreground md:h-8 md:w-8"
       >
         {icons[icon]}
         <span>{text}</span>
       </a>
     );
 
+  const isSelected = selectedPanel === panel;
+
   return (
-    <TooltipProvider>
-      <Tooltip delayDuration={200}>
-        <TooltipTrigger asChild>
-          <a
-            href={`${href ?? "/" + text.toLocaleLowerCase()}`}
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-          >
-            {icons[icon]}
-            <span className="sr-only">{text}</span>
-          </a>
-        </TooltipTrigger>
-        <TooltipContent side="right">{text}</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <a
+      onClick={() => update("panel", panel.toLocaleLowerCase())}
+      className={`group flex h-9 w-9 shrink-0 items-center justify-center md:h-8 md:w-8 md:text-base ${isSelected ? "gap-2 rounded-lg bg-primary text-lg font-semibold text-primary-foreground" : ""}`}
+    >
+      {icons[icon]}
+      <span className="sr-only">{text}</span>
+    </a>
   );
 };
 
