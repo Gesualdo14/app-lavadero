@@ -3,7 +3,7 @@ import { useStore } from "@/stores";
 import SalesPanel from "./SalesPanel";
 import UsersPanel from "./UsersPanel";
 import ServicesPanel from "./ServicesPanel";
-import BrandsPanel from "./BrandsPanel";
+import ConfigPanel from "./ConfigPanel";
 import DashboardPanel from "./DashboardPanel";
 
 export const queryClient = new QueryClient({
@@ -23,7 +23,7 @@ const Panels = () => {
       {panel === "clientes" && <UsersPanel />}
       {panel === "servicios" && <ServicesPanel />}
       {panel === "informes" && <DashboardPanel />}
-      {panel === "config" && <BrandsPanel />}
+      {panel === "config" && <ConfigPanel />}
     </QueryClientProvider>
   );
 };

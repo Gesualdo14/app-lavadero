@@ -16,41 +16,39 @@ interface Props {
 }
 
 const AsideItem = ({ text, panel, icon, tooltip = true }: Props) => {
-  const { update } = useStore();
+  const { update, panel: selectedPanel } = useStore();
+
+  const iconsClasses =
+    "h-5 w-5 transition-bg cursor-pointer group-hover:scale-110";
   const icons = {
-    washes: <CarFront className="h-5 w-5" />,
-    services: <Bell className="h-5 w-5" />,
-    clients: <User className="h-5 w-5" />,
-    dashboard: <ChartAreaIcon className="h-5 w-5" />,
-    settings: <Settings className="h-5 w-5" />,
+    washes: <CarFront className={iconsClasses} />,
+    services: <Bell className={iconsClasses} />,
+    clients: <User className={iconsClasses} />,
+    dashboard: <ChartAreaIcon className={iconsClasses} />,
+    settings: <Settings className={iconsClasses} />,
   };
 
   if (!tooltip)
     return (
       <a
         onClick={() => update("panel", text.toLocaleLowerCase())}
-        className="flex gap-3 items-center cursor-pointer justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+        className="flex gap-3 items-center cursor-pointer justify-center rounded-lg text-muted-foreground transition-bg hover:text-foreground md:h-8 md:w-8"
       >
         {icons[icon]}
         <span>{text}</span>
       </a>
     );
 
+  const isSelected = selectedPanel === panel;
+
   return (
-    <TooltipProvider>
-      <Tooltip delayDuration={200}>
-        <TooltipTrigger asChild>
-          <a
-            onClick={() => update("panel", panel.toLocaleLowerCase())}
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-          >
-            {icons[icon]}
-            <span className="sr-only">{text}</span>
-          </a>
-        </TooltipTrigger>
-        <TooltipContent side="right">{text}</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <a
+      onClick={() => update("panel", panel.toLocaleLowerCase())}
+      className={`group flex h-9 w-9 shrink-0 items-center justify-center  md:h-8 md:w-8 md:text-base ${isSelected ? "gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground" : ""}`}
+    >
+      {icons[icon]}
+      <span className="sr-only">{text}</span>
+    </a>
   );
 };
 
