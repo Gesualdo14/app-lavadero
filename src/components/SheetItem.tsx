@@ -14,10 +14,30 @@ const SheetItem = () => {
       </SheetTrigger>
       <SheetContent side="left" className="sm:max-w-xs max-w-44">
         <nav className="flex flex-col items-start gap-4 px-2 py-4">
-          <AsideItem text="Ventas" href="/" icon="washes" tooltip={false} />
-          <AsideItem text="Servicios" icon="services" tooltip={false} />
-          <AsideItem text="Clientes" icon="clients" tooltip={false} />
-          <AsideItem text="Informes" icon="dashboard" tooltip={false} />
+          <AsideItem
+            panel="ventas"
+            text="Ventas"
+            icon="washes"
+            tooltip={false}
+          />
+          <AsideItem
+            panel="servicios"
+            text="Servicios"
+            icon="services"
+            tooltip={false}
+          />
+          <AsideItem
+            panel="clientes"
+            text="Clientes"
+            icon="clients"
+            tooltip={false}
+          />
+          <AsideItem
+            panel="informes"
+            text="Informes"
+            icon="dashboard"
+            tooltip={false}
+          />
         </nav>
       </SheetContent>
     </Sheet>
