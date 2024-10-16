@@ -1,3 +1,4 @@
+import { UserFormDialog } from "./UserFormDialog";
 import {
   Card,
   CardContent,
@@ -5,28 +6,28 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { SaleFormDialog } from "./SaleFormDialog";
-import SalesTable from "./SalesTable";
+import ServicesTable from "./ServicesTable.tsx";
+import { ServiceFormDialog } from "./ServiceFormDialog.tsx";
 
-const SalesPanel = () => {
+const ServicesPanel = () => {
   return (
     <Card x-chunk="dashboard-06-chunk-0">
       <CardHeader className="pb-2">
         <div className="flex justify-between">
-          <CardTitle>Ventas</CardTitle>
-          <SaleFormDialog />
+          <CardTitle>Servicios</CardTitle>
+          <ServiceFormDialog />
         </div>
       </CardHeader>
       <CardContent>
-        <SalesTable />
+        <ServicesTable />
       </CardContent>
       <CardFooter>
         <div className="text-xs text-muted-foreground">
-          Showing <strong>1-10</strong> of <strong>32</strong> ventas
+          Mostrando <strong>1-10</strong> of <strong>32</strong> servicios
         </div>
       </CardFooter>
     </Card>
   );
 };
 
-export default SalesPanel;
+export default ServicesPanel;

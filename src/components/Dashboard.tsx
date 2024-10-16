@@ -1,18 +1,8 @@
-"use client";
-
 import {
-  Area,
-  AreaChart,
   Bar,
   BarChart,
-  CartesianGrid,
   Label,
   LabelList,
-  Line,
-  LineChart,
-  PolarAngleAxis,
-  RadialBar,
-  RadialBarChart,
   Rectangle,
   ReferenceLine,
   XAxis,
@@ -33,13 +23,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Separator } from "@/components/ui/separator";
-import {
-  Car,
-  CreditCard,
-  DollarSign,
-  Users2,
-  WashingMachine,
-} from "lucide-react";
+import { DollarSign, Users2, WashingMachine } from "lucide-react";
 
 export const description = "A collection of health charts.";
 

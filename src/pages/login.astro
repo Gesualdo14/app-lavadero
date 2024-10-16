@@ -5,6 +5,12 @@ export const description =
 import "@/styles/globals.css";
 import { LoginForm } from "@/components/LoginForm";
 import LoginLayout from "@/layouts/LoginLayout.astro";
+const jwt = Astro.cookies.get("jwt")?.value;
+console.log({ jwt });
+if (!!jwt) {
+  console.log("REDIRECT");
+  return Astro.redirect("/");
+}
 ---
 
 <LoginLayout title="Inicio de sesión">

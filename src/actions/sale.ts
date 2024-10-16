@@ -6,7 +6,9 @@ import { z } from "zod";
 const sale = {
   getSales: defineAction({
     input: z.object({ searchText: z.string().nullish() }),
-    handler: async ({ searchText }) => {
+    handler: async ({ searchText }, { cookies }) => {
+      const token = await cookies.get("jwt")?.value;
+      console.log({ token });
       try {
         const sales = await getSales(searchText);
 

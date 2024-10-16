@@ -5,28 +5,28 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { SaleFormDialog } from "./SaleFormDialog";
-import SalesTable from "./SalesTable";
+import { BrandFormDialog } from "./BrandFormDialog";
+import BrandsTable from "./BrandsTable.tsx";
 
-const SalesPanel = () => {
+const BrandsPanel = () => {
   return (
     <Card x-chunk="dashboard-06-chunk-0">
       <CardHeader className="pb-2">
         <div className="flex justify-between">
-          <CardTitle>Ventas</CardTitle>
-          <SaleFormDialog />
+          <CardTitle>Clientes</CardTitle>
+          <BrandFormDialog />
         </div>
       </CardHeader>
       <CardContent>
-        <SalesTable />
+        <BrandsTable />
       </CardContent>
       <CardFooter>
         <div className="text-xs text-muted-foreground">
-          Showing <strong>1-10</strong> of <strong>32</strong> ventas
+          Showing <strong>1-10</strong> of <strong>32</strong> clientes
         </div>
       </CardFooter>
     </Card>
   );
 };
 
-export default SalesPanel;
+export default BrandsPanel;

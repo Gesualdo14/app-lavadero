@@ -1,11 +1,16 @@
 import { UserFormDialog } from "./UserFormDialog";
-import { CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
-import Panel from "./Panel";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 import UsersTable from "./UsersTable";
 
 const UsersPanel = () => {
   return (
-    <Panel>
+    <Card x-chunk="dashboard-06-chunk-0">
       <CardHeader className="pb-2">
         <div className="flex justify-between">
           <CardTitle>Clientes</CardTitle>
@@ -20,7 +25,7 @@ const UsersPanel = () => {
           Showing <strong>1-10</strong> of <strong>32</strong> clientes
         </div>
       </CardFooter>
-    </Panel>
+    </Card>
   );
 };
 

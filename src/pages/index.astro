@@ -4,11 +4,16 @@ export const description =
 
 import "@/styles/globals.css";
 import Layout from "@/layouts/Layout.astro";
-import SalesPanel from "@/components/SalesPanel";
+import Panels from "@/components/Panels";
+const jwt = Astro.cookies.get("jwt")?.value;
+console.log({ jwt });
+if (!jwt) {
+  return Astro.redirect("/login");
+}
 ---
 
 <Layout title="Main page">
-  <SalesPanel client:load />
+  <Panels client:load />
 </Layout>
 
 <style>
