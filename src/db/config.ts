@@ -306,11 +306,19 @@ export const getPaymentMethods = async (
   searchText: string | null | undefined,
   asItems: boolean
 ) => {
-  return [
+  const payment_methods = [
     { id: 1, name: "Mercado Pago" },
     { id: 2, name: "Transferencia" },
     { id: 3, name: "Efectivo" },
     { id: 4, name: "Tarjeta de crédito" },
     { id: 5, name: "Tarjeta de débito" },
   ];
+
+  if (!!searchText) {
+    return payment_methods.filter((pm) =>
+      pm.name.toLocaleLowerCase().includes(searchText.toLowerCase())
+    );
+  }
+
+  return payment_methods;
 };

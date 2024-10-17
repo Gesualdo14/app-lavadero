@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "./ui/table";
 import MyDropdown from "./MyDropdown";
-import { TableSkeletonComponent } from "./table-skeleton";
+import { TableSkeletonComponent } from "./Skeletons";
 
 const UsersTable = () => {
   const { update, globalSearchText } = useStore();

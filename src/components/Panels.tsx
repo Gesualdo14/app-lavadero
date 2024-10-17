@@ -5,6 +5,7 @@ import UsersPanel from "./UsersPanel";
 import ServicesPanel from "./ServicesPanel";
 import ConfigPanel from "./ConfigPanel";
 import DashboardPanel from "./DashboardPanel";
+import { useLayoutEffect } from "react";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,9 +15,16 @@ export const queryClient = new QueryClient({
   },
 });
 
-const Panels = () => {
+const Panels = ({ searchParams }: { searchParams: any }) => {
   const panel = useStore((s) => s.panel);
-  console.log({ panel });
+  const update = useStore((s) => s.update);
+  console.log({ panel, searchParams });
+
+  useLayoutEffect(() => {
+    const currentPanel = localStorage.getItem("panel");
+    update("panel", currentPanel);
+    update("globalSearchText", searchParams);
+  }, []);
   return (
     <QueryClientProvider client={queryClient}>
       {panel === "ventas" && <SalesPanel />}

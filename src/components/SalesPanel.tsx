@@ -7,6 +7,7 @@ import {
 } from "./ui/card";
 import { SaleFormDialog } from "./SaleFormDialog";
 import SalesTable from "./SalesTable";
+import { SaleCashflowsDialog } from "./SaleCashflowsDialog";
 
 const SalesPanel = () => {
   return (
@@ -15,6 +16,7 @@ const SalesPanel = () => {
         <div className="flex justify-between">
           <CardTitle>Ventas</CardTitle>
           <SaleFormDialog />
+          <SaleCashflowsDialog />
         </div>
       </CardHeader>
       <CardContent>

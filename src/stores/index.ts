@@ -7,7 +7,7 @@ type Store = {
   user: User;
   sale: Sale;
   panel: string;
-  cashflow: Cashflow;
+  cashflow: Partial<Cashflow>;
   openDialog: string;
   openSelect: string;
   searchText: string;
@@ -34,16 +34,20 @@ export const useStore = create<Store>((set) => ({
     total_amount: 0,
   },
   cashflow: {
-    id: 0,
     sale_id: 0,
-    amount: 0,
     method: [],
   },
-  panel: "ventas",
+  panel: "",
   openDialog: "",
   openSelect: "",
   searchText: "",
   globalSearchText: "",
   creating: false,
-  update: (prop, value) => set((state) => ({ ...state, [prop]: value })),
+  update: (prop, value) =>
+    set((state) => {
+      if (prop === "panel") {
+        localStorage.setItem(prop, value);
+      }
+      return { ...state, [prop]: value };
+    }),
 }));

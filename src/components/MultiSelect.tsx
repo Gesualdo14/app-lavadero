@@ -17,8 +17,11 @@ import type { User } from "@/schemas/user";
 import type { Sale } from "@/schemas/sale";
 import { useStore } from "@/stores";
 import type { Cashflow } from "@/schemas/cashflow";
+import { DropdownSkeletonComponent } from "./Skeletons";
 
 type Props = {
+  id?: string;
+  idToFocusAfterSelection?: string;
   filterId?: number;
   justOne?: boolean;
   autoFocus?: boolean;
@@ -80,6 +83,8 @@ const CONFIG = {
 };
 
 const MultiSelect = ({
+  id,
+  idToFocusAfterSelection,
   field,
   form,
   entity,
@@ -89,7 +94,7 @@ const MultiSelect = ({
   autoFocus = false,
 }: Props) => {
   const { searchText, update, openSelect } = useStore();
-  const { data, refetch } = useQuery({
+  const { data, refetch, isPending } = useQuery({
     queryKey: [entity, filterId, searchText],
     queryFn: async () => {
       const data = await actions.getItems({
@@ -109,8 +114,17 @@ const MultiSelect = ({
   return (
     <Select open={isOpen}>
       <SelectTrigger
+        id={id}
         autoFocus={autoFocus}
         className="w-full"
+        onKeyDown={(e) => {
+          if (["Enter", "ArrowDown"].includes(e.code)) {
+            update("openSelect", field.name);
+          }
+          setTimeout(() => {
+            document.getElementById("my-input")?.focus();
+          }, 200);
+        }}
         onClick={() => {
           setTimeout(() => {
             document.getElementById("my-input")?.focus();
@@ -145,17 +159,27 @@ const MultiSelect = ({
             <div className="flex items-center justify-end w-full">
               <Input
                 onKeyDown={(e) => {
-                  if (e.code === "KeyP" || e.code === "KeyM") {
-                    e.stopPropagation();
+                  e.stopPropagation();
+
+                  if (e.code === "Enter") {
+                    const input = document.querySelector(
+                      "#my-input"
+                    ) as HTMLInputElement;
+                    update("searchText", input.value);
+                    refetch();
                   }
-                  if (e.code === "Enter") refetch();
                 }}
-                value={searchText}
-                onChange={(e) => update("searchText", e.target.value)}
+                onChange={(e) => {
+                  if (!e.target.value) {
+                    update("searchText", "");
+                    refetch();
+                  }
+                }}
                 id="my-input"
-                className="focus-visible:ring-0 border-0 outline-none pl-8 shadow-none"
-                placeholder={placeholder}
+                className="focus-visible:ring-0 border-0 outline-none pl-8 shadow-none <placeholder:text-gray-4></placeholder:text-gray-4>00"
+                placeholder={"Buscar..."}
               />
+
               {!!searchText && (
                 <X
                   size={16}
@@ -169,6 +193,7 @@ const MultiSelect = ({
             </div>
           </div>
           <Separator className="my-1 w-full" />
+          {isPending && <DropdownSkeletonComponent />}
           {data?.map((i) => {
             let selectedItems = form.watch(field.name as any) as any;
             const isSelected = selectedItems?.some(
@@ -203,6 +228,14 @@ const MultiSelect = ({
                   }
 
                   form.clearErrors(field.name);
+                  if (!!idToFocusAfterSelection) {
+                    const element = document.querySelector(
+                      `#${idToFocusAfterSelection}`
+                    ) as HTMLElement;
+                    const timeout = setTimeout(() => {
+                      element.focus();
+                    }, 2);
+                  }
                 }}
                 key={i.id}
                 value={`${i.id}`}

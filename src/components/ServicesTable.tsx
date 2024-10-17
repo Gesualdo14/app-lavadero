@@ -10,10 +10,10 @@ import {
   TableRow,
 } from "./ui/table";
 import MyDropdown from "./MyDropdown";
-import { TableSkeletonComponent } from "./table-skeleton";
+import { TableSkeletonComponent } from "./Skeletons";
 
-const UsersTable = () => {
-  const { update, globalSearchText } = useStore();
+const ServicesTable = () => {
+  const { globalSearchText } = useStore();
   const { data: services, isPending } = useQuery({
     queryKey: ["services", globalSearchText],
     queryFn: async () => {
@@ -42,7 +42,7 @@ const UsersTable = () => {
       ) : (
         <TableBody>
           {services?.map((s) => (
-            <TableRow>
+            <TableRow key={s.id}>
               <TableCell className="font-medium w-48">{s.name}</TableCell>
               <TableCell className="w-48">
                 {Intl.NumberFormat("es-AR", {
@@ -62,4 +62,4 @@ const UsersTable = () => {
   );
 };
 
-export default UsersTable;
+export default ServicesTable;
