@@ -111,6 +111,46 @@ const MultiSelect = ({
   const isOpen = openSelect === field.name;
   const quantitySelected = field.value?.length as number;
 
+  let selectedItems = form.watch(field.name as any) as any;
+
+  const handleItemSelection = (item: { id: number; name: string }) => {
+    const isSelected = selectedItems?.some((si: any) => si.name === item.name);
+    const newValue = isSelected
+      ? selectedItems.filter((si: any) => si.name !== item.name)
+      : justOne
+        ? [item]
+        : selectedItems.concat(item);
+
+    form.setValue(field.name, newValue);
+
+    if (justOne) {
+      update("openSelect", "");
+      update("searchText", "");
+    }
+    if (!!resetOnSelect) {
+      console.log({ value: field.value, resetOnSelect });
+      form.setValue(resetOnSelect, []);
+    }
+
+    if (field.name === "services") {
+      const totalAmount = newValue.reduce(
+        (p: number, c: any) => p + (c.value ?? 0),
+        0
+      );
+      form.setValue("total_amount", totalAmount);
+    }
+
+    form.clearErrors(field.name);
+    if (!!idToFocusAfterSelection) {
+      const element = document.querySelector(
+        `#${idToFocusAfterSelection}`
+      ) as HTMLElement;
+      const timeout = setTimeout(() => {
+        element.focus();
+      }, 2);
+    }
+  };
+
   return (
     <Select open={isOpen}>
       <SelectTrigger
@@ -168,6 +208,13 @@ const MultiSelect = ({
                     update("searchText", input.value);
                     refetch();
                   }
+                  if (e.code === "ArrowDown") {
+                    console.log("FOCUS??");
+                    const element = document.querySelector(
+                      "#item-0"
+                    ) as HTMLElement;
+                    element.focus();
+                  }
                 }}
                 onChange={(e) => {
                   if (!e.target.value) {
@@ -194,52 +241,33 @@ const MultiSelect = ({
           </div>
           <Separator className="my-1 w-full" />
           {isPending && <DropdownSkeletonComponent />}
-          {data?.map((i) => {
-            let selectedItems = form.watch(field.name as any) as any;
+          {data?.map((i, index) => {
             const isSelected = selectedItems?.some(
               (si: any) => si.name === i.name
             );
             return (
               <SelectItem
-                onClick={() => {
-                  const newValue = isSelected
-                    ? selectedItems.filter((si: any) => si.name !== i.name)
-                    : justOne
-                      ? [i]
-                      : selectedItems.concat(i);
-
-                  form.setValue(field.name, newValue);
-
-                  if (justOne) {
-                    update("openSelect", "");
-                    update("searchText", "");
+                id={`item-${index}`}
+                onKeyDown={(e) => {
+                  if (["ArrowDown"].includes(e.code)) {
+                    update("openSelect", field.name);
+                    const id =
+                      index === data.length ? data.length - 1 : index + 1;
+                    document.getElementById(`item-${index + 1}`)?.focus();
                   }
-                  if (!!resetOnSelect) {
-                    console.log({ value: field.value, resetOnSelect });
-                    form.setValue(resetOnSelect, []);
+                  if (["ArrowUp"].includes(e.code)) {
+                    update("openSelect", field.name);
+                    const id = index === 0 ? 0 : index - 1;
+                    document.getElementById(`item-${id}`)?.focus();
                   }
-
-                  if (field.name === "services") {
-                    const totalAmount = newValue.reduce(
-                      (p: number, c: any) => p + (c.value ?? 0),
-                      0
-                    );
-                    form.setValue("total_amount", totalAmount);
-                  }
-
-                  form.clearErrors(field.name);
-                  if (!!idToFocusAfterSelection) {
-                    const element = document.querySelector(
-                      `#${idToFocusAfterSelection}`
-                    ) as HTMLElement;
-                    const timeout = setTimeout(() => {
-                      element.focus();
-                    }, 2);
+                  if (e.code === "Enter") {
+                    handleItemSelection(i);
                   }
                 }}
+                onClick={() => handleItemSelection(i)}
                 key={i.id}
                 value={`${i.id}`}
-                className={`hover:bg-gray-100 my-1 ${isSelected ? "bg-gray-100" : ""} !rounded-md outline-none cursor-pointer`}
+                className={`hover:bg-gray-100 focus:bg-gray-100 my-1 ${isSelected ? "bg-gray-100" : ""} !rounded-md outline-none cursor-pointer`}
               >
                 {i.name}
                 {isSelected && (
