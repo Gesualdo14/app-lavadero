@@ -114,7 +114,10 @@ export function SaleFormDialog() {
           </span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] top-[200px]">
+      <DialogContent
+        className="sm:max-w-[425px] top-[200px]"
+        onClick={() => update("openSelect", "")}
+      >
         <DialogHeader>
           <DialogTitle>{creating ? "Nueva" : "Editando"} venta</DialogTitle>
         </DialogHeader>
@@ -129,6 +132,7 @@ export function SaleFormDialog() {
                     <MultiSelect
                       form={form}
                       field={field}
+                      idToFocusAfterSelection="sale-vehicle"
                       resetOnSelect="vehicle"
                       entity={field.name}
                       justOne
@@ -139,6 +143,7 @@ export function SaleFormDialog() {
                 </FormItem>
               )}
             />
+
             <FormField
               control={control}
               name="vehicle"
@@ -146,6 +151,8 @@ export function SaleFormDialog() {
                 <FormItem>
                   <FormControl>
                     <MultiSelect
+                      id="sale-vehicle"
+                      idToFocusAfterSelection="sale-service"
                       form={form}
                       field={field}
                       filterId={user?.length > 0 ? user[0].id : 0}
@@ -157,6 +164,7 @@ export function SaleFormDialog() {
                 </FormItem>
               )}
             />
+
             <FormField
               control={control}
               {...register("services", {
@@ -166,7 +174,13 @@ export function SaleFormDialog() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <MultiSelect form={form} field={field} entity="service" />
+                    <MultiSelect
+                      id="sale-service"
+                      idToFocusAfterSelection="sale-amount"
+                      form={form}
+                      field={field}
+                      entity="service"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -179,6 +193,7 @@ export function SaleFormDialog() {
                 <FormItem>
                   <FormControl>
                     <Input
+                      id="sale-amount"
                       placeholder="Monto..."
                       type="number"
                       {...field}

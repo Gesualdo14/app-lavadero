@@ -114,9 +114,9 @@ const MultiSelect = ({
   let selectedItems = form.watch(field.name as any) as any;
 
   const handleItemSelection = (item: { id: number; name: string }) => {
-    const isSelected = selectedItems?.some((si: any) => si.name === item.name);
+    const isSelected = selectedItems?.some((si: any) => si.id === item.id);
     const newValue = isSelected
-      ? selectedItems.filter((si: any) => si.name !== item.name)
+      ? selectedItems.filter((si: any) => si.id !== item.id)
       : justOne
         ? [item]
         : selectedItems.concat(item);
@@ -165,7 +165,8 @@ const MultiSelect = ({
             document.getElementById("my-input")?.focus();
           }, 200);
         }}
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           setTimeout(() => {
             document.getElementById("my-input")?.focus();
           }, 200);
@@ -222,6 +223,7 @@ const MultiSelect = ({
                     refetch();
                   }
                 }}
+                onClick={(e) => e.stopPropagation()}
                 id="my-input"
                 className="focus-visible:ring-0 border-0 outline-none pl-8 shadow-none <placeholder:text-gray-4></placeholder:text-gray-4>00"
                 placeholder={"Buscar..."}
@@ -242,32 +244,32 @@ const MultiSelect = ({
           <Separator className="my-1 w-full" />
           {isPending && <DropdownSkeletonComponent />}
           {data?.map((i, index) => {
-            const isSelected = selectedItems?.some(
-              (si: any) => si.name === i.name
-            );
+            const isSelected = selectedItems?.some((si: any) => si.id === i.id);
             return (
               <SelectItem
                 id={`item-${index}`}
                 onKeyDown={(e) => {
                   if (["ArrowDown"].includes(e.code)) {
                     update("openSelect", field.name);
-                    const id =
-                      index === data.length ? data.length - 1 : index + 1;
-                    document.getElementById(`item-${index + 1}`)?.focus();
+                    const id = index === data.length - 1 ? 0 : index + 1;
+                    document.getElementById(`item-${id}`)?.focus();
                   }
                   if (["ArrowUp"].includes(e.code)) {
                     update("openSelect", field.name);
-                    const id = index === 0 ? 0 : index - 1;
+                    const id = index === 0 ? data.length - 1 : index - 1;
                     document.getElementById(`item-${id}`)?.focus();
                   }
                   if (e.code === "Enter") {
                     handleItemSelection(i);
                   }
                 }}
-                onClick={() => handleItemSelection(i)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleItemSelection(i);
+                }}
                 key={i.id}
                 value={`${i.id}`}
-                className={`hover:bg-gray-100 focus:bg-gray-100 my-1 ${isSelected ? "bg-gray-100" : ""} !rounded-md outline-none cursor-pointer`}
+                className={`hover:bg-gray-100 focus:bg-blue-100 my-1 ${isSelected ? "bg-gray-100" : ""} !rounded-md outline-none cursor-pointer`}
               >
                 {i.name}
                 {isSelected && (
