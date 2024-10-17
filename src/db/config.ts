@@ -42,22 +42,27 @@ export async function createUser(
     }
   });
 }
-export async function updateUser(user: InsertUser, userId: number) {
+export async function updateUser(user: Partial<InsertUser>, userId: number) {
   return await db.update(users).set(user).where(eq(users.id, userId));
 }
 
 export const getUsers = async <T extends boolean>(
   searchText: string | null | undefined,
-  asItems: T
+  asItems: T,
+  isClient: number | undefined
 ): Promise<T extends true ? TSelect<"users"> : SelectUser[]> => {
   const searchConfig: DBQueryConfig = {
+    where: eq(users.is_client, isClient as number),
     limit: 8,
     orderBy: desc(users.id),
   };
   if (!!searchText) {
-    searchConfig.where = or(
-      like(users.firstname, `%${searchText}%`),
-      like(users.lastname, `%${searchText}%`)
+    searchConfig.where = and(
+      or(
+        like(users.firstname, `%${searchText}%`),
+        like(users.lastname, `%${searchText}%`)
+      ),
+      eq(users.is_client, isClient as number)
     );
   }
   const result = await db.query.users.findMany(searchConfig);
@@ -139,11 +144,15 @@ export const getSales = async (searchText: string | null | undefined) => {
 };
 
 export async function createSale(data: Sale) {
-  const { services, user, vehicle, total_amount } = data;
+  const { services, client, vehicle, total_amount } = data;
   return await db.transaction(async (tx) => {
-    const { lastInsertRowid } = await tx
-      .insert(sales)
-      .values({ vehicle_id: vehicle[0].id, user_id: user[0].id, total_amount });
+    const { lastInsertRowid } = await tx.insert(sales).values({
+      vehicle_id: vehicle[0].id,
+      company_id: 1,
+      created_by: 1,
+      client_id: client[0].id,
+      total_amount,
+    });
 
     await tx.insert(saleItems).values(
       services.map((s) => ({
@@ -156,13 +165,13 @@ export async function createSale(data: Sale) {
 }
 
 export async function updateSale(data: Sale) {
-  const { id, services, user, vehicle, total_amount } = data;
-  console.log({ id, user, vehicle });
+  const { id, services, client, vehicle, total_amount } = data;
+  console.log({ id, client, vehicle });
   return await db.transaction(async (tx) => {
     const saleId = id as number;
     await tx
       .update(sales)
-      .set({ vehicle_id: vehicle[0].id, user_id: user[0].id, total_amount })
+      .set({ vehicle_id: vehicle[0].id, client_id: client[0].id, total_amount })
       .where(eq(sales.id, saleId));
 
     await tx.delete(saleItems).where(eq(saleItems.sale_id, saleId));

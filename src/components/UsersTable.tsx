@@ -20,6 +20,7 @@ const UsersTable = () => {
     queryFn: async () => {
       const data = await actions.getUsers({
         searchText: globalSearchText || "",
+        justClients: true,
       });
       return data?.data?.data || [];
     },

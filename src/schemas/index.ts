@@ -1,6 +1,7 @@
 import * as saleSchema from "./sale";
 import * as saleItemSchema from "./sale-item";
 import * as userSchema from "./user";
+import * as companySchema from "./company";
 import * as cashflowSchema from "./cashflow";
 import * as vehicleSchema from "./vehicle";
 import * as brandSchema from "./brand";
@@ -14,4 +15,5 @@ export default {
   ...vehicleSchema,
   ...serviceSchema,
   ...brandSchema,
+  ...companySchema,
 };

@@ -12,13 +12,21 @@ const ui = {
   getItems: defineAction({
     input: z.object({
       searchText: z.string().nullish(),
-      entity: z.enum(["service", "vehicle", "user", "brand", "method"]),
+      entity: z.enum([
+        "service",
+        "vehicle",
+        "client",
+        "user",
+        "brand",
+        "method",
+      ]),
       filterId: z.number().optional(),
     }),
     handler: async ({ searchText, entity, filterId }) => {
       try {
         const actionToCall = {
           service: getServices,
+          client: getUsers,
           user: getUsers,
           vehicle: getVehicles,
           brand: getBrands,

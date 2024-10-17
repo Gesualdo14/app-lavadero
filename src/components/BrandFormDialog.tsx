@@ -24,12 +24,17 @@ import {
 import { LoadingSpinner } from "./Spinner";
 import { navigate } from "astro:transitions/client";
 import { brandFormSchema, type Brand } from "@/schemas/brand";
+import { useQueryClient } from "@tanstack/react-query";
+import { useStore } from "@/stores";
 
 const defaultValues = {
   name: "",
+  company_id: 1,
 };
 
 export function BrandFormDialog() {
+  const globalSearchText = useStore((s) => s.globalSearchText);
+  const queryClient = useQueryClient();
   const form = useForm<Brand>({
     resolver: zodResolver(brandFormSchema),
     defaultValues: defaultValues,
@@ -41,7 +46,7 @@ export function BrandFormDialog() {
   const onSubmit = async (values: Brand) => {
     const result = await actions.createBrand(values);
     reset(defaultValues);
-    await navigate("/config");
+    queryClient.refetchQueries({ queryKey: ["brands", globalSearchText] });
     toast({
       title: "Marca creada",
       description: "Marca creada con éxito",

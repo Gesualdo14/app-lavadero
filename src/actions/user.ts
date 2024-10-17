@@ -10,7 +10,7 @@ const user = {
     handler: async ({ email, password }, context) => {
       const { cookies } = context;
       console.log({ email });
-      const user = (await getUserByEmail(email)) as Partial<User>;
+      const user = await getUserByEmail(email);
       if (!user) {
         return { ok: false, message: "No existe un usuario con ese correo" };
       }
@@ -18,9 +18,16 @@ const user = {
       if (user.password !== password)
         return { ok: false, message: "Contraseña incorrecta" };
 
-      delete user.password;
-
-      const token = jwt.sign(user, process?.env?.JWT_SECRET_KEY as string);
+      const token = jwt.sign(
+        {
+          id: user.id,
+          email: user.email,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          role: user.role,
+        },
+        process?.env?.JWT_SECRET_KEY as string
+      );
 
       cookies.set("jwt", token, {
         httpOnly: true,
@@ -54,10 +61,13 @@ const user = {
     },
   }),
   getUsers: defineAction({
-    input: z.object({ searchText: z.string().nullish() }),
-    handler: async ({ searchText }) => {
+    input: z.object({
+      searchText: z.string().nullish(),
+      justClients: z.boolean().default(false),
+    }),
+    handler: async ({ searchText, justClients }) => {
       try {
-        const users = await getUsers(searchText, false);
+        const users = await getUsers(searchText, false, justClients ? 1 : 0);
 
         return {
           ok: true,
@@ -80,6 +90,7 @@ const user = {
             firstname: data.firstname,
             lastname: data.lastname,
             email: data.email,
+            company_id: 1,
           },
           {
             brand: Array.isArray(data.brand) ? data.brand[0].name : "",
