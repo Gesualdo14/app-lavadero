@@ -1,6 +1,6 @@
 import { createClient } from "@libsql/client";
 import schema from "@/schemas/index";
-import { and, desc, eq, like, or, type DBQueryConfig } from "drizzle-orm";
+import { and, desc, eq, like, or, sql, type DBQueryConfig } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/libsql";
 import { users, type InsertUser, type SelectUser } from "@/schemas/user";
 import {
@@ -21,6 +21,7 @@ import {
 } from "@/schemas/sale-item";
 import { brands, type InsertBrand, type SelectBrand } from "@/schemas/brand";
 import { cashflows, type InsertCashflow } from "@/schemas/cashflow";
+import { dailyReport } from "@/schemas/daily-report";
 
 export const turso = createClient({
   url: import.meta.env.TURSO_DATABASE_URL ?? "",
@@ -52,10 +53,12 @@ export const getUsers = async <T extends boolean>(
   isClient: number | undefined
 ): Promise<T extends true ? TSelect<"users"> : SelectUser[]> => {
   const searchConfig: DBQueryConfig = {
-    where: eq(users.is_client, isClient as number),
     limit: 8,
     orderBy: desc(users.id),
   };
+  if (isClient === 1) {
+    searchConfig.where = eq(users.is_client, isClient as number);
+  }
   if (!!searchText) {
     searchConfig.where = and(
       or(
@@ -146,21 +149,54 @@ export const getSales = async (searchText: string | null | undefined) => {
 export async function createSale(data: Sale) {
   const { services, client, vehicle, total_amount } = data;
   return await db.transaction(async (tx) => {
-    const { lastInsertRowid } = await tx.insert(sales).values({
-      vehicle_id: vehicle[0].id,
-      company_id: 1,
-      created_by: 1,
-      client_id: client[0].id,
-      total_amount,
-    });
+    try {
+      const { lastInsertRowid } = await tx.insert(sales).values({
+        vehicle_id: vehicle[0].id,
+        company_id: 1,
+        created_by: 1,
+        client_id: client[0].id,
+        total_amount,
+      });
+      const now = new Date();
+      await tx
+        .insert(dailyReport)
+        .values({
+          company_id: 1,
+          day: now.getDate(),
+          month: now.getMonth() + 1,
+          year: now.getFullYear(),
+          sales_amount: total_amount,
+          sales_gathered: 0,
+          sales: 1,
+          clients: 1,
+          vehicles: 1,
+        })
+        .onConflictDoUpdate({
+          target: [
+            dailyReport.day,
+            dailyReport.month,
+            dailyReport.year,
+            dailyReport.company_id,
+          ],
+          set: {
+            sales_amount: sql`${dailyReport.sales_amount} + ${total_amount}`,
+            sales: sql`${dailyReport.sales} + 1`,
+            clients: sql`${dailyReport.clients} + 1`,
+            vehicles: sql`${dailyReport.vehicles} + 1`,
+          },
+        });
 
-    await tx.insert(saleItems).values(
-      services.map((s) => ({
-        service_id: s.id,
-        sale_id: Number(lastInsertRowid),
-        price: s.value as number,
-      }))
-    );
+      await tx.insert(saleItems).values(
+        services.map((s) => ({
+          service_id: s.id,
+          sale_id: Number(lastInsertRowid),
+          price: s.value as number,
+        }))
+      );
+    } catch (error) {
+      console.log("ERROR AL CREAR LA VENTA", { error });
+      await tx.rollback();
+    }
   });
 }
 
