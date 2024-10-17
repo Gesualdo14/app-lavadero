@@ -84,7 +84,7 @@ export function UserFormDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] top-[300px]">
         <DialogHeader>
-          <DialogTitle>Crear cliente</DialogTitle>
+          <DialogTitle>Datos del cliente</DialogTitle>
           <DialogDescription>
             Añade clientes para luego poder crear ventas que se asocien a ellos.
           </DialogDescription>
@@ -135,6 +135,7 @@ export function UserFormDialog() {
             />
             {creating && (
               <>
+                <h2 className="block font-bold !-mb-2">Datos del vehículo</h2>
                 <FormField
                   control={control}
                   name="brand"
@@ -143,6 +144,7 @@ export function UserFormDialog() {
                       <FormControl>
                         <QueryClientProvider client={queryClient}>
                           <MultiSelect
+                            idToFocusAfterSelection="vehicle-model"
                             form={form}
                             field={field}
                             entity={field.name}
@@ -160,7 +162,11 @@ export function UserFormDialog() {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input placeholder="Modelo..." {...field} />
+                        <Input
+                          id="vehicle-model"
+                          placeholder="Modelo..."
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
