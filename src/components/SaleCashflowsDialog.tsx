@@ -151,7 +151,6 @@ export function SaleCashflowsDialog() {
                       id="cashflow-amount"
                       placeholder="Monto..."
                       type="number"
-                      onFocus={(e) => e.target.select()}
                       value={field.value}
                       onChange={(value) =>
                         field.onChange(value.target.valueAsNumber)
