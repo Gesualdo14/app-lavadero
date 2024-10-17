@@ -7,7 +7,7 @@ type Store = {
   user: User;
   sale: Sale;
   panel: string;
-  cashflow: Cashflow;
+  cashflow: Partial<Cashflow>;
   openDialog: string;
   openSelect: string;
   searchText: string;
@@ -34,9 +34,7 @@ export const useStore = create<Store>((set) => ({
     total_amount: 0,
   },
   cashflow: {
-    id: 0,
     sale_id: 0,
-    amount: 0,
     method: [],
   },
   panel: "",

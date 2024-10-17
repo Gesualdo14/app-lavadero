@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-import { Edit2Icon } from "lucide-react";
+import { CircleDollarSign, Edit2Icon } from "lucide-react";
 import { SaleCashflowsDialog } from "./SaleCashflowsDialog";
 import { TableSkeletonComponent } from "./Skeletons";
 
@@ -59,7 +59,6 @@ const SalesTable = () => {
                 }).format(s.total_amount)}
               </TableCell>
               <TableCell className="flex gap-3">
-                <SaleCashflowsDialog sale_id={s.id} />
                 <Edit2Icon
                   className="h-5 w-5"
                   onClick={() => {
@@ -84,6 +83,15 @@ const SalesTable = () => {
                     });
                     update("openDialog", "sale");
                     update("creating", false);
+                  }}
+                />
+                <CircleDollarSign
+                  className="h-5 w-5"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    update("creating", true);
+                    update("openDialog", "cashflow");
+                    update("sale", s);
                   }}
                 />
               </TableCell>

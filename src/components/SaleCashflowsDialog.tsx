@@ -28,16 +28,15 @@ import { useQueryClient } from "@tanstack/react-query";
 import { cashflowFormSchema, type Cashflow } from "@/schemas/cashflow";
 import SaleCashflowsTable from "./SaleCashflowsTable";
 
-export function SaleCashflowsDialog({ sale_id }: { sale_id: number }) {
+export function SaleCashflowsDialog() {
   const queryClient = useQueryClient();
   const { update, openDialog, sale, cashflow, creating } = useStore();
   const form = useForm<Cashflow>({
     resolver: zodResolver(cashflowFormSchema),
-    defaultValues: { sale_id },
+    defaultValues: { sale_id: sale.id },
   });
 
   const id = form.getValues("sale_id");
-  console.log({ id, sale_id });
 
   const {
     formState: { isSubmitting },
@@ -48,17 +47,20 @@ export function SaleCashflowsDialog({ sale_id }: { sale_id: number }) {
 
   const onSubmit = async (values: Cashflow) => {
     const action = creating ? "createCashflow" : "updateCashflow";
-    const result = await actions[action]({ ...values, sale_id });
+    const result = await actions[action]({
+      ...values,
+      sale_id: sale.id as number,
+    });
     console.log({ result });
     reset({});
-    queryClient.refetchQueries({ queryKey: ["cashflows", sale_id] });
+    queryClient.refetchQueries({ queryKey: ["cashflows", sale.id] });
 
     toast({
       title: result.data?.message,
     });
-
-    update("openDialog", "");
-    update("cashflow", {});
+    form.setValue("amount", 0);
+    (document.querySelector("#select-amount") as HTMLButtonElement).focus();
+    update("cashflow", { amount: 0 });
   };
 
   useEffect(() => {
@@ -67,18 +69,19 @@ export function SaleCashflowsDialog({ sale_id }: { sale_id: number }) {
         document.body.style.pointerEvents = "";
       }, 500);
     }
+    form.reset(cashflow);
+    form.setValue("sale_id", sale.id as number);
   }, [openDialog]);
 
   useEffect(() => {
-    console.log({ creating, cashflow });
     if (!creating && Array.isArray(cashflow.method)) {
+      console.log({ creating, cashflow });
       form.setValue("id", cashflow.id);
-      form.setValue("amount", cashflow.amount);
+      form.setValue("amount", cashflow.amount as number);
       form.setValue("method", cashflow.method);
-    } else {
-      form.reset(cashflow);
     }
-    form.setValue("sale_id", sale_id);
+
+    form.setValue("sale_id", sale.id as number);
   }, [cashflow]);
 
   return (
@@ -86,23 +89,9 @@ export function SaleCashflowsDialog({ sale_id }: { sale_id: number }) {
       open={openDialog === "cashflow"}
       onOpenChange={(open) => update("openDialog", !open ? "" : "cashflow")}
     >
-      <DialogTrigger asChild>
-        <CircleDollarSign
-          className="h-5 w-5"
-          onClick={(e) => {
-            e.stopPropagation();
-            update("creating", true);
-            update("openDialog", "cashflow");
-            update("cashflow", {
-              sale_id,
-            });
-          }}
-        />
-      </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] top-[40%]">
         <DialogTitle>Cobros recibidos</DialogTitle>
-
-        <SaleCashflowsTable sale_id={sale_id} />
+        <SaleCashflowsTable sale_id={sale.id as number} />
         <DialogHeader>
           <div className="flex gap-3 items-center justify-between">
             <DialogTitle>{creating ? "Nuevo" : "Editando"} cobro</DialogTitle>
@@ -113,7 +102,11 @@ export function SaleCashflowsDialog({ sale_id }: { sale_id: number }) {
                 className="h-7 gap-1"
                 onClick={() => {
                   update("creating", true);
-                  update("cashflow", { sale_id, amount: 0, method: [] });
+                  update("cashflow", {
+                    sale_id: sale.id,
+                    amount: 0,
+                    method: [],
+                  });
                 }}
               >
                 <PlusCircle className="h-3.5 w-3.5" />
@@ -135,6 +128,8 @@ export function SaleCashflowsDialog({ sale_id }: { sale_id: number }) {
                 <FormItem>
                   <FormControl>
                     <MultiSelect
+                      id={"select-amount"}
+                      idToFocusAfterSelection="cashflow-amount"
                       form={form}
                       field={field}
                       entity={field.name}
@@ -153,8 +148,10 @@ export function SaleCashflowsDialog({ sale_id }: { sale_id: number }) {
                 <FormItem>
                   <FormControl>
                     <Input
+                      id="cashflow-amount"
                       placeholder="Monto..."
                       type="number"
+                      onFocus={(e) => e.target.select()}
                       value={field.value}
                       onChange={(value) =>
                         field.onChange(value.target.valueAsNumber)

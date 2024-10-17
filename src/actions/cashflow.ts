@@ -15,7 +15,7 @@ const cashflow = {
       try {
         const cashflows = await getCashflows(saleId);
 
-        console.log({ cashflows });
+        console.log({ saleId });
 
         return {
           ok: true,

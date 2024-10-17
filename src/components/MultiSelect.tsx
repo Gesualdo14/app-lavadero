@@ -20,6 +20,8 @@ import type { Cashflow } from "@/schemas/cashflow";
 import { DropdownSkeletonComponent } from "./Skeletons";
 
 type Props = {
+  id?: string;
+  idToFocusAfterSelection?: string;
   filterId?: number;
   justOne?: boolean;
   autoFocus?: boolean;
@@ -81,6 +83,8 @@ const CONFIG = {
 };
 
 const MultiSelect = ({
+  id,
+  idToFocusAfterSelection,
   field,
   form,
   entity,
@@ -110,8 +114,17 @@ const MultiSelect = ({
   return (
     <Select open={isOpen}>
       <SelectTrigger
+        id={id}
         autoFocus={autoFocus}
         className="w-full"
+        onKeyDown={(e) => {
+          if (["Enter", "ArrowDown"].includes(e.code)) {
+            update("openSelect", field.name);
+          }
+          setTimeout(() => {
+            document.getElementById("my-input")?.focus();
+          }, 200);
+        }}
         onClick={() => {
           setTimeout(() => {
             document.getElementById("my-input")?.focus();
@@ -215,6 +228,14 @@ const MultiSelect = ({
                   }
 
                   form.clearErrors(field.name);
+                  if (!!idToFocusAfterSelection) {
+                    const element = document.querySelector(
+                      `#${idToFocusAfterSelection}`
+                    ) as HTMLElement;
+                    const timeout = setTimeout(() => {
+                      element.focus();
+                    }, 2);
+                  }
                 }}
                 key={i.id}
                 value={`${i.id}`}
