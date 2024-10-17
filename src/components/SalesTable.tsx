@@ -11,7 +11,7 @@ import {
 } from "./ui/table";
 import { Edit2Icon } from "lucide-react";
 import { SaleCashflowsDialog } from "./SaleCashflowsDialog";
-import { TableSkeletonComponent } from "./table-skeleton";
+import { TableSkeletonComponent } from "./Skeletons";
 
 const SalesTable = () => {
   const { update, globalSearchText } = useStore();

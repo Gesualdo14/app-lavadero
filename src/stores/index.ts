@@ -39,11 +39,17 @@ export const useStore = create<Store>((set) => ({
     amount: 0,
     method: [],
   },
-  panel: "ventas",
+  panel: "",
   openDialog: "",
   openSelect: "",
   searchText: "",
   globalSearchText: "",
   creating: false,
-  update: (prop, value) => set((state) => ({ ...state, [prop]: value })),
+  update: (prop, value) =>
+    set((state) => {
+      if (prop === "panel") {
+        localStorage.setItem(prop, value);
+      }
+      return { ...state, [prop]: value };
+    }),
 }));

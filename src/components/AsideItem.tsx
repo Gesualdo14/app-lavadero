@@ -32,7 +32,10 @@ const AsideItem = ({ text, panel, icon, tooltip = true }: Props) => {
   if (!tooltip)
     return (
       <a
-        onClick={() => update("panel", text.toLocaleLowerCase())}
+        onClick={() => {
+          update("panel", text.toLocaleLowerCase());
+          localStorage.setItem("selectedPanel", panel);
+        }}
         className="flex gap-3 items-center  cursor-pointer justify-center rounded-md text-muted-foreground transition-bg hover:text-foreground md:h-8 md:w-8"
       >
         {icons[icon]}

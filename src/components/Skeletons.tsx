@@ -1,7 +1,7 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { TableCell, TableRow } from "./ui/table";
+import { TableBody, TableCell, TableRow } from "./ui/table";
 
 export function TableSkeletonComponent({
   rows = 3,
@@ -11,7 +11,7 @@ export function TableSkeletonComponent({
   columns?: number;
 }) {
   return (
-    <>
+    <TableBody>
       {[...Array(rows)].map((_, rowIndex) => (
         <TableRow key={rowIndex} className="border-t">
           {[...Array(columns)].map((_, colIndex) => (
@@ -20,6 +20,15 @@ export function TableSkeletonComponent({
             </TableCell>
           ))}
         </TableRow>
+      ))}
+    </TableBody>
+  );
+}
+export function DropdownSkeletonComponent({ count = 3 }: { count?: number }) {
+  return (
+    <>
+      {[...Array(count)].map((_, colIndex) => (
+        <Skeleton className="h-8 w-full mt-1" key={colIndex} />
       ))}
     </>
   );

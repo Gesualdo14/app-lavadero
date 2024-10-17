@@ -1,9 +1,10 @@
 import { Search } from "lucide-react";
 import { Input } from "./ui/input";
 import { useStore } from "@/stores";
+import { navigate } from "astro/virtual-modules/transitions-router.js";
 
 const MySearchBar = () => {
-  const { update } = useStore();
+  const { update, globalSearchText } = useStore();
   return (
     <div className="relative  flex-1 w-full">
       <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -13,6 +14,7 @@ const MySearchBar = () => {
           const searchInput = document.getElementById(
             "input"
           ) as HTMLInputElement;
+          navigate("?search=" + searchInput.value);
           update("globalSearchText", searchInput.value);
         }}
       >
@@ -20,11 +22,7 @@ const MySearchBar = () => {
           id="input"
           type="search"
           placeholder="Search..."
-          onChange={(e) => {
-            if (!e.target.value) {
-              update("globalSearchText", "");
-            }
-          }}
+          defaultValue={globalSearchText}
           className="w-full rounded-lg bg-background pl-8"
         />
         <button type="submit" className="hidden"></button>

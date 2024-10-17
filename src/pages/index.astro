@@ -14,7 +14,7 @@ if (!jwt) {
 ---
 
 <Layout title="Main page">
-  <Panels client:load />
+  <Panels client:load searchParams={Astro.url.searchParams.get("search")} />
 </Layout>
 
 <style>

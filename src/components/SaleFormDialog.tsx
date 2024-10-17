@@ -37,13 +37,11 @@ export function SaleFormDialog() {
 
   const {
     formState: { isSubmitting },
-    getFieldState,
     setError,
     reset,
     handleSubmit,
     control,
     register,
-    watch,
   } = form;
 
   const onSubmit = async (values: Sale) => {

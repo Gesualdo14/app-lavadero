@@ -24,12 +24,16 @@ import {
 import { LoadingSpinner } from "./Spinner";
 import { navigate } from "astro:transitions/client";
 import { serviceFormSchema, type Service } from "@/schemas/service";
+import { useQueryClient } from "@tanstack/react-query";
+import { useStore } from "@/stores";
 
 const defaultValues = {
   name: "",
 };
 
 export function ServiceFormDialog() {
+  const globalSearchText = useStore((s) => s.globalSearchText);
+  const queryClient = useQueryClient();
   const form = useForm<Service>({
     resolver: zodResolver(serviceFormSchema),
     defaultValues: defaultValues,
@@ -41,7 +45,8 @@ export function ServiceFormDialog() {
   const onSubmit = async (values: Service) => {
     const result = await actions.createService(values);
     reset(defaultValues);
-    await navigate("/servicios");
+
+    queryClient.refetchQueries({ queryKey: ["services", globalSearchText] });
     toast({
       title: "Servicio creado",
       description: "Servicio creado con éxito",
