@@ -33,9 +33,9 @@ type Props = {
       resetOnSelect?: keyof Sale;
     }
   | {
-      entity: "user";
+      entity: "client";
       form: UseFormReturn<Sale>;
-      field: ControllerRenderProps<Sale, "user">;
+      field: ControllerRenderProps<Sale, "client">;
       resetOnSelect?: keyof Sale;
     }
   | {
@@ -64,7 +64,11 @@ const CONFIG = {
     singular: "servicio",
     plural: "servicios",
   },
-  user: { placeholder: "Clientes...", singular: "cliente", plural: "clientes" },
+  client: {
+    placeholder: "Clientes...",
+    singular: "cliente",
+    plural: "clientes",
+  },
   vehicle: {
     placeholder: "Vehículos...",
     singular: "vehículo",

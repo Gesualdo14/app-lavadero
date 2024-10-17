@@ -21,6 +21,7 @@ export const useStore = create<Store>((set) => ({
     id: 0,
     firstname: "",
     lastname: "",
+    company_id: 1,
     email: "",
     brand: [],
     model: "",
@@ -28,8 +29,9 @@ export const useStore = create<Store>((set) => ({
   },
   sale: {
     services: [],
-    user: [],
+    client: [],
     vehicle: [],
+    company_id: 1,
     gathered: 0,
     total_amount: 0,
   },

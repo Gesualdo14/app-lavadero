@@ -50,8 +50,8 @@ export function SaleFormDialog() {
         message: "Debes seleccionar al menos 1 servicio",
       });
     }
-    if (values.user?.length === 0) {
-      setError("user", {
+    if (values.client?.length === 0) {
+      setError("client", {
         message: "Debes seleccionar al cliente",
       });
     }
@@ -82,14 +82,14 @@ export function SaleFormDialog() {
     }
     if (openDialog === "sale") {
       form.setValue("id", sale.id);
-      form.setValue("user", sale.user);
+      form.setValue("client", sale.client);
       form.setValue("services", sale.services || []);
       form.setValue("vehicle", sale.vehicle);
       form.setValue("total_amount", sale.total_amount);
     }
   }, [openDialog]);
 
-  const user = form.watch("user");
+  const user = form.watch("client");
   console.log({ user });
 
   return (
@@ -125,7 +125,7 @@ export function SaleFormDialog() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={control}
-              name="user"
+              name="client"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>

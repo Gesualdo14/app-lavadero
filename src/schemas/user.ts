@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { integer, sqliteTable, text, real } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const selectSchema = z
   .array(
@@ -9,18 +9,23 @@ export const selectSchema = z
 
 export const users = sqliteTable("Users", {
   id: integer("id").primaryKey(),
+  company_id: integer("company_id").notNull(),
   firstname: text("firstname").notNull(),
   lastname: text("lastname").notNull(),
   email: text("email").unique().notNull(),
   password: text("password"),
+  role: text("role"),
+  is_client: integer("is_client").default(1),
 });
 
 export const userFormSchema = z.object({
   id: z.number().optional(),
+  company_id: z.number(),
   firstname: z.string(),
   lastname: z.string(),
   email: z.string().email("Email inválido"),
   password: z.string().optional(),
+  role: selectSchema,
   brand: selectSchema,
   model: z.string().optional(),
   patent: z.string().optional(),

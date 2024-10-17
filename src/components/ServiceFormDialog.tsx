@@ -22,13 +22,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { LoadingSpinner } from "./Spinner";
-import { navigate } from "astro:transitions/client";
 import { serviceFormSchema, type Service } from "@/schemas/service";
 import { useQueryClient } from "@tanstack/react-query";
 import { useStore } from "@/stores";
 
 const defaultValues = {
   name: "",
+  company_id: 1,
 };
 
 export function ServiceFormDialog() {

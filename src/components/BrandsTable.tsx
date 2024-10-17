@@ -12,7 +12,7 @@ import {
 import MyDropdown from "./MyDropdown";
 import { TableSkeletonComponent } from "./Skeletons";
 
-const UsersTable = () => {
+const BrandsTable = () => {
   const { update, globalSearchText } = useStore();
   const { data: brands, isPending } = useQuery({
     queryKey: ["brands", globalSearchText],
@@ -54,4 +54,4 @@ const UsersTable = () => {
   );
 };
 
-export default UsersTable;
+export default BrandsTable;
