@@ -26,24 +26,22 @@ const ui = {
         const user = locals.user as LoggedUser;
         switch (entity) {
           case "service":
-            await getServices(searchText, true, user);
+            items = await getServices(searchText, true, user);
             break;
           case "user":
-            await getUsers(searchText, true, 0, user);
+            items = await getUsers(searchText, true, 0, user);
             break;
           case "client":
-            await getUsers(searchText, true, 1, user);
+            items = await getUsers(searchText, true, 1, user);
             break;
           case "brand":
-            await getBrands(searchText, true, user);
+            items = await getBrands(searchText, true, user);
             break;
           case "vehicle":
-            await getVehicles(searchText, true, filterId);
+            items = await getVehicles(searchText, true, filterId);
             break;
           case "method":
-            await getPaymentMethods(searchText, true);
-            break;
-          default:
+            items = await getPaymentMethods(searchText, true);
             break;
         }
 

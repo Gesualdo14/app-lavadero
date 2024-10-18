@@ -45,11 +45,10 @@ export function UserFormDialog() {
   });
 
   const { formState, reset, handleSubmit, control } = form;
-  console.log({ openDialog, creating, user, formState: form.getValues() });
 
   const onSubmit = async (values: User) => {
     console.log({ values });
-    const action = creating ? "createUser" : "updateUser";
+    const action = creating ? "createClient" : "updateClient";
     const result = await actions[action](values);
     toast({ title: "Cliente creado", description: "Cliente creado con éxito" });
     queryClient.refetchQueries({ queryKey: ["users"] });

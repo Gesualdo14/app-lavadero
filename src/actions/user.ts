@@ -86,9 +86,9 @@ const user = {
       }
     },
   }),
-  createUser: defineAction({
+  createClient: defineAction({
     input: userFormSchema,
-    handler: async (data) => {
+    handler: async (data, { locals }) => {
       try {
         console.log({ data });
         const result = await createUser(
@@ -96,7 +96,8 @@ const user = {
             firstname: data.firstname,
             lastname: data.lastname,
             email: data.email,
-            company_id: 1,
+            company_id: locals.user?.company_id as number,
+            is_client: 1,
           },
           {
             brand: Array.isArray(data.brand) ? data.brand[0].name : "",
@@ -118,7 +119,7 @@ const user = {
       }
     },
   }),
-  updateUser: defineAction({
+  updateClient: defineAction({
     input: userFormSchema,
     handler: async (data) => {
       try {

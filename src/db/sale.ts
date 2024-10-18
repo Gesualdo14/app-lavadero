@@ -43,7 +43,7 @@ export async function createSale(data: Sale) {
       const { lastInsertRowid } = await tx.insert(sales).values({
         vehicle_id: vehicle[0].id,
         company_id,
-        created_by,
+        created_by: created_by as number,
         client_id: client[0].id,
         total_amount,
       });

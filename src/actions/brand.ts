@@ -1,14 +1,19 @@
 import { createBrand, getBrands } from "@/db/vehicle";
 import { brandFormSchema } from "@/schemas/brand";
+import type { LoggedUser } from "@/schemas/user";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
 
 const brand = {
   getBrands: defineAction({
     input: z.object({ searchText: z.string().nullish() }),
-    handler: async ({ searchText }) => {
+    handler: async ({ searchText }, { locals }) => {
       try {
-        const brands = await getBrands(searchText, false);
+        const brands = await getBrands(
+          searchText,
+          false,
+          locals.user as LoggedUser
+        );
 
         return {
           ok: true,

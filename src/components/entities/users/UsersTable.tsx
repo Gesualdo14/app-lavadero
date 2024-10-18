@@ -10,7 +10,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import DropdownWhatsapp from "@/components/custom-ui/DropdownWhatsapp";
-import { Badge } from "@/components/ui/badge";
 import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
 
 const UsersTable = () => {
@@ -56,9 +55,7 @@ const UsersTable = () => {
               }}
             >
               <TableCell className="font-medium">{u.firstname}</TableCell>
-              <TableCell>
-                <Badge variant="outline">{u.lastname}</Badge>
-              </TableCell>
+              <TableCell>{u.lastname}</TableCell>
               <TableCell className="text-ellipsis max-w-1 sm:text-inherit md:overflow-visible overflow-hidden">
                 {u.email}
               </TableCell>

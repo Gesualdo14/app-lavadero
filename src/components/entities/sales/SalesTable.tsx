@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import { CircleDollarSign, Edit2Icon } from "lucide-react";
 import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
+import { Progress } from "@/components/ui/progress";
 
 const SalesTable = () => {
   const { update, globalSearchText } = useStore();
@@ -23,7 +24,6 @@ const SalesTable = () => {
       return data?.data?.data || [];
     },
   });
-  console.log({ sales });
 
   return (
     <Table>
@@ -62,11 +62,20 @@ const SalesTable = () => {
                 </div>
               </TableCell>
               <TableCell className="w-48">
-                {Intl.NumberFormat("es-AR", {
-                  style: "currency",
-                  currency: "ARS",
-                  maximumFractionDigits: 0,
-                }).format(s.total_amount)}
+                <div className="flex flex-col items-center w-16">
+                  <span>
+                    {Intl.NumberFormat("es-AR", {
+                      style: "currency",
+                      currency: "ARS",
+                      maximumFractionDigits: 0,
+                    }).format(s.total_amount)}
+                  </span>
+                  <Progress
+                    value={((s.gathered || 0) / s.total_amount) * 100}
+                    className="!w-16 bg-white ring-[0.5px] ring-gray-300"
+                    color="bg-red-300"
+                  />
+                </div>
               </TableCell>
               <TableCell>
                 <div className="flex items-start justify-start gap-3">

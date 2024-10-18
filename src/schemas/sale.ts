@@ -56,7 +56,7 @@ export interface TSelect<T> extends z.infer<typeof selectSchema> {
 export const saleFormSchema = z.object({
   id: z.number().optional(),
   company_id: z.number(),
-  created_by: z.number(),
+  created_by: z.number().optional(),
   client: selectSchema,
   vehicle: selectSchema,
   services: selectSchema,
@@ -108,6 +108,7 @@ export const view_sales = sqliteView("view_Sales").as((qb) => {
         model: vehicles.model,
         patent: vehicles.patent,
       },
+      gathered: sales.gathered,
       total_amount: sales.total_amount,
       services: sql``.as("services"),
     })

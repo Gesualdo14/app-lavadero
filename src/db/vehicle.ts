@@ -61,7 +61,10 @@ export const getBrands = async <T extends boolean>(
     orderBy: [desc(brands.id)],
   };
   if (!!searchText) {
-    searchConfig.where = like(brands.name, `%${searchText}%`);
+    searchConfig.where = and(
+      like(brands.name, `%${searchText}%`),
+      eq(brands.company_id, user.company_id)
+    );
   }
 
   const results = await db.query.brands.findMany(searchConfig);
