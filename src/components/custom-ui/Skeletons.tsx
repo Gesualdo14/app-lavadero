@@ -11,7 +11,7 @@ export function TableSkeletonComponent({
   columns?: number;
 }) {
   return (
-    <TableBody>
+    <>
       {[...Array(rows)].map((_, rowIndex) => (
         <TableRow key={rowIndex} className="border-t">
           {[...Array(columns)].map((_, colIndex) => (
@@ -21,7 +21,7 @@ export function TableSkeletonComponent({
           ))}
         </TableRow>
       ))}
-    </TableBody>
+    </>
   );
 }
 export function DropdownSkeletonComponent({ count = 3 }: { count?: number }) {

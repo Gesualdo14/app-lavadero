@@ -72,8 +72,7 @@ const SalesTable = () => {
                   </span>
                   <Progress
                     value={((s.gathered || 0) / s.total_amount) * 100}
-                    className="!w-16 bg-white ring-[0.5px] ring-gray-300"
-                    color="bg-red-300"
+                    className="!w-16 bg-gray-50 ring-[0.5px] ring-gray-300"
                   />
                 </div>
               </TableCell>
