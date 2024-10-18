@@ -23,10 +23,10 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { LoadingSpinner } from "./Spinner";
+import { LoadingSpinner } from "../../custom-ui/Spinner";
 import { saleFormSchema } from "@/schemas/sale";
 import { QueryClientProvider, useQueryClient } from "@tanstack/react-query";
-import MultiSelect from "./MultiSelect";
+import MultiSelect from "../../custom-ui/MultiSelect";
 import { useStore } from "@/stores";
 
 export type Entities = "user" | "sale";

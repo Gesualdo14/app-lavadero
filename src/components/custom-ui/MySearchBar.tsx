@@ -1,5 +1,5 @@
 import { Search } from "lucide-react";
-import { Input } from "./ui/input";
+import { Input } from "@/components/ui/input";
 import { useStore } from "@/stores";
 import { navigate } from "astro/virtual-modules/transitions-router.js";
 

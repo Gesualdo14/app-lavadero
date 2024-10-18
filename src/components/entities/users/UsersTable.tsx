@@ -8,10 +8,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./ui/table";
-import MyDropdown from "./MyDropdown";
-import { Badge } from "./ui/badge";
-import { TableSkeletonComponent } from "./Skeletons";
+} from "@/components/ui/table";
+import DropdownWhatsapp from "@/components/custom-ui/DropdownWhatsapp";
+import { Badge } from "@/components/ui/badge";
+import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
 
 const UsersTable = () => {
   const { update, globalSearchText } = useStore();
@@ -36,7 +36,7 @@ const UsersTable = () => {
           <TableHead>Apellido</TableHead>
           <TableHead className="min-w-24">Email</TableHead>
           <TableHead>
-            <span className="sr-only">Actions</span>
+            <span className="sr-only">Acciones</span>
           </TableHead>
         </TableRow>
       </TableHeader>
@@ -63,7 +63,7 @@ const UsersTable = () => {
                 {u.email}
               </TableCell>
               <TableCell>
-                <MyDropdown />
+                <DropdownWhatsapp />
               </TableCell>
             </TableRow>
           ))}

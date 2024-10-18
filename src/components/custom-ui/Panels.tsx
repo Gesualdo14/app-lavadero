@@ -1,10 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useStore } from "@/stores";
-import SalesPanel from "./SalesPanel";
-import UsersPanel from "./UsersPanel";
-import ServicesPanel from "./ServicesPanel";
-import ConfigPanel from "./ConfigPanel";
-import DashboardPanel from "./DashboardPanel";
+import SalesPanel from "@/components/entities/sales/SalesPanel";
+import UsersPanel from "@/components/entities/users/UsersPanel";
+import ServicesPanel from "@/components/entities/services/ServicesPanel";
+import ConfigPanel from "@/components/entities/configs/ConfigPanel";
+import DashboardPanel from "@/components/entities/reports/DashboardPanel";
 import { useLayoutEffect } from "react";
 
 export const queryClient = new QueryClient({

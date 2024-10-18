@@ -1,4 +1,4 @@
-import { createSale, getSales, updateSale } from "@/db/config";
+import { createSale, getSales, updateSale } from "@/db/sale";
 import { saleFormSchema } from "@/schemas/sale";
 import { defineAction } from "astro:actions";
 import { z } from "zod";

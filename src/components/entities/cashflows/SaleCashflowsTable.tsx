@@ -10,9 +10,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./ui/table";
+} from "@/components/ui/table";
 import { Edit2Icon } from "lucide-react";
-import { TableSkeletonComponent } from "./Skeletons";
+import { TableSkeletonComponent } from "../../custom-ui/Skeletons";
 
 const SaleCashflowsTable = ({ sale_id }: { sale_id: number }) => {
   const { update, cashflow } = useStore();

@@ -3,7 +3,7 @@ export const description =
   "An products dashboard with a sidebar navigation. The sidebar has icon navigation. The content area has a breadcrumb and search in the header. It displays a list of products in a table with actions.";
 
 import "@/styles/globals.css";
-import { LoginForm } from "@/components/LoginForm";
+import { LoginForm } from "@/components/entities/users/LoginForm";
 import LoginLayout from "@/layouts/LoginLayout.astro";
 import jwt from "jsonwebtoken";
 const token = Astro.cookies.get("jwt")?.value;

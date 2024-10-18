@@ -1,10 +1,7 @@
-import {
-  getBrands,
-  getPaymentMethods,
-  getServices,
-  getUsers,
-  getVehicles,
-} from "@/db/config";
+import { getPaymentMethods } from "@/db/cashflow";
+import { getServices } from "@/db/service";
+import { getUsers } from "@/db/user";
+import { getVehicles, getBrands } from "@/db/vehicle";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
 

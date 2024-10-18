@@ -1,4 +1,4 @@
-import { createUser, getUserByEmail, getUsers, updateUser } from "@/db/config";
+import { createUser, getUserByEmail, getUsers, updateUser } from "@/db/user";
 import { userFormSchema, type User } from "@/schemas/user";
 import { defineAction } from "astro:actions";
 import { z } from "zod";

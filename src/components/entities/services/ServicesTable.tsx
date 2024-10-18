@@ -8,9 +8,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./ui/table";
-import MyDropdown from "./MyDropdown";
-import { TableSkeletonComponent } from "./Skeletons";
+} from "@/components/ui/table";
+import MyDropdown from "@/components/custom-ui/DropdownWhatsapp";
+import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
 
 const ServicesTable = () => {
   const { globalSearchText } = useStore();

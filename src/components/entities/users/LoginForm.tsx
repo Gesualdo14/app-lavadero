@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import Logo from "@/components/Logo";
+import Logo from "@/components/custom-ui/Logo";
 import { Label } from "@/components/ui/label";
 import { navigate } from "astro/virtual-modules/transitions-router.js";
 import { actions } from "astro:actions";
