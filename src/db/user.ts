@@ -1,4 +1,9 @@
-import { users, type InsertUser, type SelectUser } from "@/schemas/user";
+import {
+  users,
+  type InsertUser,
+  type LoggedUser,
+  type SelectUser,
+} from "@/schemas/user";
 import { vehicles, type InsertVehicle } from "@/schemas/vehicle";
 import { db } from ".";
 import type { TSelect } from "@/schemas/sale";
@@ -25,14 +30,20 @@ export async function updateUser(user: Partial<InsertUser>, userId: number) {
 export const getUsers = async <T extends boolean>(
   searchText: string | null | undefined,
   asItems: T,
-  isClient: number | undefined
+  isClient: number | undefined,
+  user: LoggedUser
 ): Promise<T extends true ? TSelect<"users"> : SelectUser[]> => {
   const searchConfig: DBQueryConfig = {
+    where: eq(users.company_id, user.company_id),
     limit: 8,
     orderBy: desc(users.id),
   };
+  console.log({ isClient, user });
   if (isClient === 1) {
-    searchConfig.where = eq(users.is_client, isClient as number);
+    searchConfig.where = and(
+      eq(users.is_client, isClient as number),
+      eq(users.company_id, user.company_id)
+    );
   }
   if (!!searchText) {
     searchConfig.where = and(
@@ -40,7 +51,8 @@ export const getUsers = async <T extends boolean>(
         like(users.firstname, `%${searchText}%`),
         like(users.lastname, `%${searchText}%`)
       ),
-      eq(users.is_client, isClient as number)
+      eq(users.is_client, isClient as number),
+      eq(users.company_id, user.company_id)
     );
   }
   const result = await db.query.users.findMany(searchConfig);

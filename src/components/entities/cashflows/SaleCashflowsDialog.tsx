@@ -30,13 +30,12 @@ import SaleCashflowsTable from "./SaleCashflowsTable";
 
 export function SaleCashflowsDialog() {
   const queryClient = useQueryClient();
-  const { update, openDialog, sale, cashflow, creating } = useStore();
+  const { update, openDialog, sale, cashflow, creating, globalSearchText } =
+    useStore();
   const form = useForm<Cashflow>({
     resolver: zodResolver(cashflowFormSchema),
     defaultValues: { sale_id: sale.id },
   });
-
-  const id = form.getValues("sale_id");
 
   const {
     formState: { isSubmitting },
@@ -54,6 +53,7 @@ export function SaleCashflowsDialog() {
     console.log({ result });
     reset({});
     queryClient.refetchQueries({ queryKey: ["cashflows", sale.id] });
+    queryClient.refetchQueries({ queryKey: ["sales", globalSearchText] });
 
     toast({
       title: result.data?.message,

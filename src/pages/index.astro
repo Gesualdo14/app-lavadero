@@ -5,24 +5,11 @@ export const description =
 import "@/styles/globals.css";
 import Layout from "@/layouts/Layout.astro";
 import Panels from "@/components/custom-ui/Panels";
-import jwt from "jsonwebtoken";
-try {
-  const token = Astro.cookies.get("jwt")?.value;
-  console.log({ token });
-  if (!token) {
-    return Astro.redirect("/login");
-  }
-  const user = await jwt.verify(
-    token || "",
-    import.meta.env.JWT_SECRET_KEY as string
-  );
-  console.log({ user });
 
-  if (!user) {
-    console.log("REDIRECT");
-    return Astro.redirect("/login");
-  }
-} catch (error) {
+const user = Astro.locals.user;
+console.log("INDEX", { user: Astro.locals.user });
+
+if (!user) {
   Astro.cookies.set("jwt", "", {
     httpOnly: true,
     expires: new Date(),

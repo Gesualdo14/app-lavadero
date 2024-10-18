@@ -162,18 +162,19 @@ const MultiSelect = ({
         autoFocus={autoFocus}
         className="w-full"
         onKeyDown={(e) => {
+          e.stopPropagation();
           if (["Enter", "ArrowDown"].includes(e.code)) {
             update("openSelect", field.name);
           }
           setTimeout(() => {
             document.getElementById("my-input")?.focus();
-          }, 200);
+          }, 50);
         }}
         onClick={(e) => {
           e.stopPropagation();
           setTimeout(() => {
             document.getElementById("my-input")?.focus();
-          }, 200);
+          }, 50);
           update("openSelect", isOpen ? "" : field.name);
           update("searchText", "");
         }}

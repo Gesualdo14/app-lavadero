@@ -2,6 +2,7 @@ import { getPaymentMethods } from "@/db/cashflow";
 import { getServices } from "@/db/service";
 import { getUsers } from "@/db/user";
 import { getVehicles, getBrands } from "@/db/vehicle";
+import type { LoggedUser } from "@/schemas/user";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
 
@@ -19,18 +20,30 @@ const ui = {
       ]),
       filterId: z.number().optional(),
     }),
-    handler: async ({ searchText, entity, filterId }) => {
+    handler: async ({ searchText, entity, filterId }, { locals }) => {
       try {
-        const actionToCall = {
-          service: getServices,
-          client: getUsers,
-          user: getUsers,
-          vehicle: getVehicles,
-          brand: getBrands,
-          method: getPaymentMethods,
-        };
-
-        const items = await actionToCall[entity](searchText, true, filterId);
+        let items;
+        const user = locals.user as LoggedUser;
+        switch (entity) {
+          case "service":
+            items = await getServices(searchText, true, user);
+            break;
+          case "user":
+            items = await getUsers(searchText, true, 0, user);
+            break;
+          case "client":
+            items = await getUsers(searchText, true, 1, user);
+            break;
+          case "brand":
+            items = await getBrands(searchText, true, user);
+            break;
+          case "vehicle":
+            items = await getVehicles(searchText, true, filterId);
+            break;
+          case "method":
+            items = await getPaymentMethods(searchText, true);
+            break;
+        }
 
         return {
           ok: true,

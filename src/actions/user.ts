@@ -1,5 +1,5 @@
 import { createUser, getUserByEmail, getUsers, updateUser } from "@/db/user";
-import { userFormSchema, type User } from "@/schemas/user";
+import { userFormSchema, type LoggedUser, type User } from "@/schemas/user";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
@@ -24,6 +24,7 @@ const user = {
           email: user.email,
           firstname: user.firstname,
           lastname: user.lastname,
+          company_id: user.company_id,
           role: user.role,
         },
         process?.env?.JWT_SECRET_KEY as string
@@ -65,9 +66,14 @@ const user = {
       searchText: z.string().nullish(),
       justClients: z.boolean().default(false),
     }),
-    handler: async ({ searchText, justClients }) => {
+    handler: async ({ searchText, justClients }, { locals }) => {
       try {
-        const users = await getUsers(searchText, false, justClients ? 1 : 0);
+        const users = await getUsers(
+          searchText,
+          false,
+          justClients ? 1 : 0,
+          locals.user as LoggedUser
+        );
 
         return {
           ok: true,
@@ -80,9 +86,9 @@ const user = {
       }
     },
   }),
-  createUser: defineAction({
+  createClient: defineAction({
     input: userFormSchema,
-    handler: async (data) => {
+    handler: async (data, { locals }) => {
       try {
         console.log({ data });
         const result = await createUser(
@@ -90,7 +96,8 @@ const user = {
             firstname: data.firstname,
             lastname: data.lastname,
             email: data.email,
-            company_id: 1,
+            company_id: locals.user?.company_id as number,
+            is_client: 1,
           },
           {
             brand: Array.isArray(data.brand) ? data.brand[0].name : "",
@@ -112,7 +119,7 @@ const user = {
       }
     },
   }),
-  updateUser: defineAction({
+  updateClient: defineAction({
     input: userFormSchema,
     handler: async (data) => {
       try {

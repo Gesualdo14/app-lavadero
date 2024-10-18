@@ -34,3 +34,7 @@ export const userFormSchema = z.object({
 export type InsertUser = typeof users.$inferInsert;
 export type SelectUser = typeof users.$inferSelect;
 export type User = z.infer<typeof userFormSchema>;
+export type LoggedUser = Omit<User, "role" & "id"> & {
+  id: number;
+  role: string;
+};

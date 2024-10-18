@@ -1,14 +1,19 @@
 import { createService, getServices } from "@/db/service";
 import { serviceFormSchema } from "@/schemas/service";
+import type { LoggedUser } from "@/schemas/user";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
 
 const service = {
   getServices: defineAction({
     input: z.object({ searchText: z.string().nullish() }),
-    handler: async ({ searchText }) => {
+    handler: async ({ searchText }, { locals }) => {
       try {
-        const services = await getServices(searchText, false);
+        const services = await getServices(
+          searchText,
+          false,
+          locals.user as LoggedUser
+        );
 
         return {
           ok: true,
@@ -23,9 +28,12 @@ const service = {
   }),
   createService: defineAction({
     input: serviceFormSchema,
-    handler: async (data) => {
+    handler: async (data, { locals }) => {
       try {
-        const result = await createService(data);
+        const result = await createService({
+          ...data,
+          company_id: locals.user?.company_id as number,
+        });
         console.log(result);
         return {
           ok: true,
