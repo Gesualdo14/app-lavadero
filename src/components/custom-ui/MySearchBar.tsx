@@ -14,7 +14,8 @@ const MySearchBar = () => {
           const searchInput = document.getElementById(
             "input"
           ) as HTMLInputElement;
-          navigate("?search=" + searchInput.value);
+
+          navigate(searchInput.value ? "?search=" + searchInput.value : "/");
           update("globalSearchText", searchInput.value);
         }}
       >
@@ -24,6 +25,12 @@ const MySearchBar = () => {
           placeholder="Search..."
           defaultValue={globalSearchText}
           className="w-full rounded-lg bg-background pl-8"
+          onChange={(e) => {
+            if (!e.target.value) {
+              navigate("/");
+              update("globalSearchText", "");
+            }
+          }}
         />
         <button type="submit" className="hidden"></button>
       </form>

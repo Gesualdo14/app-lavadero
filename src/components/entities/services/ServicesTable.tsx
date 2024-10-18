@@ -37,11 +37,11 @@ const ServicesTable = () => {
           </TableHead>
         </TableRow>
       </TableHeader>
-      {isPending ? (
-        <TableSkeletonComponent />
-      ) : (
-        <TableBody>
-          {services?.map((s) => (
+      <TableBody>
+        {isPending ? (
+          <TableSkeletonComponent />
+        ) : (
+          services?.map((s) => (
             <TableRow key={s.id}>
               <TableCell className="font-medium w-48">{s.name}</TableCell>
               <TableCell className="w-48">
@@ -55,9 +55,9 @@ const ServicesTable = () => {
                 <MyDropdown />
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      )}
+          ))
+        )}
+      </TableBody>
     </Table>
   );
 };

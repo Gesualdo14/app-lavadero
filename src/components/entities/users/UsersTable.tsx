@@ -39,11 +39,11 @@ const UsersTable = () => {
           </TableHead>
         </TableRow>
       </TableHeader>
-      {isPending ? (
-        <TableSkeletonComponent />
-      ) : (
-        <TableBody>
-          {users?.map((u) => (
+      <TableBody>
+        {isPending ? (
+          <TableSkeletonComponent />
+        ) : (
+          users?.map((u) => (
             <TableRow
               key={u.id}
               className="cursor-pointer"
@@ -63,9 +63,9 @@ const UsersTable = () => {
                 <DropdownWhatsapp />
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      )}
+          ))
+        )}
+      </TableBody>
     </Table>
   );
 };
