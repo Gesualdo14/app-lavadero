@@ -79,10 +79,10 @@ const SalesTable = () => {
                       update("sale", {
                         id: s.id,
                         services: JSON.parse(s.services as string),
-                        user: [
+                        client: [
                           {
-                            id: s.user.id,
-                            name: `${s.user.firstname} ${s.user.lastname}`,
+                            id: s.client.id,
+                            name: `${s.client.firstname} ${s.client.lastname}`,
                           },
                         ],
                         vehicle: [
