@@ -1,21 +1,40 @@
 import { cashflows, type InsertCashflow } from "@/schemas/cashflow";
 import { db } from ".";
-import { eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { sales } from "@/schemas/sale";
+import { dailyReport } from "@/schemas/daily-report";
 
 export async function createCashflow(cashflow: InsertCashflow) {
   return await db.transaction(async (tx) => {
-    console.log({ cashflow });
-    const created = await tx.insert(cashflows).values(cashflow);
-    const currentSale = await tx.query.sales.findFirst({
-      where: eq(sales.id, cashflow.sale_id),
-    });
-    console.log({ currentSale, created });
-    const updated = await tx
-      .update(sales)
-      .set({ gathered: (currentSale?.gathered || 0) + cashflow.amount })
-      .where(eq(sales.id, cashflow.sale_id));
-    console.log({ updated });
+    try {
+      console.log({ cashflow });
+      const created = await tx.insert(cashflows).values(cashflow);
+      const currentSale = await tx.query.sales.findFirst({
+        where: eq(sales.id, cashflow.sale_id),
+      });
+      console.log({ currentSale, created });
+      await tx
+        .update(sales)
+        .set({ gathered: (currentSale?.gathered || 0) + cashflow.amount })
+        .where(eq(sales.id, cashflow.sale_id));
+      const now = new Date();
+      await tx
+        .update(dailyReport)
+        .set({
+          sales_gathered: sql`${dailyReport.sales_gathered} + ${cashflow.amount}`,
+        })
+        .where(
+          and(
+            eq(dailyReport.company_id, 1),
+            eq(dailyReport.day, now.getDate()),
+            eq(dailyReport.month, now.getMonth() + 1),
+            eq(dailyReport.year, now.getFullYear())
+          )
+        );
+    } catch (error) {
+      console.log("ERROR AL CREAR EL COBRO", { error });
+      await tx.rollback();
+    }
   });
 }
 
