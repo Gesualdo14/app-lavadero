@@ -13,6 +13,7 @@ type Store = {
   searchText: string;
   globalSearchText: string;
   creating: boolean;
+  sheetOpen: boolean;
   update: (prop: keyof Store, value: any) => void;
 };
 
@@ -45,6 +46,7 @@ export const useStore = create<Store>((set) => ({
   searchText: "",
   globalSearchText: "",
   creating: false,
+  sheetOpen: false,
   update: (prop, value) =>
     set((state) => {
       if (prop === "panel") {

@@ -89,7 +89,7 @@ export function SaleCashflowsDialog() {
       open={openDialog === "cashflow"}
       onOpenChange={(open) => update("openDialog", !open ? "" : "cashflow")}
     >
-      <DialogContent className="sm:max-w-[425px] top-[40%]">
+      <DialogContent className="sm:max-w-[425px] top-[200px]">
         <DialogTitle>Cobros recibidos</DialogTitle>
         <SaleCashflowsTable sale_id={sale.id as number} />
         <DialogHeader>

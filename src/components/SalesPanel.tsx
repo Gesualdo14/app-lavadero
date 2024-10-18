@@ -11,7 +11,10 @@ import { SaleCashflowsDialog } from "./SaleCashflowsDialog";
 
 const SalesPanel = () => {
   return (
-    <Card x-chunk="dashboard-06-chunk-0">
+    <Card
+      x-chunk="dashboard-06-chunk-0"
+      className="rounded-none sm:rounded-xl m-0 mt-0 h-full border-0"
+    >
       <CardHeader className="pb-2">
         <div className="flex justify-between">
           <CardTitle>Ventas</CardTitle>
@@ -22,11 +25,6 @@ const SalesPanel = () => {
       <CardContent>
         <SalesTable />
       </CardContent>
-      <CardFooter>
-        <div className="text-xs text-muted-foreground">
-          Showing <strong>1-10</strong> of <strong>32</strong> ventas
-        </div>
-      </CardFooter>
     </Card>
   );
 };
