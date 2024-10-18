@@ -1,15 +1,13 @@
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { SaleFormDialog } from "./SaleFormDialog";
-import SalesTable from "./SalesTable";
-import { SaleCashflowsDialog } from "./SaleCashflowsDialog";
+} from "@/components/ui/card.tsx";
+import { BrandFormDialog } from "./BrandFormDialog.tsx";
+import BrandsTable from "./BrandsTable.tsx";
 
-const SalesPanel = () => {
+const ConfigPanel = () => {
   return (
     <Card
       x-chunk="dashboard-06-chunk-0"
@@ -17,16 +15,15 @@ const SalesPanel = () => {
     >
       <CardHeader className="pb-2">
         <div className="flex justify-between">
-          <CardTitle>Ventas</CardTitle>
-          <SaleFormDialog />
-          <SaleCashflowsDialog />
+          <CardTitle>Configuración</CardTitle>
+          <BrandFormDialog />
         </div>
       </CardHeader>
       <CardContent>
-        <SalesTable />
+        <BrandsTable />
       </CardContent>
     </Card>
   );
 };
 
-export default SalesPanel;
+export default ConfigPanel;

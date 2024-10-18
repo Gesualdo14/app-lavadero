@@ -5,9 +5,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from "@/components/ui/card";
 
-import { UserFormDialog } from "./UserFormDialog";
+import { UserFormDialog } from "../entities/users/UserFormDialog";
 import type React from "react";
 
 const TableWrapper = ({

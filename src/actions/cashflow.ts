@@ -3,7 +3,7 @@ import {
   getCashflows,
   getPaymentMethods,
   updateCashflow,
-} from "@/db/config";
+} from "@/db/cashflow";
 import { cashflowFormSchema } from "@/schemas/cashflow";
 import { defineAction } from "astro:actions";
 import { z } from "zod";

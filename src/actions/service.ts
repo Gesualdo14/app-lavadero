@@ -1,4 +1,4 @@
-import { createService, getServices } from "@/db/config";
+import { createService, getServices } from "@/db/service";
 import { serviceFormSchema } from "@/schemas/service";
 import { defineAction } from "astro:actions";
 import { z } from "zod";

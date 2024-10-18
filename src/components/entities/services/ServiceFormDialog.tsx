@@ -21,7 +21,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { LoadingSpinner } from "./Spinner";
+import { LoadingSpinner } from "@/components/custom-ui/Spinner";
 import { serviceFormSchema, type Service } from "@/schemas/service";
 import { useQueryClient } from "@tanstack/react-query";
 import { useStore } from "@/stores";

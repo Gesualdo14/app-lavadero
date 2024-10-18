@@ -21,7 +21,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { LoadingSpinner } from "./Spinner";
+import { LoadingSpinner } from "../../custom-ui/Spinner";
 import { navigate } from "astro:transitions/client";
 import { brandFormSchema, type Brand } from "@/schemas/brand";
 import { useQueryClient } from "@tanstack/react-query";

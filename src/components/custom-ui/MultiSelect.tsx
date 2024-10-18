@@ -6,13 +6,13 @@ import {
   SelectGroup,
   SelectItem,
   SelectTrigger,
-} from "./ui/select";
+} from "@/components/ui/select";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { Input } from "./ui/input";
-import { Separator } from "./ui/separator";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import type { ControllerRenderProps, UseFormReturn } from "react-hook-form";
 import { CheckIcon, X } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import type { User } from "@/schemas/user";
 import type { Sale } from "@/schemas/sale";
 import { useStore } from "@/stores";

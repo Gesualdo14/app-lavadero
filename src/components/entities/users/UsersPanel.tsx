@@ -1,11 +1,5 @@
 import { UserFormDialog } from "./UserFormDialog";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import UsersTable from "./UsersTable";
 
 const UsersPanel = () => {
@@ -23,11 +17,6 @@ const UsersPanel = () => {
       <CardContent>
         <UsersTable />
       </CardContent>
-      <CardFooter>
-        <div className="text-xs text-muted-foreground">
-          Showing <strong>1-10</strong> of <strong>32</strong> clientes
-        </div>
-      </CardFooter>
     </Card>
   );
 };

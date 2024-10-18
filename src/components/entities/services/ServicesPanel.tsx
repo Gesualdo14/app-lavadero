@@ -1,11 +1,4 @@
-import { UserFormDialog } from "./UserFormDialog";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ServicesTable from "./ServicesTable.tsx";
 import { ServiceFormDialog } from "./ServiceFormDialog.tsx";
 
@@ -24,11 +17,6 @@ const ServicesPanel = () => {
       <CardContent>
         <ServicesTable />
       </CardContent>
-      <CardFooter>
-        <div className="text-xs text-muted-foreground">
-          Mostrando <strong>1-10</strong> of <strong>32</strong> servicios
-        </div>
-      </CardFooter>
     </Card>
   );
 };

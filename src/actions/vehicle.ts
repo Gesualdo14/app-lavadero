@@ -1,4 +1,4 @@
-import { createVehicle, getVehicles } from "@/db/config";
+import { createVehicle, getVehicles } from "@/db/vehicle";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
 

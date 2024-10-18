@@ -1,4 +1,4 @@
-import { createBrand, getBrands } from "@/db/config";
+import { createBrand, getBrands } from "@/db/vehicle";
 import { brandFormSchema } from "@/schemas/brand";
 import { defineAction } from "astro:actions";
 import { z } from "zod";

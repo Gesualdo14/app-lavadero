@@ -8,10 +8,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./ui/table";
+} from "@/components/ui/table";
 import { CircleDollarSign, Edit2Icon } from "lucide-react";
-import { SaleCashflowsDialog } from "./SaleCashflowsDialog";
-import { TableSkeletonComponent } from "./Skeletons";
+import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
 
 const SalesTable = () => {
   const { update, globalSearchText } = useStore();

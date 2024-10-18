@@ -21,8 +21,8 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { LoadingSpinner } from "./Spinner";
-import MultiSelect from "./MultiSelect";
+import { LoadingSpinner } from "../../custom-ui/Spinner";
+import MultiSelect from "../../custom-ui/MultiSelect";
 import { useStore } from "@/stores";
 import { useQueryClient } from "@tanstack/react-query";
 import { cashflowFormSchema, type Cashflow } from "@/schemas/cashflow";
