@@ -5,23 +5,9 @@ export const description =
 import "@/styles/globals.css";
 import { LoginForm } from "@/components/entities/users/LoginForm";
 import LoginLayout from "@/layouts/LoginLayout.astro";
-import jwt from "jsonwebtoken";
-const token = Astro.cookies.get("jwt")?.value;
-console.log({ token });
 
-if (!!token) {
-  console.log("REDIRECT");
-
-  const user = await jwt.verify(
-    token || "",
-    import.meta.env.JWT_SECRET_KEY as string
-  );
-  console.log({ user });
-
-  if (!user) {
-    console.log("REDIRECT");
-    return Astro.redirect("/");
-  }
+if (!!Astro.locals.user) {
+  return Astro.redirect("/");
 }
 ---
 

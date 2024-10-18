@@ -56,6 +56,7 @@ export interface TSelect<T> extends z.infer<typeof selectSchema> {
 export const saleFormSchema = z.object({
   id: z.number().optional(),
   company_id: z.number(),
+  created_by: z.number(),
   client: selectSchema,
   vehicle: selectSchema,
   services: selectSchema,

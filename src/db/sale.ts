@@ -7,6 +7,7 @@ import {
   type InsertSaleItem,
   type SelectSaleItem,
 } from "@/schemas/sale-item";
+import type { LoggedUser } from "@/schemas/user";
 
 export const getSales = async (searchText: string | null | undefined) => {
   try {
@@ -35,13 +36,14 @@ export const getSales = async (searchText: string | null | undefined) => {
 };
 
 export async function createSale(data: Sale) {
-  const { services, client, vehicle, total_amount } = data;
+  const { services, client, created_by, company_id, vehicle, total_amount } =
+    data;
   return await db.transaction(async (tx) => {
     try {
       const { lastInsertRowid } = await tx.insert(sales).values({
         vehicle_id: vehicle[0].id,
-        company_id: 1,
-        created_by: 1,
+        company_id,
+        created_by,
         client_id: client[0].id,
         total_amount,
       });
@@ -116,7 +118,3 @@ export const getSaleItems = async (): Promise<SelectSaleItem[]> => {
     orderBy: [desc(saleItems.id)],
   });
 };
-
-export async function createSaleItems(data: InsertSaleItem[]) {
-  return await db.insert(saleItems).values(data);
-}

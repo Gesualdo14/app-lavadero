@@ -1,5 +1,5 @@
 import { createUser, getUserByEmail, getUsers, updateUser } from "@/db/user";
-import { userFormSchema, type User } from "@/schemas/user";
+import { userFormSchema, type LoggedUser, type User } from "@/schemas/user";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
@@ -24,6 +24,7 @@ const user = {
           email: user.email,
           firstname: user.firstname,
           lastname: user.lastname,
+          company_id: user.company_id,
           role: user.role,
         },
         process?.env?.JWT_SECRET_KEY as string
@@ -65,9 +66,14 @@ const user = {
       searchText: z.string().nullish(),
       justClients: z.boolean().default(false),
     }),
-    handler: async ({ searchText, justClients }) => {
+    handler: async ({ searchText, justClients }, { locals }) => {
       try {
-        const users = await getUsers(searchText, false, justClients ? 1 : 0);
+        const users = await getUsers(
+          searchText,
+          false,
+          justClients ? 1 : 0,
+          locals.user as LoggedUser
+        );
 
         return {
           ok: true,

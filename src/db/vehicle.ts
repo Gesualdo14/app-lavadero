@@ -7,6 +7,7 @@ import { db } from ".";
 import { and, desc, eq, like, or, type DBQueryConfig } from "drizzle-orm";
 import type { TSelect } from "@/schemas/sale";
 import { brands, type InsertBrand, type SelectBrand } from "@/schemas/brand";
+import type { LoggedUser } from "@/schemas/user";
 
 export const getVehicles = async <T extends boolean>(
   searchText: string | null | undefined,
@@ -51,9 +52,11 @@ export async function createVehicle(data: InsertVehicle) {
 
 export const getBrands = async <T extends boolean>(
   searchText: string | null | undefined,
-  asItems: T
+  asItems: T,
+  user: LoggedUser
 ): Promise<T extends true ? TSelect<"brand"> : SelectBrand[]> => {
   const searchConfig: DBQueryConfig = {
+    where: eq(brands.company_id, user.company_id),
     limit: 5,
     orderBy: [desc(brands.id)],
   };
