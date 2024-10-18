@@ -29,7 +29,7 @@ export const description = "A collection of health charts.";
 
 export function Dashboard() {
   return (
-    <div className="chart-wrapper flex max-w-6xl flex-col flex-wrap items-start gap-6 p-0 sm:flex-row sm:p-4">
+    <div className="chart-wrapper flex max-w-6xl flex-col flex-wrap items-start gap-6 sm:flex-row p-4">
       <div className="grid w-full gap-6 sm:grid-cols-2 lg:max-w-[28rem] lg:grid-cols-1">
         <Card className="lg:max-w-md" x-chunk="charts-01-chunk-0">
           <CardHeader className="space-y-0 pb-2">

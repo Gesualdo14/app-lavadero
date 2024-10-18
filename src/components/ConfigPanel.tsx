@@ -4,7 +4,10 @@ import BrandsTable from "./BrandsTable.tsx";
 
 const ConfigPanel = () => {
   return (
-    <Card x-chunk="dashboard-06-chunk-0">
+    <Card
+      x-chunk="dashboard-06-chunk-0"
+      className="rounded-none sm:rounded-xl m-0 mt-0 h-full border-0"
+    >
       <CardHeader className="pb-2">
         <div className="flex justify-between">
           <CardTitle>Configuración</CardTitle>

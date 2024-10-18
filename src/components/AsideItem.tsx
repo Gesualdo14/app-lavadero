@@ -34,6 +34,7 @@ const AsideItem = ({ text, panel, icon, tooltip = true }: Props) => {
       <a
         onClick={() => {
           update("panel", text.toLocaleLowerCase());
+          update("sheetOpen", false);
           localStorage.setItem("selectedPanel", panel);
         }}
         className="flex gap-3 items-center  cursor-pointer justify-center rounded-md text-muted-foreground transition-bg hover:text-foreground md:h-8 md:w-8"
@@ -47,7 +48,10 @@ const AsideItem = ({ text, panel, icon, tooltip = true }: Props) => {
 
   return (
     <a
-      onClick={() => update("panel", panel.toLocaleLowerCase())}
+      onClick={() => {
+        update("panel", panel.toLocaleLowerCase());
+        update("sheetOpen", false);
+      }}
       className={`group flex h-9 w-9 shrink-0 items-center justify-center md:h-8 md:w-8 md:text-base ${isSelected ? "gap-2 rounded-lg bg-primary text-lg font-semibold text-primary-foreground" : ""}`}
     >
       {icons[icon]}
