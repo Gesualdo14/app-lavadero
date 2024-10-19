@@ -41,6 +41,12 @@ const SheetItem = () => {
             tooltip={false}
           />
           <AsideItem
+            panel="marcas"
+            text="Marcas"
+            icon="brands"
+            tooltip={false}
+          />
+          <AsideItem
             panel="informes"
             text="Informes"
             icon="dashboard"

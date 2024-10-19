@@ -85,7 +85,11 @@ const SalesTable = () => {
                       console.log({ s });
                       update("sale", {
                         id: s.id,
+                        company_id: s.company_id,
                         services: JSON.parse(s.services as string),
+                        sale_date: new Date(
+                          s.sale_date as number
+                        ).toUTCString(),
                         client: [
                           {
                             id: s.client.id,

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { integer, sqliteTable, text, real } from "drizzle-orm/sqlite-core";
 import { companies } from "./company";
+import { users } from "./user";
 
 export const services = sqliteTable("Services", {
   id: integer("id").primaryKey(),
@@ -9,6 +10,7 @@ export const services = sqliteTable("Services", {
   company_id: integer("company_id")
     .notNull()
     .references(() => companies.id),
+  deleted_by: integer("deleted_by").references(() => users.id),
 });
 
 export const serviceFormSchema = z.object({
@@ -16,6 +18,7 @@ export const serviceFormSchema = z.object({
   name: z.string(),
   price: z.number(),
   company_id: z.number(),
+  deleted_by: z.number().optional(),
 });
 
 export type InsertService = typeof services.$inferInsert;

@@ -1,6 +1,5 @@
 import { createSale, getSales, updateSale } from "@/db/sale";
 import { saleFormSchema } from "@/schemas/sale";
-import type { LoggedUser } from "@/schemas/user";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
 
@@ -28,6 +27,7 @@ const sale = {
     input: saleFormSchema,
     handler: async (data, { locals }) => {
       try {
+        console.log({ data });
         const result = await createSale({
           ...data,
           company_id: locals.user?.company_id as number,

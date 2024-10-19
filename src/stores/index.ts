@@ -9,12 +9,23 @@ type Store = {
   panel: string;
   cashflow: Partial<Cashflow>;
   openDialog: string;
+  openDatePicker: string;
   openSelect: string;
   searchText: string;
   globalSearchText: string;
   creating: boolean;
   sheetOpen: boolean;
   update: (prop: keyof Store, value: any) => void;
+};
+
+export const EMPTY_SALE = {
+  sale_date: new Date().toUTCString(),
+  services: [],
+  client: [],
+  vehicle: [],
+  company_id: 1,
+  gathered: 0,
+  total_amount: 0,
 };
 
 export const useStore = create<Store>((set) => ({
@@ -28,20 +39,14 @@ export const useStore = create<Store>((set) => ({
     model: "",
     patent: "",
   },
-  sale: {
-    services: [],
-    client: [],
-    vehicle: [],
-    company_id: 1,
-    gathered: 0,
-    total_amount: 0,
-  },
+  sale: EMPTY_SALE,
   cashflow: {
     sale_id: 0,
     method: [],
   },
   panel: "",
   openDialog: "",
+  openDatePicker: "",
   openSelect: "",
   searchText: "",
   globalSearchText: "",

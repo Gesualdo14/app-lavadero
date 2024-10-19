@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { relations, sql } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import { integer, sqliteTable, text, real } from "drizzle-orm/sqlite-core";
 import { users } from "./user";
 
@@ -11,6 +11,7 @@ export const vehicles = sqliteTable("Vehicles", {
   user_id: integer("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
+  deleted_by: integer("deleted_by").references(() => users.id),
   createdAt: text("created_at")
     .default(sql`(CURRENT_TIMESTAMP)`)
     .notNull(),
@@ -23,6 +24,7 @@ export const vehicleFormSchema = z.object({
   brand: z.string(),
   model: z.string(),
   user_id: z.number(),
+  deleted_by: z.date().optional(),
   created_at: z.date().optional(),
   updated_at: z.date().optional(),
 });

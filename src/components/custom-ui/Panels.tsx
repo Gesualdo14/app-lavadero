@@ -3,7 +3,7 @@ import { useStore } from "@/stores";
 import SalesPanel from "@/components/entities/sales/SalesPanel";
 import UsersPanel from "@/components/entities/users/UsersPanel";
 import ServicesPanel from "@/components/entities/services/ServicesPanel";
-import ConfigPanel from "@/components/entities/configs/ConfigPanel";
+import BrandsPanel from "@/components/entities/brands/BrandsPanel";
 import DashboardPanel from "@/components/entities/reports/DashboardPanel";
 import { useLayoutEffect } from "react";
 
@@ -30,8 +30,9 @@ const Panels = ({ searchParams }: { searchParams: any }) => {
       {panel === "ventas" && <SalesPanel />}
       {panel === "clientes" && <UsersPanel />}
       {panel === "servicios" && <ServicesPanel />}
+      {panel === "marcas" && <BrandsPanel />}
       {panel === "informes" && <DashboardPanel />}
-      {panel === "config" && <ConfigPanel />}
+      {panel === "config" && <BrandsPanel />}
     </QueryClientProvider>
   );
 };
