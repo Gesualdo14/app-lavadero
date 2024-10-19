@@ -51,9 +51,7 @@ const ServicesTable = () => {
                   maximumFractionDigits: 0,
                 }).format(s.price)}
               </TableCell>
-              <TableCell>
-                <MyDropdown />
-              </TableCell>
+              <TableCell></TableCell>
             </TableRow>
           ))
         )}

@@ -43,9 +43,6 @@ const BrandsTable = () => {
           {brands?.map((b) => (
             <TableRow>
               <TableCell className="font-medium w-48">{b.name}</TableCell>
-              <TableCell>
-                <MyDropdown />
-              </TableCell>
             </TableRow>
           ))}
         </TableBody>
