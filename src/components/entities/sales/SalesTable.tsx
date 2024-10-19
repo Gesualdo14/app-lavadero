@@ -12,6 +12,7 @@ import {
 import { CircleDollarSign, Edit2Icon } from "lucide-react";
 import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
 import { Progress } from "@/components/ui/progress";
+import DropdownWhatsapp from "@/components/custom-ui/DropdownWhatsapp";
 
 const SalesTable = () => {
   const { update, globalSearchText } = useStore();
@@ -43,7 +44,33 @@ const SalesTable = () => {
         ) : (
           Array.isArray(sales) &&
           sales?.map((s) => (
-            <TableRow key={s.id} className="cursor-pointer">
+            <TableRow
+              key={s.id}
+              className="cursor-pointer"
+              onClick={() => {
+                update("sale", {
+                  id: s.id,
+                  company_id: s.company_id,
+                  services: JSON.parse(s.services as string),
+                  sale_date: new Date(s.sale_date as number).toUTCString(),
+                  client: [
+                    {
+                      id: s.client.id,
+                      name: `${s.client.firstname} ${s.client.lastname}`,
+                    },
+                  ],
+                  vehicle: [
+                    {
+                      id: s.vehicle.id,
+                      name: `${s.vehicle.brand} ${s.vehicle.model}`,
+                    },
+                  ],
+                  total_amount: s.total_amount,
+                });
+                update("openDialog", "sale");
+                update("creating", false);
+              }}
+            >
               <TableCell className="font-medium w-80">
                 <div className="flex flex-col">
                   <span>{`${s.client.firstname} ${s.client.lastname}`}</span>
@@ -77,46 +104,19 @@ const SalesTable = () => {
                 </div>
               </TableCell>
               <TableCell>
-                <div className="flex items-start justify-start gap-3">
-                  <Edit2Icon
-                    className="h-5 w-5"
-                    onClick={() => {
-                      console.log("CLICK");
-                      console.log({ s });
-                      update("sale", {
-                        id: s.id,
-                        company_id: s.company_id,
-                        services: JSON.parse(s.services as string),
-                        sale_date: new Date(
-                          s.sale_date as number
-                        ).toUTCString(),
-                        client: [
-                          {
-                            id: s.client.id,
-                            name: `${s.client.firstname} ${s.client.lastname}`,
-                          },
-                        ],
-                        vehicle: [
-                          {
-                            id: s.vehicle.id,
-                            name: `${s.vehicle.brand} ${s.vehicle.model}`,
-                          },
-                        ],
-                        total_amount: s.total_amount,
-                      });
-                      update("openDialog", "sale");
-                      update("creating", false);
-                    }}
-                  />
-                  <CircleDollarSign
-                    className="h-5 w-5"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      update("creating", true);
-                      update("openDialog", "cashflow");
-                      update("sale", s);
-                    }}
-                  />
+                <div className="flex items-center justify-start">
+                  <div className="mr-2">
+                    <CircleDollarSign
+                      className="h-6 w-6  text-gray-700 hover:text-blue-500"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        update("creating", true);
+                        update("openDialog", "cashflow");
+                        update("sale", s);
+                      }}
+                    />
+                  </div>
+                  <DropdownWhatsapp />
                 </div>
               </TableCell>
             </TableRow>

@@ -15,9 +15,12 @@ const DropdownWhatsapp = () => {
           aria-haspopup="true"
           size="icon"
           variant="ghost"
-          className="!ring-0"
+          className="!ring-0 mt-0 block"
         >
-          <img src="/whatsapp.png" className="h-7 w-7" />
+          <img
+            src="/whatsapp.png"
+            className="!h-[1.8rem] !w-[1.8rem] hover:scale-105 transition-all"
+          />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
