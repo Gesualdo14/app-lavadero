@@ -20,7 +20,7 @@ export function LoginForm() {
     <Card className="w-full max-w-sm">
       <CardHeader>
         <div className="w-full flex justify-center items-center">
-          <Logo />
+          <img src="/login-logo.png" alt="" className="w-52" />
         </div>
       </CardHeader>
       <CardContent>

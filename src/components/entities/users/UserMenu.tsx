@@ -20,7 +20,7 @@ const UserMenu = () => {
           className="overflow-hidden rounded-full"
         >
           <img
-            src="/user.png"
+            src="/henry.png"
             width={36}
             height={36}
             alt="Avatar"
@@ -29,10 +29,9 @@ const UserMenu = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Settings</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
+        <DropdownMenuItem>Configuración</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={async () => {
