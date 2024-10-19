@@ -5,6 +5,7 @@ import SheetItem from "@/components/custom-ui/SheetItem";
 import { Toaster } from "@/components/ui/toaster";
 import UserMenu from "@/components/entities/users/UserMenu";
 import { ClientRouter } from "astro:transitions";
+import Logo from "@/components/custom-ui/Logo";
 interface Props {
   title: string;
 }
@@ -38,7 +39,7 @@ const { title } = Astro.props;
         class="abosolute inset-y-0 left-0 z-10 hidden w-16 flex-col border-r bg-background sm:flex"
       >
         <nav class="flex flex-col items-center gap-4 px-2 py-4">
-          <img src="/logo.png" alt="" class="w-9" />
+          <Logo href="/logo.png" client:load />
           <AsideItem
             panel="ventas"
             text="Ventas"
@@ -96,6 +97,7 @@ const { title } = Astro.props;
     </div>
   </body>
 </html>
+
 <style is:global>
   :root {
     --accent: 136, 58, 234;
