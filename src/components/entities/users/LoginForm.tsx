@@ -2,10 +2,8 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Logo from "@/components/custom-ui/Logo";
@@ -13,8 +11,11 @@ import { Label } from "@/components/ui/label";
 import { navigate } from "astro/virtual-modules/transitions-router.js";
 import { actions } from "astro:actions";
 import { toast } from "@/hooks/use-toast";
+import { useStore } from "@/stores";
+import { LoadingSpinner } from "@/components/custom-ui/Spinner";
 
 export function LoginForm() {
+  const { update, loading } = useStore();
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
@@ -49,6 +50,7 @@ export function LoginForm() {
                 description: "Debes rellenar ambos campos",
               });
             }
+            update("loading", "login");
             const result = await actions.login({
               email,
               password,
@@ -56,6 +58,7 @@ export function LoginForm() {
             console.log({ result });
             if (result.data?.ok) {
               await navigate("/");
+              update("loading", "");
             } else {
               toast({
                 title: result.data?.message,
@@ -64,7 +67,7 @@ export function LoginForm() {
             }
           }}
         >
-          Iniciar sesión
+          {loading === "login" ? <LoadingSpinner /> : "Iniciar sesión"}
         </Button>
       </CardFooter>
     </Card>
