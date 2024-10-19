@@ -1,4 +1,21 @@
-export default function PremiumCarWashLogo() {
+import { useStore } from "@/stores";
+
+export default function Logo({ href }: { href?: string }) {
+  const { update } = useStore();
+  if (href) {
+    return (
+      <img
+        src={href}
+        alt=""
+        className="w-9 cursor-pointer hover:scale-105 transition-transform"
+        onClick={() => {
+          update("panel", "ventas");
+          localStorage.setItem("selectedPanel", "");
+        }}
+      />
+    );
+  }
+
   return (
     <svg
       width="250"
