@@ -59,9 +59,7 @@ const UsersTable = () => {
               <TableCell className="text-ellipsis max-w-1 sm:text-inherit md:overflow-visible overflow-hidden">
                 {u.email}
               </TableCell>
-              <TableCell>
-                <DropdownWhatsapp />
-              </TableCell>
+              <TableCell></TableCell>
             </TableRow>
           ))
         )}

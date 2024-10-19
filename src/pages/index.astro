@@ -7,7 +7,6 @@ import Layout from "@/layouts/Layout.astro";
 import Panels from "@/components/custom-ui/Panels";
 
 const user = Astro.locals.user;
-console.log("INDEX", { user: Astro.locals.user });
 
 if (!user) {
   Astro.cookies.set("jwt", "", {
@@ -21,7 +20,7 @@ if (!user) {
 }
 ---
 
-<Layout title="Main page">
+<Layout title="Auto SPA">
   <Panels client:load searchParams={Astro.url.searchParams.get("search")} />
 </Layout>
 
