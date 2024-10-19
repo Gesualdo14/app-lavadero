@@ -11,6 +11,7 @@ type Store = {
   openDialog: string;
   openDatePicker: string;
   openSelect: string;
+  loading: string;
   searchText: string;
   globalSearchText: string;
   creating: boolean;
@@ -44,10 +45,11 @@ export const useStore = create<Store>((set) => ({
     sale_id: 0,
     method: [],
   },
-  panel: "",
+  panel: "ventas",
   openDialog: "",
   openDatePicker: "",
   openSelect: "",
+  loading: "",
   searchText: "",
   globalSearchText: "",
   creating: false,
