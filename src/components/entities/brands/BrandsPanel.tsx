@@ -7,7 +7,7 @@ import {
 import { BrandFormDialog } from "./BrandFormDialog.tsx";
 import BrandsTable from "./BrandsTable.tsx";
 
-const ConfigPanel = () => {
+const BrandsPanel = () => {
   return (
     <Card
       x-chunk="dashboard-06-chunk-0"
@@ -15,7 +15,7 @@ const ConfigPanel = () => {
     >
       <CardHeader className="pb-2">
         <div className="flex justify-between">
-          <CardTitle>Configuración</CardTitle>
+          <CardTitle>Marcas</CardTitle>
           <BrandFormDialog />
         </div>
       </CardHeader>
@@ -26,4 +26,4 @@ const ConfigPanel = () => {
   );
 };
 
-export default ConfigPanel;
+export default BrandsPanel;

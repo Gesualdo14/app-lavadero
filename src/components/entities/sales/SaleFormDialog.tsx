@@ -24,8 +24,9 @@ import {
 import { LoadingSpinner } from "@/components/custom-ui/Spinner";
 import { saleFormSchema, type Sale } from "@/schemas/sale";
 import MultiSelect from "@/components/custom-ui/MultiSelect";
-import { useStore } from "@/stores";
+import { EMPTY_SALE, useStore } from "@/stores";
 import { useQueryClient } from "@tanstack/react-query";
+import { DatePicker } from "@/components/custom-ui/DapePicker";
 
 export function SaleFormDialog() {
   const queryClient = useQueryClient();
@@ -64,7 +65,6 @@ export function SaleFormDialog() {
     const action = creating ? "createSale" : "updateSale";
     const result = await actions[action](values);
     console.log({ result });
-    reset({});
     queryClient.refetchQueries({ queryKey: ["sales", globalSearchText] });
 
     toast({
@@ -83,6 +83,7 @@ export function SaleFormDialog() {
     if (openDialog === "sale") {
       form.setValue("id", sale.id);
       form.setValue("client", sale.client);
+      form.setValue("sale_date", sale.sale_date);
       form.setValue("services", sale.services || []);
       form.setValue("vehicle", sale.vehicle);
       form.setValue("total_amount", sale.total_amount);
@@ -90,12 +91,18 @@ export function SaleFormDialog() {
   }, [openDialog]);
 
   const user = form.watch("client");
-  console.log({ user });
+  console.log({ errors: form.formState.errors });
 
   return (
     <Dialog
       open={openDialog === "sale"}
-      onOpenChange={(open) => update("openDialog", !open ? "" : "sale")}
+      onOpenChange={(open) => {
+        update("openDialog", !open ? "" : "sale");
+        if (!open) {
+          update("openSelect", "");
+          update("openDatePicker", "");
+        }
+      }}
     >
       <DialogTrigger asChild>
         <Button
@@ -105,7 +112,7 @@ export function SaleFormDialog() {
           onClick={() => {
             update("creating", true);
             update("openDialog", "sale");
-            update("sale", {});
+            update("sale", EMPTY_SALE);
           }}
         >
           <PlusCircle className="h-3.5 w-3.5" />
@@ -115,14 +122,32 @@ export function SaleFormDialog() {
         </Button>
       </DialogTrigger>
       <DialogContent
-        className="sm:max-w-[425px] top-[200px]"
-        onClick={() => update("openSelect", "")}
+        className="sm:max-w-[425px] top-[50px] translate-y-0"
+        onClick={() => {
+          update("openSelect", "");
+          update("openDatePicker", "");
+        }}
       >
         <DialogHeader>
           <DialogTitle>{creating ? "Nueva" : "Editando"} venta</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={handleSubmit(onSubmit, (error) => console.log(error))}
+            className="space-y-4"
+          >
+            <FormField
+              control={control}
+              name="sale_date"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <DatePicker form={form} field={field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={control}
               name="client"

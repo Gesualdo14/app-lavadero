@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { integer, sqliteTable, text, real } from "drizzle-orm/sqlite-core";
 import { companies } from "./company";
+import { users } from "./user";
 
 export const brands = sqliteTable("Brands", {
   id: integer("id").primaryKey(),
@@ -8,12 +9,14 @@ export const brands = sqliteTable("Brands", {
   company_id: integer("company_id")
     .notNull()
     .references(() => companies.id),
+  deleted_by: integer("deleted_by").references(() => users.id),
 });
 
 export const brandFormSchema = z.object({
   id: z.number().optional(),
   name: z.string(),
   company_id: z.number(),
+  deleted_by: z.number().optional(),
 });
 
 export type InsertBrand = typeof brands.$inferInsert;

@@ -15,6 +15,10 @@ import { companies } from "./company";
 
 export const sales = sqliteTable("Sales", {
   id: integer("id").primaryKey(),
+  sale_date: integer("sale_date"),
+  day: integer("day"),
+  month: integer("month"),
+  year: integer("year"),
   total_amount: integer("total_amount").notNull(),
   gathered: integer("gathered").default(0),
   client_id: integer("client_id")
@@ -33,16 +37,7 @@ export const sales = sqliteTable("Sales", {
     .default(sql`(CURRENT_TIMESTAMP)`)
     .notNull(),
   updated_at: text("updated_at").$onUpdate(() => sql`(CURRENT_TIMESTAMP)`),
-});
-
-export const saleSchema = z.object({
-  client_id: z.number(),
-  created_by: z.number(),
-  vehicle_id: z.number(),
-  total_amount: z.number(),
-  id: z.number().optional(),
-  created_at: z.string().optional(),
-  updated_at: z.string().optional(),
+  deleted_by: integer("deleted_by").references(() => users.id),
 });
 
 export const selectSchema = z.array(
@@ -55,6 +50,7 @@ export interface TSelect<T> extends z.infer<typeof selectSchema> {
 
 export const saleFormSchema = z.object({
   id: z.number().optional(),
+  sale_date: z.string(),
   company_id: z.number(),
   created_by: z.number().optional(),
   client: selectSchema,
@@ -62,6 +58,7 @@ export const saleFormSchema = z.object({
   services: selectSchema,
   total_amount: z.number(),
   gathered: z.number().default(0),
+  deleted_by: z.number().optional(),
 });
 
 let u1 = alias(users, "u1");
@@ -74,6 +71,10 @@ export const salesRelations = relations(sales, ({ one, many }) => ({
   }),
   user: one(users, {
     fields: [sales.created_by],
+    references: [users.id],
+  }),
+  deleter: one(users, {
+    fields: [sales.deleted_by],
     references: [users.id],
   }),
   company: one(companies, {
@@ -91,6 +92,8 @@ export const view_sales = sqliteView("view_Sales").as((qb) => {
   return qb
     .select({
       id: sales.id,
+      company_id: sales.company_id,
+      sale_date: sales.sale_date,
       client: {
         id: sales.client_id,
         firstname: u1.firstname,

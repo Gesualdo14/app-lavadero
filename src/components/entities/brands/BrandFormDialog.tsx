@@ -68,7 +68,7 @@ export function BrandFormDialog() {
           </span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] top-[30%]">
+      <DialogContent className="sm:max-w-[425px] top-[50px] translate-y-0">
         <DialogHeader>
           <DialogTitle>Crear marca</DialogTitle>
         </DialogHeader>

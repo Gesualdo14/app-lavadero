@@ -36,11 +36,25 @@ export const getSales = async (searchText: string | null | undefined) => {
 };
 
 export async function createSale(data: Sale) {
-  const { services, client, created_by, company_id, vehicle, total_amount } =
-    data;
+  const {
+    sale_date,
+    services,
+    client,
+    created_by,
+    company_id,
+    vehicle,
+    total_amount,
+  } = data;
+
   return await db.transaction(async (tx) => {
+    const date = new Date(sale_date);
+    const timestamp = +date;
     try {
       const { lastInsertRowid } = await tx.insert(sales).values({
+        sale_date: timestamp,
+        day: date.getDate(),
+        month: date.getMonth() + 1,
+        year: date.getFullYear(),
         vehicle_id: vehicle[0].id,
         company_id,
         created_by: created_by as number,
@@ -91,13 +105,24 @@ export async function createSale(data: Sale) {
 }
 
 export async function updateSale(data: Sale) {
-  const { id, services, client, vehicle, total_amount } = data;
-  console.log({ id, client, vehicle });
+  const { id, services, sale_date, client, vehicle, total_amount } = data;
+  const date = new Date(sale_date);
+
+  const timestamp = +date;
+
   return await db.transaction(async (tx) => {
     const saleId = id as number;
     await tx
       .update(sales)
-      .set({ vehicle_id: vehicle[0].id, client_id: client[0].id, total_amount })
+      .set({
+        sale_date: timestamp,
+        day: date.getDate(),
+        month: date.getMonth() + 1,
+        year: date.getFullYear(),
+        vehicle_id: vehicle[0].id,
+        client_id: client[0].id,
+        total_amount,
+      })
       .where(eq(sales.id, saleId));
 
     await tx.delete(saleItems).where(eq(saleItems.sale_id, saleId));
