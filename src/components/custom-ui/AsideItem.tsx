@@ -5,13 +5,22 @@ import {
   CircleDollarSign,
   Users,
   Tags,
+  User2,
+  UserCog2,
 } from "lucide-react";
 
 import { useStore } from "@/stores";
 
 interface Props {
   text: string;
-  icon: "washes" | "services" | "clients" | "dashboard" | "settings" | "brands";
+  icon:
+    | "washes"
+    | "services"
+    | "clients"
+    | "dashboard"
+    | "settings"
+    | "brands"
+    | "users";
   panel: string;
   tooltip?: boolean;
 }
@@ -29,6 +38,7 @@ const AsideItem = ({ text, panel, icon, tooltip = true }: Props) => {
     dashboard: <ChartAreaIcon className={iconsClasses} />,
     settings: <Settings className={iconsClasses} />,
     brands: <Tags className={iconsClasses} />,
+    users: <UserCog2 className={iconsClasses} />,
   };
 
   if (!tooltip)

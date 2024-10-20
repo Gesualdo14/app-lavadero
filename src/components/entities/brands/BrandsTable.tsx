@@ -31,22 +31,20 @@ const BrandsTable = () => {
       <TableHeader>
         <TableRow>
           <TableHead>Denominación</TableHead>
-          <TableHead>
-            <span className="sr-only">Acciones</span>
-          </TableHead>
+          <TableHead>Acciones</TableHead>
         </TableRow>
       </TableHeader>
-      {isPending ? (
-        <TableSkeletonComponent />
-      ) : (
-        <TableBody>
-          {brands?.map((b) => (
-            <TableRow>
+      <TableBody>
+        {isPending ? (
+          <TableSkeletonComponent columns={2} />
+        ) : (
+          brands?.map((b) => (
+            <TableRow key={b.id}>
               <TableCell className="font-medium w-48">{b.name}</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      )}
+          ))
+        )}
+      </TableBody>
     </Table>
   );
 };

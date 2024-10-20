@@ -1,8 +1,14 @@
 import { createUser, getUserByEmail, getUsers, updateUser } from "@/db/user";
-import { userFormSchema, type LoggedUser, type User } from "@/schemas/user";
+import {
+  selectSchema,
+  userFormSchema,
+  type LoggedUser,
+  type User,
+} from "@/schemas/user";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
+import blobs from "./blobs";
 
 const user = {
   login: defineAction({
@@ -109,8 +115,7 @@ const user = {
 
         return {
           ok: true,
-          data: { id: 1 },
-          message: "Usuario creado con éxito",
+          message: "Cliente creado con éxito",
         };
       } catch (error) {
         console.log({ error });
@@ -136,8 +141,75 @@ const user = {
 
         return {
           ok: true,
+          message: "Cliente actualizado con éxito",
+        };
+      } catch (error) {
+        console.log({ error });
+        if (error instanceof Error)
+          return { ok: false, message: error.message };
+      }
+    },
+  }),
+  createUser: defineAction({
+    accept: "form",
+    input: z.object({
+      firstname: z.string(),
+      lastname: z.string(),
+      email: z.string().email(),
+      role: z.string(),
+      file: z.instanceof(File),
+    }),
+    handler: async (form, { locals }) => {
+      try {
+        console.log({ form });
+        const { user_id } = await createUser(
+          {
+            firstname: form.firstname,
+            lastname: form.lastname,
+            email: form.email,
+            role: form.role,
+            company_id: locals.user?.company_id as number,
+            is_client: 0,
+          },
+          null
+        );
+        const blob = await blobs.upload({
+          avatar: form.file,
+          blob_id: user_id as number,
+        });
+        console.log({ blob });
+
+        return {
+          ok: true,
           data: { id: 1 },
           message: "Usuario creado con éxito",
+        };
+      } catch (error) {
+        console.log({ error });
+        if (error instanceof Error)
+          return { ok: false, message: error.message };
+      }
+    },
+  }),
+  updateUser: defineAction({
+    input: userFormSchema,
+    handler: async (data) => {
+      try {
+        console.log({ data });
+        const result = await updateUser(
+          {
+            firstname: data.firstname,
+            lastname: data.lastname,
+            email: data.email,
+            role: !!data.role ? data.role[0].name : "",
+          },
+          data.id as number
+        );
+
+        return {
+          ok: true,
+          data: { id: 1 },
+          message: "Usuario actualizado con éxito",
         };
       } catch (error) {
         console.log({ error });

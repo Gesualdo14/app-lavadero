@@ -20,7 +20,7 @@ const UserMenu = () => {
           className="overflow-hidden rounded-full"
         >
           <img
-            src="/henry.png"
+            src="/avatar"
             width={36}
             height={36}
             alt="Avatar"

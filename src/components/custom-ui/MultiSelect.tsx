@@ -51,6 +51,12 @@ type Props = {
       resetOnSelect?: keyof User;
     }
   | {
+      entity: "role";
+      form: any;
+      field: ControllerRenderProps<User, "role">;
+      resetOnSelect?: keyof User;
+    }
+  | {
       entity: "method";
       form: any;
       field: ControllerRenderProps<Cashflow, "method">;
@@ -59,6 +65,11 @@ type Props = {
 );
 
 const CONFIG = {
+  role: {
+    placeholder: "Roles...",
+    singular: "rol",
+    plural: "roles",
+  },
   service: {
     placeholder: "Servicios...",
     singular: "servicio",

@@ -34,7 +34,8 @@ const Panels = ({ searchParams }: { searchParams: any }) => {
   return (
     <QueryClientProvider client={queryClient}>
       {panel === "ventas" && <SalesPanel />}
-      {panel === "clientes" && <UsersPanel />}
+      {panel === "clientes" && <UsersPanel justClients />}
+      {panel === "usuarios" && <UsersPanel />}
       {panel === "servicios" && <ServicesPanel />}
       {panel === "marcas" && <BrandsPanel />}
       {panel === "informes" && <DashboardPanel />}

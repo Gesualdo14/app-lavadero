@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { UserFormDialog } from "../entities/users/UserFormDialog";
+import { UserFormDialog } from "../entities/users/ClientFormDialog";
 import type React from "react";
 
 const TableWrapper = ({

@@ -9,17 +9,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import DropdownWhatsapp from "@/components/custom-ui/DropdownWhatsapp";
 import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
 
-const UsersTable = () => {
+const UsersTable = ({ justClients = false }: { justClients?: boolean }) => {
   const { update, globalSearchText } = useStore();
   const { data: users, isPending } = useQuery({
-    queryKey: ["users", globalSearchText],
+    queryKey: [justClients ? "clients" : "users", globalSearchText],
     queryFn: async () => {
       const data = await actions.getUsers({
         searchText: globalSearchText || "",
-        justClients: true,
+        justClients,
       });
       return data?.data?.data || [];
     },
