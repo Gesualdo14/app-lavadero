@@ -36,7 +36,7 @@ export const schemas = {
   sale: saleFormSchema,
 } as const;
 
-export function UserFormDialog() {
+export function ClientFormDialog() {
   const queryClient = useQueryClient();
   const { update, openDialog, creating, user, globalSearchText } = useStore();
   const form = useForm<User>({
@@ -47,18 +47,13 @@ export function UserFormDialog() {
   const { formState, reset, handleSubmit, control } = form;
 
   const onSubmit = async (values: User) => {
-    const form = document.querySelector("#user-form") as HTMLFormElement;
-    const formData = new FormData(form);
-    formData.set("role", values.role ? values.role[0].name : "");
-    const res = await actions.createUser(formData);
-    console.log({ res });
     console.log({ values });
-
-    toast({ title: "Usuario creado", description: "Usuario creado con éxito" });
-    queryClient.refetchQueries({ queryKey: ["users", globalSearchText] });
+    const action = creating ? "createClient" : "updateClient";
+    const result = await actions[action](values);
+    toast({ title: "Cliente creado", description: "Cliente creado con éxito" });
+    queryClient.refetchQueries({ queryKey: ["clients", globalSearchText] });
     update("openDialog", "");
   };
-  console.log("DIOSSS");
 
   useEffect(() => {
     reset(user);
@@ -81,20 +76,19 @@ export function UserFormDialog() {
         >
           <PlusCircle className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Crear usuario
+            Crear cliente
           </span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] top-[50px] translate-y-0">
         <DialogHeader>
-          <DialogTitle>Datos del usuario</DialogTitle>
+          <DialogTitle>Datos del cliente</DialogTitle>
           <DialogDescription>
-            Añade usuarios para que puedan iniciar sesión.
+            Añade clientes para luego poder crear ventas que se asocien a ellos.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
-            id="user-form"
             onSubmit={handleSubmit(onSubmit)}
             className="space-y-4"
             onError={() => {
@@ -137,43 +131,59 @@ export function UserFormDialog() {
                 </FormItem>
               )}
             />
-            <FormField
-              control={control}
-              name="role"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <QueryClientProvider client={queryClient}>
-                      <MultiSelect
-                        form={form}
-                        field={field}
-                        entity={field.name}
-                        justOne
-                      />
-                    </QueryClientProvider>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      type="file"
-                      name="file"
-                      id=""
-                      placeholder="Seleccionar..."
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
+            {creating && (
+              <>
+                <h2 className="block font-bold !-mb-2">Datos del vehículo</h2>
+                <FormField
+                  control={control}
+                  name="brand"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <QueryClientProvider client={queryClient}>
+                          <MultiSelect
+                            idToFocusAfterSelection="vehicle-model"
+                            form={form}
+                            field={field}
+                            entity={field.name}
+                            justOne
+                          />
+                        </QueryClientProvider>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={control}
+                  name="model"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          id="vehicle-model"
+                          placeholder="Modelo..."
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={control}
+                  name="patent"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input placeholder="Patente..." {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </>
+            )}
             <DialogFooter>
               <Button type="submit">
                 {formState.isSubmitting ? (

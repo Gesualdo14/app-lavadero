@@ -11,7 +11,7 @@ import { and, desc, eq, like, or, type DBQueryConfig } from "drizzle-orm";
 
 export async function createUser(
   user: InsertUser,
-  vehicle: Omit<InsertVehicle, "user_id">
+  vehicle: Omit<InsertVehicle, "user_id"> | null
 ) {
   return await db.transaction(async (tx) => {
     const { lastInsertRowid } = await tx.insert(users).values(user);
@@ -20,6 +20,7 @@ export async function createUser(
         .insert(vehicles)
         .values({ ...vehicle, user_id: Number(lastInsertRowid) });
     }
+    return { user_id: Number(lastInsertRowid) };
   });
 }
 

@@ -1,8 +1,9 @@
-import { UserFormDialog } from "./UserFormDialog";
+import { ClientFormDialog } from "./ClientFormDialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import UsersTable from "./UsersTable";
+import { UserFormDialog } from "./UserFormDialog";
 
-const UsersPanel = () => {
+const UsersPanel = ({ justClients = false }: { justClients?: boolean }) => {
   return (
     <Card
       x-chunk="dashboard-06-chunk-0"
@@ -10,12 +11,12 @@ const UsersPanel = () => {
     >
       <CardHeader className="pb-2">
         <div className="flex justify-between">
-          <CardTitle>Clientes</CardTitle>
-          <UserFormDialog />
+          <CardTitle>{justClients ? "Clientes" : "Usuarios"}</CardTitle>
+          {justClients ? <ClientFormDialog /> : <UserFormDialog />}
         </div>
       </CardHeader>
       <CardContent>
-        <UsersTable />
+        <UsersTable justClients={justClients} />
       </CardContent>
     </Card>
   );

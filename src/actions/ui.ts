@@ -1,4 +1,5 @@
 import { getPaymentMethods } from "@/db/cashflow";
+import { getRoles } from "@/db/role";
 import { getServices } from "@/db/service";
 import { getUsers } from "@/db/user";
 import { getVehicles, getBrands } from "@/db/vehicle";
@@ -17,6 +18,7 @@ const ui = {
         "user",
         "brand",
         "method",
+        "role",
       ]),
       filterId: z.number().optional(),
     }),
@@ -27,6 +29,9 @@ const ui = {
         switch (entity) {
           case "service":
             items = await getServices(searchText, true, user);
+            break;
+          case "role":
+            items = await getRoles();
             break;
           case "user":
             items = await getUsers(searchText, true, 0, user);
