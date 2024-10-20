@@ -21,7 +21,13 @@ const Panels = ({ searchParams }: { searchParams: any }) => {
   console.log({ panel, searchParams });
 
   useLayoutEffect(() => {
-    const currentPanel = localStorage.getItem("panel");
+    let currentPanel = localStorage.getItem("panel");
+
+    if (!currentPanel) {
+      localStorage.setItem("panel", "ventas");
+      currentPanel = "ventas";
+    }
+
     update("panel", currentPanel);
     update("globalSearchText", searchParams);
   }, []);
