@@ -54,13 +54,13 @@ const UsersTable = ({ justClients = false }: { justClients?: boolean }) => {
                 update("creating", false);
               }}
             >
-              <TableCell>
+              <TableCell className="w-16">
                 <img
                   src={"/avatar?id=" + u.id}
-                  width={36}
-                  height={36}
+                  width={28}
+                  height={28}
                   alt="Avatar"
-                  className="overflow-hidden rounded-full"
+                  className="overflow-hidden rounded"
                 />
               </TableCell>
               <TableCell className="font-medium">{u.firstname}</TableCell>
