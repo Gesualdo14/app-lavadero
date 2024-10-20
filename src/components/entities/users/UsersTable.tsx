@@ -30,6 +30,7 @@ const UsersTable = ({ justClients = false }: { justClients?: boolean }) => {
     <Table>
       <TableHeader>
         <TableRow>
+          <TableHead></TableHead>
           <TableHead>Nombre</TableHead>
           <TableHead>Apellido</TableHead>
           <TableHead className="min-w-24">Email</TableHead>
@@ -53,6 +54,15 @@ const UsersTable = ({ justClients = false }: { justClients?: boolean }) => {
                 update("creating", false);
               }}
             >
+              <TableCell>
+                <img
+                  src={"/avatar?id=" + u.id}
+                  width={36}
+                  height={36}
+                  alt="Avatar"
+                  className="overflow-hidden rounded-full"
+                />
+              </TableCell>
               <TableCell className="font-medium">{u.firstname}</TableCell>
               <TableCell>{u.lastname}</TableCell>
               <TableCell className="text-ellipsis max-w-1 sm:text-inherit md:overflow-visible overflow-hidden">

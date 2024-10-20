@@ -16,11 +16,11 @@ const blobs = {
           token: "nfp_ZFydxi2H55R76t41vPX6H7b3r5wX7sbD0584", // lavapp token
         });
         // Set the file in the store. Replace `<key>` with a unique key for the file.
-        const response = await avatarsStore.set(`${blob_id}`, avatar);
-        console.log({ response });
+        await avatarsStore.set(`${blob_id}`, avatar);
+        return true;
       } catch (error) {
         const my_error = error as Error;
-        return { ok: false, data: [], message: my_error.message || "" };
+        return false;
       }
     },
   }),
