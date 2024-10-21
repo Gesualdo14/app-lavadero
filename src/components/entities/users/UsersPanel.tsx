@@ -1,7 +1,8 @@
-import { ClientFormDialog } from "./ClientFormDialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import UsersTable from "./UsersTable";
+import { ClientFormDialog } from "./ClientFormDialog";
 import { UserFormDialog } from "./UserFormDialog";
+import ClientsTable from "./ClientsTable";
 
 const UsersPanel = ({ justClients = false }: { justClients?: boolean }) => {
   return (
@@ -16,7 +17,7 @@ const UsersPanel = ({ justClients = false }: { justClients?: boolean }) => {
         </div>
       </CardHeader>
       <CardContent>
-        <UsersTable justClients={justClients} />
+        {justClients ? <ClientsTable /> : <UsersTable />}
       </CardContent>
     </Card>
   );

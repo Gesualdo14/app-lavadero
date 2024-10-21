@@ -13,7 +13,7 @@ export const GET: APIRoute = async ({ request, locals, params }) => {
   const searchParams = new URLSearchParams(url.search);
 
   const id = (searchParams.get("id") || locals.user?.id) as string;
-
+  console.log({ id });
   const userAvatar = await avatarsStore.get(id, {
     type: "stream",
   });
