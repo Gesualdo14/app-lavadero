@@ -75,7 +75,7 @@ const SalesTable = () => {
                 <div className="flex flex-col">
                   <span>{`${s.client.firstname} ${s.client.lastname}`}</span>
                   <span className="text-[12px] text-gray-400 block sm:hidden">{`${s.vehicle.brand?.toUpperCase()} - ${s.vehicle.model}`}</span>
-                  <span className="text-[12px] text-gray-400 hidden sm:block">
+                  <span className="text-[12px] text-gray-400 hidden sm:block font-normal">
                     {s.client.email}
                   </span>
                 </div>

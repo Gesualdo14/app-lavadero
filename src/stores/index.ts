@@ -28,18 +28,19 @@ export const EMPTY_SALE = {
   gathered: 0,
   total_amount: 0,
 };
+export const EMPTY_USER = {
+  id: 0,
+  firstname: "",
+  lastname: "",
+  company_id: 1,
+  email: "",
+  brand: [],
+  model: "",
+  patent: "",
+};
 
 export const useStore = create<Store>((set) => ({
-  user: {
-    id: 0,
-    firstname: "",
-    lastname: "",
-    company_id: 1,
-    email: "",
-    brand: [],
-    model: "",
-    patent: "",
-  },
+  user: EMPTY_USER,
   sale: EMPTY_SALE,
   cashflow: {
     sale_id: 0,

@@ -30,6 +30,10 @@ const Panels = ({ searchParams }: { searchParams: any }) => {
 
     update("panel", currentPanel);
     update("globalSearchText", searchParams);
+    const body = document.querySelector("body")! as HTMLBodyElement;
+    setTimeout(() => {
+      body.style.pointerEvents = "auto";
+    }, 50);
   }, []);
   return (
     <QueryClientProvider client={queryClient}>

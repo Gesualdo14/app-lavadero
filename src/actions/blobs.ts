@@ -4,7 +4,10 @@ import { z } from "zod";
 
 const blobs = {
   upload: defineAction({
-    input: z.object({ avatar: z.instanceof(File), blob_id: z.number() }),
+    input: z.object({
+      avatar: z.instanceof(File),
+      blob_id: z.number(),
+    }),
     handler: async ({ avatar, blob_id }) => {
       try {
         // Load the Netlify Blobs store called `UserUpload`
@@ -16,7 +19,9 @@ const blobs = {
           token: "nfp_ZFydxi2H55R76t41vPX6H7b3r5wX7sbD0584", // lavapp token
         });
         // Set the file in the store. Replace `<key>` with a unique key for the file.
-        await avatarsStore.set(`${blob_id}`, avatar);
+        if (avatar.size > 0) {
+          await avatarsStore.set(`${blob_id}`, avatar);
+        }
         return true;
       } catch (error) {
         const my_error = error as Error;

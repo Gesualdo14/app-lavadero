@@ -156,8 +156,9 @@ const user = {
       firstname: z.string(),
       lastname: z.string(),
       email: z.string().email(),
+      password: z.string().min(4),
       role: z.string(),
-      file: z.instanceof(File),
+      avatar: z.instanceof(File),
     }),
     handler: async (form, { locals }) => {
       try {
@@ -167,6 +168,7 @@ const user = {
             firstname: form.firstname,
             lastname: form.lastname,
             email: form.email,
+            password: form.password,
             role: form.role,
             company_id: locals.user?.company_id as number,
             is_client: 0,
@@ -174,8 +176,8 @@ const user = {
           null
         );
         const blob = await blobs.upload({
-          avatar: form.file,
-          blob_id: user_id as number,
+          avatar: form.avatar,
+          blob_id: user_id,
         });
         console.log({ blob });
 
@@ -192,24 +194,39 @@ const user = {
     },
   }),
   updateUser: defineAction({
-    input: userFormSchema,
-    handler: async (data) => {
+    accept: "form",
+    input: z.object({
+      id: z.number(),
+      firstname: z.string(),
+      lastname: z.string(),
+      email: z.string().email(),
+      password: z.string().optional(),
+      role: z.string(),
+      avatar: z.instanceof(File),
+    }),
+    handler: async (form) => {
       try {
-        console.log({ data });
-        const result = await updateUser(
+        console.log({ form });
+        await updateUser(
           {
-            firstname: data.firstname,
-            lastname: data.lastname,
-            email: data.email,
-            role: !!data.role ? data.role[0].name : "",
+            firstname: form.firstname,
+            lastname: form.lastname,
+            email: form.email,
+            password: form.password,
+            role: form.role,
           },
-          data.id as number
+          form.id
         );
+        const blob = await blobs.upload({
+          avatar: form.avatar,
+          blob_id: form.id as number,
+        });
+        console.log({ blob });
 
         return {
           ok: true,
           data: { id: 1 },
-          message: "Usuario actualizado con éxito",
+          message: "Usuario creado con éxito",
         };
       } catch (error) {
         console.log({ error });
