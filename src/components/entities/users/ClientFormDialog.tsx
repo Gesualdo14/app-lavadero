@@ -50,7 +50,10 @@ export function ClientFormDialog() {
     console.log({ values });
     const action = creating ? "createClient" : "updateClient";
     const result = await actions[action](values);
-    toast({ title: "Cliente creado", description: "Cliente creado con éxito" });
+    toast({
+      title: "Operación exitosa",
+      description: result.data?.message,
+    });
     queryClient.refetchQueries({ queryKey: ["clients", globalSearchText] });
     update("openDialog", "");
   };

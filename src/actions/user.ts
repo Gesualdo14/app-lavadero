@@ -185,7 +185,6 @@ const user = {
 
         return {
           ok: true,
-          data: { id: 1 },
           message: "Usuario creado con éxito",
         };
       } catch (error) {
@@ -227,8 +226,7 @@ const user = {
 
         return {
           ok: true,
-          data: { id: 1 },
-          message: "Usuario creado con éxito",
+          message: "Usuario actualizado con éxito",
         };
       } catch (error) {
         console.log({ error });

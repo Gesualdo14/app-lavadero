@@ -52,11 +52,11 @@ export function UserFormDialog() {
     formData.set("role", values.role ? values.role[0].name : "");
     formData.set("id", `${values.id}`);
     const action = creating ? "createUser" : "updateUser";
-    const res = await actions[action](formData);
-    console.log({ res });
+    const result = await actions[action](formData);
+
     console.log({ values });
 
-    toast({ title: "Usuario creado", description: "Usuario creado con éxito" });
+    toast({ title: "Operación exitosa", description: result.data?.message });
     queryClient.refetchQueries({ queryKey: ["users", globalSearchText] });
     update("openDialog", "");
   };
