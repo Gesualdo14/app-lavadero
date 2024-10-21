@@ -200,7 +200,7 @@ export function Dashboard() {
       </div>
       <div className="grid w-full gap-6 lg:max-w-[24rem]">
         <Card className="max-w-xl w-full" x-chunk="charts-01-chunk-4">
-          <CardContent className="flex gap-4 p-4 pb-2">
+          <CardContent className="flex gap-6 p-4 pb-2">
             <ChartContainer
               config={{
                 move: {
@@ -216,14 +216,14 @@ export function Dashboard() {
                   color: "hsl(var(--chart-3))",
                 },
               }}
-              className="h-[140px] w-full"
+              className="h-[150px] w-full gap-2"
             >
               <BarChart
                 margin={{
                   left: 0,
                   right: 0,
                   top: 0,
-                  bottom: 10,
+                  bottom: 30,
                 }}
                 data={cashflows.map((c) => ({
                   activity: c.method,
@@ -237,7 +237,7 @@ export function Dashboard() {
                 }))}
                 layout="vertical"
                 barSize={32}
-                barGap={2}
+                barGap={6}
               >
                 <XAxis type="number" dataKey="value" hide />
                 <YAxis
