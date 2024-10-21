@@ -99,6 +99,7 @@ export const view_sales = sqliteView("view_Sales").as((qb) => {
         firstname: u1.firstname,
         lastname: u1.lastname,
         email: u1.email,
+        phone: u1.phone,
       },
       user: {
         id: sales.created_by,

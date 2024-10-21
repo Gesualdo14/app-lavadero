@@ -2,7 +2,7 @@ import { cashflows, type InsertCashflow } from "@/schemas/cashflow";
 import { db } from ".";
 import { and, eq, sql } from "drizzle-orm";
 import { sales } from "@/schemas/sale";
-import { dailyReport } from "@/schemas/daily-report";
+import { daily_reports } from "@/schemas/report";
 
 export async function createCashflow(cashflow: InsertCashflow) {
   return await db.transaction(async (tx) => {
@@ -19,16 +19,16 @@ export async function createCashflow(cashflow: InsertCashflow) {
         .where(eq(sales.id, cashflow.sale_id));
       const now = new Date();
       await tx
-        .update(dailyReport)
+        .update(daily_reports)
         .set({
-          sales_gathered: sql`${dailyReport.sales_gathered} + ${cashflow.amount}`,
+          sales_gathered: sql`${daily_reports.sales_gathered} + ${cashflow.amount}`,
         })
         .where(
           and(
-            eq(dailyReport.company_id, 1),
-            eq(dailyReport.day, now.getDate()),
-            eq(dailyReport.month, now.getMonth() + 1),
-            eq(dailyReport.year, now.getFullYear())
+            eq(daily_reports.company_id, 1),
+            eq(daily_reports.day, now.getDate()),
+            eq(daily_reports.month, now.getMonth() + 1),
+            eq(daily_reports.year, now.getFullYear())
           )
         );
     } catch (error) {

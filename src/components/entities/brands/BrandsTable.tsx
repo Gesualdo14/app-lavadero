@@ -9,7 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import MyDropdown from "@/components/custom-ui/DropdownWhatsapp";
 import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
 
 const BrandsTable = () => {

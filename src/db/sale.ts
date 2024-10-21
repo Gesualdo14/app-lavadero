@@ -1,13 +1,8 @@
 import { sales, view_sales, type Sale } from "@/schemas/sale";
 import { desc, eq, like, or, sql } from "drizzle-orm";
 import { db } from ".";
-import { dailyReport } from "@/schemas/daily-report";
-import {
-  saleItems,
-  type InsertSaleItem,
-  type SelectSaleItem,
-} from "@/schemas/sale-item";
-import type { LoggedUser } from "@/schemas/user";
+import { daily_reports } from "@/schemas/report";
+import { saleItems, type SelectSaleItem } from "@/schemas/sale-item";
 
 export const getSales = async (searchText: string | null | undefined) => {
   try {
@@ -48,6 +43,7 @@ export async function createSale(data: Sale) {
 
   return await db.transaction(async (tx) => {
     const date = new Date(sale_date);
+    console.log({ data, sale_date });
     const timestamp = +date;
     try {
       const { lastInsertRowid } = await tx.insert(sales).values({
@@ -61,14 +57,13 @@ export async function createSale(data: Sale) {
         client_id: client[0].id,
         total_amount,
       });
-      const now = new Date();
       await tx
-        .insert(dailyReport)
+        .insert(daily_reports)
         .values({
           company_id: 1,
-          day: now.getDate(),
-          month: now.getMonth() + 1,
-          year: now.getFullYear(),
+          day: date.getDate(),
+          month: date.getMonth() + 1,
+          year: date.getFullYear(),
           sales_amount: total_amount,
           sales_gathered: 0,
           sales: 1,
@@ -77,16 +72,16 @@ export async function createSale(data: Sale) {
         })
         .onConflictDoUpdate({
           target: [
-            dailyReport.day,
-            dailyReport.month,
-            dailyReport.year,
-            dailyReport.company_id,
+            daily_reports.day,
+            daily_reports.month,
+            daily_reports.year,
+            daily_reports.company_id,
           ],
           set: {
-            sales_amount: sql`${dailyReport.sales_amount} + ${total_amount}`,
-            sales: sql`${dailyReport.sales} + 1`,
-            clients: sql`${dailyReport.clients} + 1`,
-            vehicles: sql`${dailyReport.vehicles} + 1`,
+            sales_amount: sql`${daily_reports.sales_amount} + ${total_amount}`,
+            sales: sql`${daily_reports.sales} + 1`,
+            clients: sql`${daily_reports.clients} + 1`,
+            vehicles: sql`${daily_reports.vehicles} + 1`,
           },
         });
 

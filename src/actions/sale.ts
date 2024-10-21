@@ -27,7 +27,7 @@ const sale = {
     input: saleFormSchema,
     handler: async (data, { locals }) => {
       try {
-        console.log({ data });
+        console.log("VENTA", { data });
         const result = await createSale({
           ...data,
           company_id: locals.user?.company_id as number,

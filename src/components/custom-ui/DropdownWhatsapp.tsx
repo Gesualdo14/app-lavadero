@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-const DropdownWhatsapp = () => {
+const DropdownWhatsapp = ({ sale }: { sale: any }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -34,12 +34,30 @@ const DropdownWhatsapp = () => {
           onClick={(e) => {
             e.stopPropagation();
             window.open(
-              `https://api.whatsapp.com/send/?phone=+5492216101441&text=${encodeURI(`*Pago recibido*
-Desde Auto Spa Palmas del Mar queremos darte la bienvenida.
+              `https://api.whatsapp.com/send/?phone=${sale.client.phone}&text=${encodeURI(`Hola ${sale.client.firstname}, `)}`,
+              "_blank"
+            );
+          }}
+        >
+          Iniciar conversación
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="cursor-pointer hover:!bg-gray-100"
+          onClick={(e) => {
+            e.stopPropagation();
+            window.open(
+              `https://api.whatsapp.com/send/?phone=${sale.client.phone}&text=${encodeURI(`${sale.client.firstname}, te enviamos este mensaje como comprobate de que ya has abonado *${Intl.NumberFormat(
+                "es-AR",
+                {
+                  style: "currency",
+                  currency: "ARS",
+                  maximumFractionDigits: 0,
+                }
+              ).format(sale.gathered)}*.
+
+En cuanto esté listo tu vehículo te vamos a contactar para que vengas a retirarlo.
                 
-Estamos muy contentos de que hayas traido tu vehículo, pero necesitamos que vengas a retirarlo, así que apurate.
-                
-Un beso gigante 🙂`)}`,
+¡Saludos! 🙋🏻‍♂️`)}`,
               "_blank"
             );
           }}

@@ -6,7 +6,7 @@ import {
   uniqueIndex,
 } from "drizzle-orm/sqlite-core";
 
-export const dailyReport = sqliteTable(
+export const daily_reports = sqliteTable(
   "DailyReport",
   {
     id: integer("id").primaryKey(),
@@ -33,5 +33,5 @@ export const dailyReport = sqliteTable(
   }
 );
 
-export type InsertDailyReport = typeof dailyReport.$inferInsert;
-export type SelectDailyReport = typeof dailyReport.$inferSelect;
+export type InsertDailyReport = typeof daily_reports.$inferInsert;
+export type SelectDailyReport = typeof daily_reports.$inferSelect;

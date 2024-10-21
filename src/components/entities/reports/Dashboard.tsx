@@ -24,18 +24,38 @@ import {
 } from "@/components/ui/chart";
 import { Separator } from "@/components/ui/separator";
 import { DollarSign, Users2, WashingMachine } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { actions } from "astro:actions";
 
 export const description = "A collection of health charts.";
 
 export function Dashboard() {
+  const { data: reports, isPending } = useQuery({
+    queryKey: ["reports"],
+    queryFn: async () => {
+      const data = await actions.getReports({
+        searchText: "",
+      });
+      return data?.data?.data || [];
+    },
+  });
+  console.log({ reports });
   return (
     <div className="chart-wrapper flex max-w-6xl flex-col flex-wrap items-start gap-6 sm:flex-row p-4">
-      <div className="grid w-full gap-6 sm:grid-cols-2 lg:max-w-[28rem] lg:grid-cols-1">
-        <Card className="lg:max-w-md" x-chunk="charts-01-chunk-0">
+      <div className="grid w-full gap-6 sm:grid-cols-2 lg:max-w-[28rem] md:grid-cols-1">
+        <Card x-chunk="charts-01-chunk-0">
           <CardHeader className="space-y-0 pb-2">
             <CardDescription>Hoy</CardDescription>
             <CardTitle className="text-4xl tabular-nums">
-              $2.584{" "}
+              {Intl.NumberFormat("es-AR", {
+                style: "currency",
+                currency: "ARS",
+                maximumFractionDigits: 0,
+              }).format(
+                Array.isArray(reports)
+                  ? reports[reports.length - 1].sales_amount || 0
+                  : 0
+              )}{" "}
               <span className="font-sans text-sm font-normal tracking-normal text-muted-foreground">
                 en ventas
               </span>
@@ -56,36 +76,12 @@ export function Dashboard() {
                   left: -4,
                   right: -4,
                 }}
-                data={[
-                  {
-                    date: "2024-01-01",
-                    ventas: 1040,
-                  },
-                  {
-                    date: "2024-01-02",
-                    ventas: 3100,
-                  },
-                  {
-                    date: "2024-01-03",
-                    ventas: 2200,
-                  },
-                  {
-                    date: "2024-01-04",
-                    ventas: 2300,
-                  },
-                  {
-                    date: "2024-01-05",
-                    ventas: 1400,
-                  },
-                  {
-                    date: "2024-01-06",
-                    ventas: 3500,
-                  },
-                  {
-                    date: "2024-01-07",
-                    ventas: 2584,
-                  },
-                ]}
+                data={reports
+                  ?.sort((a, b) => a.day - b.day)
+                  .map((r) => ({
+                    date: `${r.year}/${r.month}/${r.day}`,
+                    ventas: r.sales_amount,
+                  }))}
               >
                 <Bar
                   dataKey="ventas"
@@ -122,7 +118,12 @@ export function Dashboard() {
                   cursor={false}
                 />
                 <ReferenceLine
-                  y={1200}
+                  y={
+                    (reports?.reduce(
+                      (acc, curr) => acc + (curr?.sales_amount || 0),
+                      0
+                    ) || 1) / (reports?.length || 1)
+                  }
                   stroke="hsl(var(--muted-foreground))"
                   strokeDasharray="3 3"
                   strokeWidth={1}
@@ -135,7 +136,16 @@ export function Dashboard() {
                   />
                   <Label
                     position="insideTopLeft"
-                    value="2,303"
+                    value={Intl.NumberFormat("es-AR", {
+                      style: "currency",
+                      currency: "ARS",
+                      maximumFractionDigits: 0,
+                    }).format(
+                      (reports?.reduce(
+                        (acc, curr) => acc + (curr?.sales_amount || 0),
+                        0
+                      ) || 1) / (reports?.length || 1)
+                    )}
                     className="text-lg"
                     fill="hsl(var(--foreground))"
                     offset={10}
@@ -148,12 +158,36 @@ export function Dashboard() {
           <CardFooter className="flex-col items-start gap-1">
             <CardDescription>
               En últimos 7 días, hubieron ventas por un total de{" "}
-              <span className="font-medium text-foreground">$16.124</span>.
+              <span className="font-medium text-foreground">
+                {Intl.NumberFormat("es-AR", {
+                  style: "currency",
+                  currency: "ARS",
+                  maximumFractionDigits: 0,
+                }).format(
+                  reports?.reduce(
+                    (acc, curr) => acc + (curr?.sales_amount || 0),
+                    0
+                  ) || 1
+                )}
+              </span>
+              .
             </CardDescription>
             <CardDescription>
               Necesitás{" "}
-              <span className="font-medium text-foreground">$3.876</span> para
-              alcanzar tu objetivo.
+              <span className="font-medium text-foreground">
+                {Intl.NumberFormat("es-AR", {
+                  style: "currency",
+                  currency: "ARS",
+                  maximumFractionDigits: 0,
+                }).format(
+                  700_000 -
+                    (reports?.reduce(
+                      (acc, curr) => acc + (curr?.sales_amount || 0),
+                      0
+                    ) || 1)
+                )}
+              </span>{" "}
+              para alcanzar tu objetivo.
             </CardDescription>
           </CardFooter>
         </Card>
