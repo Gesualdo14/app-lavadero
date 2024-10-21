@@ -62,10 +62,8 @@ const UsersTable = () => {
               <TableCell className="w-16">
                 <img
                   src={"/avatar?id=" + u.id}
-                  width={28}
-                  height={28}
                   alt="Avatar"
-                  className="overflow-hidden rounded"
+                  className="overflow-hidden rounded w-10 h-10 object-cover"
                 />
               </TableCell>
               <TableCell className="font-medium w-52">

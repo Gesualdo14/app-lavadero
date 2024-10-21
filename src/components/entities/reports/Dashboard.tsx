@@ -45,7 +45,7 @@ export function Dashboard() {
       return data?.data?.data || [];
     },
   });
-  console.log({ data });
+
   if (isPending || !Array.isArray(data)) return "Loading sales...";
 
   const [sales, cashflows] = data;
@@ -233,7 +233,7 @@ export function Dashboard() {
                     currency: "ARS",
                     maximumFractionDigits: 0,
                   }).format(c.amount),
-                  fill: FILL_COLORS[c.method],
+                  fill: FILL_COLORS[c.method as keyof typeof FILL_COLORS],
                 }))}
                 layout="vertical"
                 barSize={32}
