@@ -102,6 +102,7 @@ const user = {
             firstname: data.firstname,
             lastname: data.lastname,
             email: data.email,
+            phone: data.phone,
             company_id: locals.user?.company_id as number,
             is_client: 1,
           },
@@ -128,12 +129,13 @@ const user = {
     input: userFormSchema,
     handler: async (data) => {
       try {
-        console.log({ data });
+        console.log("UPDATE", { data });
         const result = await updateUser(
           {
             firstname: data.firstname,
             lastname: data.lastname,
             email: data.email,
+            phone: data.phone,
           },
           data.id as number
         );
@@ -183,7 +185,6 @@ const user = {
 
         return {
           ok: true,
-          data: { id: 1 },
           message: "Usuario creado con éxito",
         };
       } catch (error) {
@@ -225,8 +226,7 @@ const user = {
 
         return {
           ok: true,
-          data: { id: 1 },
-          message: "Usuario creado con éxito",
+          message: "Usuario actualizado con éxito",
         };
       } catch (error) {
         console.log({ error });

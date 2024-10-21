@@ -48,7 +48,7 @@ const ClientsTable = () => {
               className="cursor-pointer"
               onClick={() => {
                 console.log("CLICK");
-                update("user", { ...u, role: [{ id: 1, name: u.role }] });
+                update("user", { ...u });
                 update("openDialog", "user");
                 update("creating", false);
               }}
