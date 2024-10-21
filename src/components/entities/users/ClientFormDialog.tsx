@@ -44,7 +44,7 @@ export function ClientFormDialog() {
     defaultValues: user,
   });
 
-  const { formState, reset, handleSubmit, control } = form;
+  const { formState, handleSubmit, control } = form;
 
   const onSubmit = async (values: User) => {
     console.log({ values });
@@ -56,8 +56,15 @@ export function ClientFormDialog() {
   };
 
   useEffect(() => {
-    reset(user);
-  }, [user]);
+    if (openDialog === "user") {
+      form.setValue("id", user.id);
+      form.setValue("company_id", user.company_id);
+      form.setValue("firstname", user.firstname);
+      form.setValue("lastname", user.lastname);
+      form.setValue("email", user.email);
+      form.setValue("phone", user.phone);
+    }
+  }, [openDialog]);
 
   return (
     <Dialog
@@ -114,6 +121,18 @@ export function ClientFormDialog() {
                 <FormItem>
                   <FormControl>
                     <Input placeholder="Apellido..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input placeholder="Teléfono..." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
