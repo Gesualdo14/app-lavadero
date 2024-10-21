@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-const DropdownWhatsapp = () => {
+const DropdownWhatsapp = ({ phone }: { phone: any }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -34,7 +34,7 @@ const DropdownWhatsapp = () => {
           onClick={(e) => {
             e.stopPropagation();
             window.open(
-              `https://api.whatsapp.com/send/?phone=+5492216101441&text=${encodeURI(`*Pago recibido*
+              `https://api.whatsapp.com/send/?phone=${phone}&text=${encodeURI(`*Pago recibido*
 Desde Auto Spa Palmas del Mar queremos darte la bienvenida.
                 
 Estamos muy contentos de que hayas traido tu vehículo, pero necesitamos que vengas a retirarlo, así que apurate.

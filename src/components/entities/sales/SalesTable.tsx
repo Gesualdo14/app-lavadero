@@ -116,7 +116,7 @@ const SalesTable = () => {
                       }}
                     />
                   </div>
-                  <DropdownWhatsapp />
+                  <DropdownWhatsapp phone={s.client.phone} />
                 </div>
               </TableCell>
             </TableRow>
