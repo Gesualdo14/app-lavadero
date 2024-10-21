@@ -7,11 +7,12 @@ const report = {
     input: z.object({ searchText: z.string().nullish() }),
     handler: async ({ searchText }, { locals }) => {
       try {
-        const reports = await getReports();
+        const sales = await getReports("sale");
+        const cashflows = await getReports("cashflow");
 
         return {
           ok: true,
-          data: reports,
+          data: [sales, cashflows],
           message: "",
         };
       } catch (error) {

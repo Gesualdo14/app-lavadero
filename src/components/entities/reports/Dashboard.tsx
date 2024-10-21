@@ -22,15 +22,21 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { Separator } from "@/components/ui/separator";
 import { DollarSign, Users2, WashingMachine } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { actions } from "astro:actions";
 
 export const description = "A collection of health charts.";
 
+const FILL_COLORS = {
+  PayPal: "var(--color-stand)",
+  Transferencia: "#aaa",
+  Efectivo: "var(--color-exercise)",
+  Tarjeta: "var(--color-move)",
+};
+
 export function Dashboard() {
-  const { data: reports, isPending } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ["reports"],
     queryFn: async () => {
       const data = await actions.getReports({
@@ -39,7 +45,11 @@ export function Dashboard() {
       return data?.data?.data || [];
     },
   });
-  console.log({ reports });
+
+  if (isPending || !Array.isArray(data)) return "Loading sales...";
+
+  const [sales, cashflows] = data;
+
   return (
     <div className="chart-wrapper flex max-w-6xl flex-col flex-wrap items-start gap-6 sm:flex-row p-4">
       <div className="grid w-full gap-6 sm:grid-cols-2 lg:max-w-[28rem] md:grid-cols-1">
@@ -52,9 +62,7 @@ export function Dashboard() {
                 currency: "ARS",
                 maximumFractionDigits: 0,
               }).format(
-                Array.isArray(reports)
-                  ? reports[reports.length - 1].sales_amount || 0
-                  : 0
+                Array.isArray(sales) ? sales[sales.length - 1].amount || 0 : 0
               )}{" "}
               <span className="font-sans text-sm font-normal tracking-normal text-muted-foreground">
                 en ventas
@@ -76,11 +84,11 @@ export function Dashboard() {
                   left: -4,
                   right: -4,
                 }}
-                data={reports
+                data={sales
                   ?.sort((a, b) => a.day - b.day)
                   .map((r) => ({
                     date: `${r.year}/${r.month}/${r.day}`,
-                    ventas: r.sales_amount,
+                    ventas: r.amount,
                   }))}
               >
                 <Bar
@@ -119,10 +127,10 @@ export function Dashboard() {
                 />
                 <ReferenceLine
                   y={
-                    (reports?.reduce(
-                      (acc, curr) => acc + (curr?.sales_amount || 0),
+                    (sales?.reduce(
+                      (acc, curr) => acc + (curr?.amount || 0),
                       0
-                    ) || 1) / (reports?.length || 1)
+                    ) || 1) / (sales?.length || 1)
                   }
                   stroke="hsl(var(--muted-foreground))"
                   strokeDasharray="3 3"
@@ -141,10 +149,10 @@ export function Dashboard() {
                       currency: "ARS",
                       maximumFractionDigits: 0,
                     }).format(
-                      (reports?.reduce(
-                        (acc, curr) => acc + (curr?.sales_amount || 0),
+                      (sales?.reduce(
+                        (acc, curr) => acc + (curr?.amount || 0),
                         0
-                      ) || 1) / (reports?.length || 1)
+                      ) || 1) / (sales?.length || 1)
                     )}
                     className="text-lg"
                     fill="hsl(var(--foreground))"
@@ -164,10 +172,8 @@ export function Dashboard() {
                   currency: "ARS",
                   maximumFractionDigits: 0,
                 }).format(
-                  reports?.reduce(
-                    (acc, curr) => acc + (curr?.sales_amount || 0),
-                    0
-                  ) || 1
+                  sales?.reduce((acc, curr) => acc + (curr?.amount || 0), 0) ||
+                    1
                 )}
               </span>
               .
@@ -181,8 +187,8 @@ export function Dashboard() {
                   maximumFractionDigits: 0,
                 }).format(
                   700_000 -
-                    (reports?.reduce(
-                      (acc, curr) => acc + (curr?.sales_amount || 0),
+                    (sales?.reduce(
+                      (acc, curr) => acc + (curr?.amount || 0),
                       0
                     ) || 1)
                 )}
@@ -219,26 +225,16 @@ export function Dashboard() {
                   top: 0,
                   bottom: 10,
                 }}
-                data={[
-                  {
-                    activity: "Mercado Pago",
-                    value: (8 / 12) * 100,
-                    label: "$180.104",
-                    fill: "var(--color-stand)",
-                  },
-                  {
-                    activity: "Efectivo",
-                    value: (46 / 60) * 100,
-                    label: "$210.030",
-                    fill: "var(--color-exercise)",
-                  },
-                  {
-                    activity: "Tarjetas",
-                    value: (245 / 360) * 100,
-                    label: "$181.087",
-                    fill: "var(--color-move)",
-                  },
-                ]}
+                data={cashflows.map((c) => ({
+                  activity: c.method,
+                  value: c.amount,
+                  label: Intl.NumberFormat("es-AR", {
+                    style: "currency",
+                    currency: "ARS",
+                    maximumFractionDigits: 0,
+                  }).format(c.amount),
+                  fill: FILL_COLORS[c.method as keyof typeof FILL_COLORS],
+                }))}
                 layout="vertical"
                 barSize={32}
                 barGap={2}
@@ -249,6 +245,7 @@ export function Dashboard() {
                   type="category"
                   tickLine={false}
                   tickMargin={4}
+                  width={100}
                   axisLine={false}
                   className="capitalize"
                 />
@@ -264,41 +261,6 @@ export function Dashboard() {
               </BarChart>
             </ChartContainer>
           </CardContent>
-          <CardFooter className="flex flex-row border-t p-4">
-            <div className="flex w-full items-center gap-2">
-              <div className="grid flex-1 auto-rows-min gap-0.5">
-                <div className="text-xs text-muted-foreground">
-                  Mercado pago
-                </div>
-                <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
-                  110
-                  <span className="text-sm font-normal text-muted-foreground">
-                    pagos
-                  </span>
-                </div>
-              </div>
-              <Separator orientation="vertical" className="mx-2 h-10 w-px" />
-              <div className="grid flex-1 auto-rows-min gap-0.5">
-                <div className="text-xs text-muted-foreground">Efectivo</div>
-                <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
-                  73
-                  <span className="text-sm font-normal text-muted-foreground">
-                    pagos
-                  </span>
-                </div>
-              </div>
-              <Separator orientation="vertical" className="mx-2 h-10 w-px" />
-              <div className="grid flex-1 auto-rows-min gap-0.5">
-                <div className="text-xs text-muted-foreground">Tarjetas</div>
-                <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
-                  79
-                  <span className="text-sm font-normal text-muted-foreground">
-                    pagos
-                  </span>
-                </div>
-              </div>
-            </div>
-          </CardFooter>
         </Card>
       </div>
       <div className="grid w-full sm:grid-cols-2 md:grid-cols-3 gap-6">

@@ -2,7 +2,7 @@ import { cashflows, type InsertCashflow } from "@/schemas/cashflow";
 import { db } from ".";
 import { and, eq, sql } from "drizzle-orm";
 import { sales } from "@/schemas/sale";
-import { daily_reports } from "@/schemas/report";
+import { cashflows_daily_report } from "@/schemas/report";
 
 export async function createCashflow(cashflow: InsertCashflow) {
   return await db.transaction(async (tx) => {
@@ -19,18 +19,29 @@ export async function createCashflow(cashflow: InsertCashflow) {
         .where(eq(sales.id, cashflow.sale_id));
       const now = new Date();
       await tx
-        .update(daily_reports)
-        .set({
-          sales_gathered: sql`${daily_reports.sales_gathered} + ${cashflow.amount}`,
+        .insert(cashflows_daily_report)
+        .values({
+          day: now.getDate(),
+          month: now.getMonth() + 1,
+          year: now.getFullYear(),
+          company_id: currentSale?.company_id as number,
+          amount: cashflow.amount,
+          quantity: 1,
+          method: cashflow.method,
         })
-        .where(
-          and(
-            eq(daily_reports.company_id, 1),
-            eq(daily_reports.day, now.getDate()),
-            eq(daily_reports.month, now.getMonth() + 1),
-            eq(daily_reports.year, now.getFullYear())
-          )
-        );
+        .onConflictDoUpdate({
+          target: [
+            cashflows_daily_report.day,
+            cashflows_daily_report.month,
+            cashflows_daily_report.year,
+            cashflows_daily_report.method,
+            cashflows_daily_report.company_id,
+          ],
+          set: {
+            amount: sql`${cashflows_daily_report.amount} + ${cashflow.amount}`,
+            quantity: sql`${cashflows_daily_report.quantity} + 1`,
+          },
+        });
     } catch (error) {
       console.log("ERROR AL CREAR EL COBRO", { error });
       await tx.rollback();
@@ -82,11 +93,10 @@ export const getPaymentMethods = async (
   asItems: boolean
 ) => {
   const payment_methods = [
-    { id: 1, name: "Mercado Pago" },
+    { id: 1, name: "PayPal" },
     { id: 2, name: "Transferencia" },
     { id: 3, name: "Efectivo" },
-    { id: 4, name: "Tarjeta de crédito" },
-    { id: 5, name: "Tarjeta de débito" },
+    { id: 4, name: "Tarjeta" },
   ];
 
   if (!!searchText) {
