@@ -6,6 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { toMoney } from "@/helpers/fmt";
 
 const DropdownWhatsapp = ({ sale }: { sale: any }) => {
   return (
@@ -46,14 +47,7 @@ const DropdownWhatsapp = ({ sale }: { sale: any }) => {
           onClick={(e) => {
             e.stopPropagation();
             window.open(
-              `https://api.whatsapp.com/send/?phone=${sale.client.phone}&text=${encodeURI(`${sale.client.firstname}, te enviamos este mensaje como comprobate de que ya has abonado *${Intl.NumberFormat(
-                "es-AR",
-                {
-                  style: "currency",
-                  currency: "ARS",
-                  maximumFractionDigits: 0,
-                }
-              ).format(sale.gathered)}*.
+              `https://api.whatsapp.com/send/?phone=${sale.client.phone}&text=${encodeURI(`${sale.client.firstname}, te enviamos este mensaje como comprobate de que ya has abonado *${toMoney(sale.gathered)}*.
 
 En cuanto esté listo tu vehículo te vamos a contactar para que vengas a retirarlo.
                 

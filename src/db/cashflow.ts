@@ -8,6 +8,7 @@ export async function createCashflow(cashflow: InsertCashflow) {
   return await db.transaction(async (tx) => {
     try {
       console.log({ cashflow });
+      delete cashflow.id;
       const created = await tx.insert(cashflows).values(cashflow);
       const currentSale = await tx.query.sales.findFirst({
         where: eq(sales.id, cashflow.sale_id),
@@ -89,8 +90,7 @@ export const getCashflows = async (saleId: number) => {
 };
 
 export const getPaymentMethods = async (
-  searchText: string | null | undefined,
-  asItems: boolean
+  searchText: string | null | undefined
 ) => {
   const payment_methods = [
     { id: 1, name: "PayPal" },

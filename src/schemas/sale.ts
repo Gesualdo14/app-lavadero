@@ -20,7 +20,7 @@ export const sales = sqliteTable("Sales", {
   month: integer("month"),
   year: integer("year"),
   total_amount: integer("total_amount").notNull(),
-  gathered: integer("gathered").default(0),
+  gathered: integer("gathered").default(0).notNull(),
   client_id: integer("client_id")
     .notNull()
     .references(() => users.id),

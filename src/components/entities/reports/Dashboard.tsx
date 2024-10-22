@@ -25,6 +25,7 @@ import {
 import { DollarSign, Users2, WashingMachine } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { actions } from "astro:actions";
+import { toMoney } from "@/helpers/fmt";
 
 export const description = "A collection of health charts.";
 
@@ -57,11 +58,7 @@ export function Dashboard() {
           <CardHeader className="space-y-0 pb-2">
             <CardDescription>Hoy</CardDescription>
             <CardTitle className="text-4xl tabular-nums">
-              {Intl.NumberFormat("es-AR", {
-                style: "currency",
-                currency: "ARS",
-                maximumFractionDigits: 0,
-              }).format(
+              {toMoney(
                 Array.isArray(sales) ? sales[sales.length - 1].amount || 0 : 0
               )}{" "}
               <span className="font-sans text-sm font-normal tracking-normal text-muted-foreground">
@@ -144,11 +141,7 @@ export function Dashboard() {
                   />
                   <Label
                     position="insideTopLeft"
-                    value={Intl.NumberFormat("es-AR", {
-                      style: "currency",
-                      currency: "ARS",
-                      maximumFractionDigits: 0,
-                    }).format(
+                    value={toMoney(
                       (sales?.reduce(
                         (acc, curr) => acc + (curr?.amount || 0),
                         0
@@ -167,11 +160,7 @@ export function Dashboard() {
             <CardDescription>
               En últimos 7 días, hubieron ventas por un total de{" "}
               <span className="font-medium text-foreground">
-                {Intl.NumberFormat("es-AR", {
-                  style: "currency",
-                  currency: "ARS",
-                  maximumFractionDigits: 0,
-                }).format(
+                {toMoney(
                   sales?.reduce((acc, curr) => acc + (curr?.amount || 0), 0) ||
                     1
                 )}
@@ -181,11 +170,7 @@ export function Dashboard() {
             <CardDescription>
               Necesitás{" "}
               <span className="font-medium text-foreground">
-                {Intl.NumberFormat("es-AR", {
-                  style: "currency",
-                  currency: "ARS",
-                  maximumFractionDigits: 0,
-                }).format(
+                {toMoney(
                   700_000 -
                     (sales?.reduce(
                       (acc, curr) => acc + (curr?.amount || 0),
@@ -228,11 +213,7 @@ export function Dashboard() {
                 data={cashflows.map((c) => ({
                   activity: c.method,
                   value: c.amount,
-                  label: Intl.NumberFormat("es-AR", {
-                    style: "currency",
-                    currency: "ARS",
-                    maximumFractionDigits: 0,
-                  }).format(c.amount),
+                  label: toMoney(c.amount),
                   fill: FILL_COLORS[c.method as keyof typeof FILL_COLORS],
                 }))}
                 layout="vertical"

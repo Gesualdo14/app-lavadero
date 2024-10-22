@@ -7,16 +7,17 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { Edit2Icon } from "lucide-react";
 import { TableSkeletonComponent } from "../../custom-ui/Skeletons";
+import { toMoney } from "@/helpers/fmt";
 
 const SaleCashflowsTable = ({ sale_id }: { sale_id: number }) => {
   const { update, cashflow } = useStore();
-  console.log({ sale_id });
   const { data: cashflows, isPending } = useQuery({
     queryKey: ["cashflows", sale_id],
     queryFn: async () => {
@@ -40,8 +41,8 @@ const SaleCashflowsTable = ({ sale_id }: { sale_id: number }) => {
       <TableHeader>
         <TableRow>
           <TableHead>Método</TableHead>
-          <TableHead>Monto</TableHead>
           <TableHead>Fecha</TableHead>
+          <TableHead>Monto</TableHead>
           <TableHead>
             <span className="sr-only">Acciones</span>
           </TableHead>
@@ -57,14 +58,7 @@ const SaleCashflowsTable = ({ sale_id }: { sale_id: number }) => {
               key={c.id}
               className={`cursor-pointer ${c.id === cashflow.id ? "bg-gray-100" : ""}`}
             >
-              <TableCell className="flex w-32 ">{c.method}</TableCell>
-              <TableCell className="w-24">
-                {Intl.NumberFormat("es-AR", {
-                  style: "currency",
-                  currency: "ARS",
-                  maximumFractionDigits: 0,
-                }).format(c.amount)}
-              </TableCell>
+              <TableCell className="flex w-28">{c.method}</TableCell>
               <TableCell>
                 {format(
                   addHours(
@@ -77,6 +71,7 @@ const SaleCashflowsTable = ({ sale_id }: { sale_id: number }) => {
                   }
                 )}
               </TableCell>
+              <TableCell className="w-24">{toMoney(c.amount)}</TableCell>
               <TableCell>
                 <Edit2Icon
                   className={`h-4 w-4 ${c.id === cashflow.id ? "text-blue-500" : "text-gray-900"} hover:text-blue-500`}
