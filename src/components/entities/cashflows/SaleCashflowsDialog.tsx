@@ -107,6 +107,11 @@ export function SaleCashflowsDialog() {
                     amount: 0,
                     method: [],
                   });
+                  form.setValue("amount", 0);
+                  form.setValue("method", []);
+                  (
+                    document.querySelector("#select-amount") as HTMLInputElement
+                  ).click();
                 }}
               >
                 <PlusCircle className="h-3.5 w-3.5" />

@@ -45,7 +45,8 @@ const ServicesTable = () => {
             <TableRow key={s.id}>
               <TableCell className="font-medium w-48">{s.name}</TableCell>
               <TableCell className="w-48">
-                {Intl.NumberFormat("es-AR", {
+                {("es-AR",
+                {
                   style: "currency",
                   currency: "ARS",
                   maximumFractionDigits: 0,

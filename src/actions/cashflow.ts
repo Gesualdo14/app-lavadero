@@ -82,7 +82,7 @@ const cashflow = {
     handler: async (data) => {
       try {
         console.log({ data });
-        const payment_methods = await getPaymentMethods("", false);
+        const payment_methods = await getPaymentMethods("");
         console.log({ payment_methods });
 
         return {

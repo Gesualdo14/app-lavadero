@@ -9,10 +9,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CircleDollarSign, Edit2Icon } from "lucide-react";
+import { CircleDollarSign } from "lucide-react";
 import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
 import { Progress } from "@/components/ui/progress";
 import DropdownWhatsapp from "@/components/custom-ui/DropdownWhatsapp";
+import { toMoney } from "@/helpers/fmt";
 
 const SalesTable = () => {
   const { update, globalSearchText } = useStore();
@@ -74,8 +75,8 @@ const SalesTable = () => {
               <TableCell className="font-medium w-80">
                 <div className="flex flex-col">
                   <span>{`${s.client.firstname} ${s.client.lastname}`}</span>
-                  <span className="text-[12px] text-gray-400 block sm:hidden">{`${s.vehicle.brand?.toUpperCase()} - ${s.vehicle.model}`}</span>
-                  <span className="text-[12px] text-gray-400 hidden sm:block font-normal">
+                  <span className="text-[12px] text-gray-400 block sm:hidden font-normal -mt-1">{`${s.vehicle.brand?.toUpperCase()} - ${s.vehicle.model}`}</span>
+                  <span className="text-[12px] text-gray-400 hidden sm:block font-normal -mt-1">
                     {s.client.email}
                   </span>
                 </div>
@@ -83,24 +84,26 @@ const SalesTable = () => {
               <TableCell className="hidden sm:inline-block w-48">
                 <div className="flex flex-col h-100">
                   <span>{s.vehicle.brand?.toUpperCase()}</span>
-                  <span className="text-[12px] text-gray-400">
+                  <span className="text-[12px] text-gray-400 font-normal -mt-1">
                     {s.vehicle.model}
                   </span>
                 </div>
               </TableCell>
               <TableCell className="w-48">
                 <div className="flex flex-col items-center w-16">
-                  <span>
-                    {Intl.NumberFormat("es-AR", {
-                      style: "currency",
-                      currency: "ARS",
-                      maximumFractionDigits: 0,
-                    }).format(s.total_amount)}
-                  </span>
+                  <span>{toMoney(s.total_amount)}</span>
                   <Progress
-                    value={((s.gathered || 0) / s.total_amount) * 100}
+                    value={(s.gathered / s.total_amount) * 100}
                     className="!w-16 bg-gray-50 ring-[0.5px] ring-gray-300"
                   />
+                  {s.gathered - s.total_amount > 0 && (
+                    <small className="text-[7px] w-24 text-center text-muted-foreground -mt-1">
+                      propina{" "}
+                      <span className="text-blue-500">
+                        {toMoney(s.gathered - s.total_amount)}
+                      </span>
+                    </small>
+                  )}
                 </div>
               </TableCell>
               <TableCell>
