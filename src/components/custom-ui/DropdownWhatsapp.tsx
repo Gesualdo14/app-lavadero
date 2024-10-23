@@ -58,7 +58,21 @@ En cuanto esté listo tu vehículo te vamos a contactar para que vengas a retira
         >
           Cobro recibido
         </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer hover:!bg-gray-100">
+        <DropdownMenuItem
+          className="cursor-pointer hover:!bg-gray-100"
+          onClick={(e) => {
+            e.stopPropagation();
+            window.open(
+              `https://api.whatsapp.com/send/?phone=${sale.client.phone}&text=${encodeURI(`${sale.client.firstname}.
+
+Ya podes pasar a retirar tu vehículo.
+Recordá que cerramos a las 18 hs.
+                
+¡Te esperamos! 🙋🏻‍♂️`)}`,
+              "_blank"
+            );
+          }}
+        >
           Retirar vehículo
         </DropdownMenuItem>
       </DropdownMenuContent>
