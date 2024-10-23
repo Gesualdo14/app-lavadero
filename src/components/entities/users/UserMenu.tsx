@@ -29,11 +29,8 @@ const UserMenu = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>Configuración</DropdownMenuItem>
-        <DropdownMenuSeparator />
         <DropdownMenuItem
+          className="hover:!text-red-500 hover:underline hover:cursor-pointer"
           onClick={async () => {
             await actions.logout();
             await navigate("/login");
