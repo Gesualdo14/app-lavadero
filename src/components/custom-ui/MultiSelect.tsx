@@ -186,7 +186,7 @@ const MultiSelect = ({
           setTimeout(() => {
             document.getElementById("my-input")?.focus();
           }, 50);
-          update("openSelect", isOpen ? "" : field.name);
+          update("openSelect", openSelect === field.name ? "" : field.name);
           update("searchText", "");
         }}
       >
