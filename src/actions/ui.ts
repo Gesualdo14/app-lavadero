@@ -46,7 +46,7 @@ const ui = {
             items = await getVehicles(searchText, true, filterId);
             break;
           case "method":
-            items = await getPaymentMethods(searchText, true);
+            items = await getPaymentMethods(searchText);
             break;
         }
 
