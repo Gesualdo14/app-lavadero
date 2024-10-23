@@ -50,6 +50,7 @@ export function Dashboard() {
   if (isPending || !Array.isArray(data)) return "Loading sales...";
 
   const [sales, cashflows] = data;
+  console.log({ cashflows });
 
   return (
     <div className="chart-wrapper flex max-w-6xl flex-col flex-wrap items-start gap-6 sm:flex-row p-4">

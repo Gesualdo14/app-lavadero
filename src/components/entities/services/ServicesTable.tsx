@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import MyDropdown from "@/components/custom-ui/DropdownWhatsapp";
 import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
+import { toMoney } from "@/helpers/fmt";
 
 const ServicesTable = () => {
   const { globalSearchText } = useStore();
@@ -44,14 +45,7 @@ const ServicesTable = () => {
           services?.map((s) => (
             <TableRow key={s.id}>
               <TableCell className="font-medium w-48">{s.name}</TableCell>
-              <TableCell className="w-48">
-                {("es-AR",
-                {
-                  style: "currency",
-                  currency: "ARS",
-                  maximumFractionDigits: 0,
-                }).format(s.price)}
-              </TableCell>
+              <TableCell className="w-48">{toMoney(s.price)}</TableCell>
               <TableCell></TableCell>
             </TableRow>
           ))
