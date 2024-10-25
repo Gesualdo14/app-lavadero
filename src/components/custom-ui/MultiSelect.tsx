@@ -177,12 +177,16 @@ const MultiSelect = ({
       onOpenChange={(open) => {
         if (open) {
           setTimeout(() => {
-            const dialog = document.querySelector(
+            let dialog = document.querySelector(
               "div[role=dialog]"
             ) as HTMLDivElement;
-            console.log(dialog);
-            dialog.style.pointerEvents = "auto !important";
+            console.log(1, dialog);
+            dialog.style.pointerEvents = "none";
             console.log("POINTER AUTO!");
+            dialog = document.querySelector(
+              "div[role=dialog]"
+            ) as HTMLDivElement;
+            console.log(2, dialog);
           }, 150);
         }
       }}
