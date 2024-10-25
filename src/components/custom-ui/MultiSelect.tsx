@@ -18,6 +18,7 @@ import type { Sale } from "@/schemas/sale";
 import { useStore } from "@/stores";
 import type { Cashflow } from "@/schemas/cashflow";
 import { DropdownSkeletonComponent } from "./Skeletons";
+import { useEffect } from "react";
 
 type Props = {
   id?: string;
@@ -166,6 +167,10 @@ const MultiSelect = ({
     }
   };
 
+  useEffect(() => {
+    const dialog = document.querySelector("div");
+  }, []);
+
   return (
     <Select open={isOpen}>
       <SelectTrigger
@@ -188,6 +193,10 @@ const MultiSelect = ({
           }, 50);
           update("openSelect", isOpen ? "" : field.name);
           update("searchText", "");
+          const dialog = document.querySelector(
+            "div[role='dialog']"
+          ) as HTMLDivElement;
+          dialog.style.pointerEvents = "auto";
         }}
       >
         {quantitySelected === 0 || !quantitySelected ? (
@@ -198,7 +207,7 @@ const MultiSelect = ({
               quantitySelected < 3 &&
               field?.value?.map((fv) => (
                 <span key={fv.id} className="rounded-md bg-gray-100 px-3">
-                  {fv.name}  
+                  {fv.name}
                 </span>
               ))}
             {quantitySelected > 2 && (

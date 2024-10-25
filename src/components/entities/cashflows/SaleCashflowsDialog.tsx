@@ -86,7 +86,9 @@ export function SaleCashflowsDialog() {
   return (
     <Dialog
       open={openDialog === "cashflow"}
-      onOpenChange={(open) => update("openDialog", !open ? "" : "cashflow")}
+      onOpenChange={(open) => {
+        update("openDialog", !open ? "" : "cashflow");
+      }}
     >
       <DialogContent className="sm:max-w-[425px] top-[50px] translate-y-0">
         <DialogTitle>Cobros recibidos</DialogTitle>
