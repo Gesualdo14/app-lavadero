@@ -198,7 +198,7 @@ const MultiSelect = ({
               quantitySelected < 3 &&
               field?.value?.map((fv) => (
                 <span key={fv.id} className="rounded-md bg-gray-100 px-3">
-                  {fv.name}
+                  {fv.name}  
                 </span>
               ))}
             {quantitySelected > 2 && (
