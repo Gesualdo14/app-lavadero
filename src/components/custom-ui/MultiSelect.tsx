@@ -183,7 +183,7 @@ const MultiSelect = ({
             console.log(dialog);
             dialog.style.pointerEvents = "auto !important";
             console.log("POINTER AUTO!");
-          }, 50);
+          }, 150);
         }
       }}
     >
