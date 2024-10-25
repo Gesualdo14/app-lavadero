@@ -197,6 +197,7 @@ const MultiSelect = ({
             "div[role='dialog']"
           ) as HTMLDivElement;
           dialog.style.pointerEvents = "auto";
+          console.log("POINTER AUTO!");
         }}
       >
         {quantitySelected === 0 || !quantitySelected ? (
