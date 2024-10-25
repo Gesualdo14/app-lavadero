@@ -182,12 +182,10 @@ const MultiSelect = ({
             ) as HTMLDivElement;
             console.log(1, dialog);
             dialog.style.pointerEvents = "auto";
-            console.log("POINTER AUTO!");
             dialog = document.querySelector(
               "div[role=dialog]"
             ) as HTMLDivElement;
-            console.log(2, dialog);
-          }, 150);
+          }, 50);
         }
       }}
     >
