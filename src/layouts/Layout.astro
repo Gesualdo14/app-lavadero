@@ -104,13 +104,6 @@ const { title } = Astro.props;
   </body>
 </html>
 
-<script>
-  const html = document.querySelector("html");
-  html?.addEventListener("click", () => {
-    console.log("CLICK!!");
-  });
-</script>
-
 <style is:global>
   :root {
     --accent: 136, 58, 234;
@@ -126,6 +119,10 @@ const { title } = Astro.props;
   html {
     font-family: system-ui, sans-serif;
     background: #13151a;
+  }
+
+  body {
+    pointer-events: auto !important;
   }
   main {
     margin: auto;
