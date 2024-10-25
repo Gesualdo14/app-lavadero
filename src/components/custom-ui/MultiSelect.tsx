@@ -172,7 +172,21 @@ const MultiSelect = ({
   }, []);
 
   return (
-    <Select open={isOpen}>
+    <Select
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (open) {
+          setTimeout(() => {
+            const dialog = document.querySelector(
+              "div[role=dialog]"
+            ) as HTMLDivElement;
+            console.log(dialog);
+            dialog.style.pointerEvents = "auto !important";
+            console.log("POINTER AUTO!");
+          }, 150);
+        }
+      }}
+    >
       <SelectTrigger
         id={id}
         autoFocus={autoFocus}
@@ -193,11 +207,6 @@ const MultiSelect = ({
           }, 50);
           update("openSelect", isOpen ? "" : field.name);
           update("searchText", "");
-          const dialog = document.querySelector(
-            "div[role='dialog']"
-          ) as HTMLDivElement;
-          dialog.style.pointerEvents = "auto";
-          console.log("POINTER AUTO!");
         }}
       >
         {quantitySelected === 0 || !quantitySelected ? (
