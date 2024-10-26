@@ -18,7 +18,6 @@ import type { Sale } from "@/schemas/sale";
 import { useStore } from "@/stores";
 import type { Cashflow } from "@/schemas/cashflow";
 import { DropdownSkeletonComponent } from "./Skeletons";
-import { useEffect } from "react";
 
 type Props = {
   id?: string;
@@ -167,10 +166,6 @@ const MultiSelect = ({
     }
   };
 
-  useEffect(() => {
-    const dialog = document.querySelector("div");
-  }, []);
-
   return (
     <Select
       open={isOpen}
@@ -180,7 +175,6 @@ const MultiSelect = ({
             let dialog = document.querySelector(
               "div[role=dialog]"
             ) as HTMLDivElement;
-            console.log(1, dialog);
             dialog.style.pointerEvents = "auto";
             dialog = document.querySelector(
               "div[role=dialog]"
