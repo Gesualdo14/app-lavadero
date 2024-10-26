@@ -185,7 +185,7 @@ const MultiSelect = ({
             dialog = document.querySelector(
               "div[role=dialog]"
             ) as HTMLDivElement;
-          }, 50);
+          }, 150);
         }
       }}
     >
