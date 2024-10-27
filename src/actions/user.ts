@@ -33,7 +33,7 @@ const user = {
 
       cookies.set("jwt", token, {
         httpOnly: true,
-        maxAge: 24 * 60 * 60,
+        maxAge: 180 * 24 * 60 * 60, // 6 meses
         path: "/",
         sameSite: "strict",
       });
