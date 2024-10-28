@@ -160,7 +160,7 @@ const MultiSelect = ({
       const element = document.querySelector(
         `#${idToFocusAfterSelection}`
       ) as HTMLElement;
-      const timeout = setTimeout(() => {
+      setTimeout(() => {
         element.focus();
       }, 2);
     }

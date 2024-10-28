@@ -39,7 +39,6 @@ export function SaleFormDialog() {
   const {
     formState: { isSubmitting },
     setError,
-    reset,
     handleSubmit,
     control,
     register,

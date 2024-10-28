@@ -5,7 +5,6 @@ import {
   updateCashflow,
 } from "@/db/cashflow";
 import { cashflowFormSchema } from "@/schemas/cashflow";
-import type { LoggedUser } from "@/schemas/user";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
 

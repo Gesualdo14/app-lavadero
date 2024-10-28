@@ -8,7 +8,7 @@ const vehicle = {
       searchText: z.string().nullish(),
       asItems: z.boolean(),
     }),
-    handler: async ({ searchText, asItems }) => {
+    handler: async ({ searchText }) => {
       try {
         const vehicles = await getVehicles(searchText, false);
 

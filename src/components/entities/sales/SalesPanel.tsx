@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SaleFormDialog } from "./SaleFormDialog";
 import SalesTable from "./SalesTable";
 import { SaleCashflowsDialog } from "@/components/entities/cashflows/SaleCashflowsDialog";
