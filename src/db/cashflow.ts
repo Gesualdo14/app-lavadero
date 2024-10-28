@@ -8,7 +8,7 @@ export async function createCashflow(cashflow: InsertCashflow) {
   return await db.transaction(async (tx) => {
     try {
       delete cashflow.id;
-      const created = await tx.insert(cashflows).values(cashflow);
+      await tx.insert(cashflows).values(cashflow);
       const currentSale = await tx.query.sales.findFirst({
         where: eq(sales.id, cashflow.sale_id),
       });

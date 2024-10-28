@@ -89,7 +89,7 @@ export async function createSale(data: Sale) {
       );
     } catch (error) {
       console.log("ERROR AL CREAR LA VENTA", { error });
-      await tx.rollback();
+      tx.rollback();
     }
   });
 }
