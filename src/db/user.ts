@@ -28,6 +28,13 @@ export async function updateUser(user: Partial<InsertUser>, userId: number) {
   return await db.update(users).set(user).where(eq(users.id, userId));
 }
 
+export async function deleteUser(userId: number) {
+  return await db
+    .update(users)
+    .set({ deleted_by: userId })
+    .where(eq(users.id, userId));
+}
+
 export const getUsers = async <T extends boolean>(
   searchText: string | null | undefined,
   asItems: T,
@@ -64,6 +71,7 @@ export const getUsers = async <T extends boolean>(
     return result as any;
   }
 };
+
 export const getUserByEmail = async (email: string) => {
   return await db.query.users.findFirst({ where: eq(users.email, email) });
 };
