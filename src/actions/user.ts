@@ -1,4 +1,10 @@
-import { createUser, getUserByEmail, getUsers, updateUser } from "@/db/user";
+import {
+  createUser,
+  deleteUser,
+  getUserByEmail,
+  getUsers,
+  updateUser,
+} from "@/db/user";
 import { userFormSchema, type LoggedUser } from "@/schemas/user";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
@@ -222,6 +228,23 @@ const user = {
         return {
           ok: true,
           message: "Usuario actualizado con éxito",
+        };
+      } catch (error) {
+        console.log({ error });
+        if (error instanceof Error)
+          return { ok: false, message: error.message };
+      }
+    },
+  }),
+  deleteUser: defineAction({
+    input: z.number(),
+    handler: async (user_to_delete_id, { locals: { user } }) => {
+      try {
+        await deleteUser(user_to_delete_id, user?.id as number);
+
+        return {
+          ok: true,
+          message: "Usuario eliminado con éxito",
         };
       } catch (error) {
         console.log({ error });

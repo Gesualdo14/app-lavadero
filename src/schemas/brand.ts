@@ -15,7 +15,6 @@ export const brands = sqliteTable("Brands", {
 export const brandFormSchema = z.object({
   id: z.number().optional(),
   name: z.string(),
-  company_id: z.number(),
   deleted_by: z.number().optional(),
 });
 

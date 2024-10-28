@@ -7,7 +7,15 @@ import {
 import { vehicles, type InsertVehicle } from "@/schemas/vehicle";
 import { db } from ".";
 import type { TSelect } from "@/schemas/sale";
-import { and, desc, eq, like, or, type DBQueryConfig } from "drizzle-orm";
+import {
+  and,
+  desc,
+  eq,
+  isNull,
+  like,
+  or,
+  type DBQueryConfig,
+} from "drizzle-orm";
 
 export async function createUser(
   user: InsertUser,
@@ -28,11 +36,11 @@ export async function updateUser(user: Partial<InsertUser>, userId: number) {
   return await db.update(users).set(user).where(eq(users.id, userId));
 }
 
-export async function deleteUser(userId: number) {
+export async function deleteUser(user_to_delete_id: number, userId: number) {
   return await db
     .update(users)
     .set({ deleted_by: userId })
-    .where(eq(users.id, userId));
+    .where(eq(users.id, user_to_delete_id));
 }
 
 export const getUsers = async <T extends boolean>(
@@ -44,7 +52,8 @@ export const getUsers = async <T extends boolean>(
   const searchConfig: DBQueryConfig = {
     where: and(
       eq(users.is_client, isClient as number),
-      eq(users.company_id, user.company_id)
+      eq(users.company_id, user.company_id),
+      isNull(users.deleted_by)
     ),
     limit: 8,
     orderBy: desc(users.id),
@@ -57,7 +66,8 @@ export const getUsers = async <T extends boolean>(
         like(users.lastname, `%${searchText}%`)
       ),
       eq(users.is_client, isClient as number),
-      eq(users.company_id, user.company_id)
+      eq(users.company_id, user.company_id),
+      isNull(users.deleted_by)
     );
   }
   const result = await db.query.users.findMany(searchConfig);

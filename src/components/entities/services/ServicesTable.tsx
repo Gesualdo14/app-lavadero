@@ -9,13 +9,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import MyDropdown from "@/components/custom-ui/DropdownWhatsapp";
 import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
 import { toMoney } from "@/helpers/fmt";
+import { LoadingSpinner } from "@/components/custom-ui/Spinner";
+import { Trash2 } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 const ServicesTable = () => {
-  const { globalSearchText } = useStore();
-  const { data: services, isPending } = useQuery({
+  const { globalSearchText, update, deleting } = useStore();
+  const {
+    data: services,
+    isPending,
+    refetch,
+  } = useQuery({
     queryKey: ["services", globalSearchText],
     queryFn: async () => {
       const data = await actions.getServices({
@@ -24,8 +30,6 @@ const ServicesTable = () => {
       return data?.data?.data || [];
     },
   });
-
-  console.log({ services });
 
   return (
     <Table>
@@ -43,10 +47,37 @@ const ServicesTable = () => {
           <TableSkeletonComponent />
         ) : (
           services?.map((s) => (
-            <TableRow key={s.id}>
+            <TableRow
+              key={s.id}
+              onClick={() => {
+                update("service", s);
+
+                update("openDialog", "service");
+                update("creating", false);
+              }}
+            >
               <TableCell className="font-medium w-48">{s.name}</TableCell>
               <TableCell className="w-48">{toMoney(s.price)}</TableCell>
-              <TableCell></TableCell>
+              <TableCell>
+                {deleting === "brand" ? (
+                  <LoadingSpinner />
+                ) : (
+                  <Trash2
+                    className="text-red-700 hover:text-red-500 hover:cursor-pointer"
+                    onClick={async (e) => {
+                      e.stopPropagation();
+                      update("deleting", "brand");
+                      const result = await actions.deleteService(s.id);
+                      update("deleting", "");
+                      refetch();
+                      toast({
+                        title: "Operación exitosa",
+                        description: result.data?.message,
+                      });
+                    }}
+                  />
+                )}
+              </TableCell>
             </TableRow>
           ))
         )}

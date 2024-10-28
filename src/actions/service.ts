@@ -1,4 +1,9 @@
-import { createService, getServices } from "@/db/service";
+import {
+  createService,
+  deleteService,
+  getServices,
+  updateService,
+} from "@/db/service";
 import { serviceFormSchema } from "@/schemas/service";
 import type { LoggedUser } from "@/schemas/user";
 import { defineAction } from "astro:actions";
@@ -38,7 +43,44 @@ const service = {
         return {
           ok: true,
           data: { id: 1 },
-          message: "Usuario creado con éxito",
+          message: "Servicio creado con éxito",
+        };
+      } catch (error) {
+        console.log({ error });
+        if (error instanceof Error)
+          return { ok: false, message: error.message };
+      }
+    },
+  }),
+  updateService: defineAction({
+    input: serviceFormSchema,
+    handler: async (data) => {
+      try {
+        console.log("UPDATING SERVICE", data);
+        const result = await updateService(data);
+        console.log(result);
+        return {
+          ok: true,
+          data: { id: 1 },
+          message: "Servicio editado con éxito",
+        };
+      } catch (error) {
+        console.log({ error });
+        if (error instanceof Error)
+          return { ok: false, message: error.message };
+      }
+    },
+  }),
+  deleteService: defineAction({
+    input: z.number(),
+    handler: async (service_id, { locals: { user } }) => {
+      try {
+        console.log("DELETING SERVICE", service_id);
+        const result = await deleteService(service_id, user?.id as number);
+        console.log(result);
+        return {
+          ok: true,
+          message: "Servicio eliminado con éxito",
         };
       } catch (error) {
         console.log({ error });
