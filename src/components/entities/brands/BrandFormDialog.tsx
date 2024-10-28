@@ -50,7 +50,9 @@ export function BrandFormDialog() {
       });
     }
     reset(EMPTY_BRAND);
-    queryClient.refetchQueries({ queryKey: ["brands", globalSearchText] });
+    await queryClient.refetchQueries({
+      queryKey: ["brands", globalSearchText],
+    });
     update("openDialog", "");
     toast({
       title: "Operación exitosa",

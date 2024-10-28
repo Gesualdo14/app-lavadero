@@ -58,14 +58,14 @@ const BrandsTable = () => {
             >
               <TableCell className="font-medium w-48">{b.name}</TableCell>
               <TableCell>
-                {deleting === "brand" ? (
+                {deleting === `brand-${b.id}` ? (
                   <LoadingSpinner />
                 ) : (
                   <Trash2
                     className="text-red-700 hover:text-red-500 hover:cursor-pointer"
                     onClick={async (e) => {
                       e.stopPropagation();
-                      update("deleting", "brand");
+                      update("deleting", `brand-${b.id}`);
                       const result = await actions.deleteBrand(b.id);
                       update("deleting", "");
                       refetch();
