@@ -1,7 +1,7 @@
 import { useStore } from "@/stores";
 
 export default function Logo({ href }: { href?: string }) {
-  const { update } = useStore();
+  const update = useStore((s) => s.update);
   if (href) {
     return (
       <img

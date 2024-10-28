@@ -11,18 +11,15 @@ import {
 } from "@/components/ui/table";
 import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
 import { toMoney } from "@/helpers/fmt";
-import { LoadingSpinner } from "@/components/custom-ui/Spinner";
-import { Trash2 } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import DeleteIcon from "@/components/custom-ui/DeleteIcon";
 
 const ServicesTable = () => {
-  const { globalSearchText, update, deleting } = useStore();
-  const {
-    data: services,
-    isPending,
-    refetch,
-  } = useQuery({
-    queryKey: ["services", globalSearchText],
+  const globalSearchText = useStore((s) => s.globalSearchText);
+
+  const update = useStore((s) => s.update);
+  const queryKey = ["services", globalSearchText];
+  const { data: services, isPending } = useQuery({
+    queryKey,
     queryFn: async () => {
       const data = await actions.getServices({
         searchText: globalSearchText || "",
@@ -49,9 +46,13 @@ const ServicesTable = () => {
           services?.map((s) => (
             <TableRow
               key={s.id}
+              className="hover:cursor-pointer"
               onClick={() => {
-                update("service", s);
-
+                update("service", {
+                  id: s.id,
+                  name: s.name,
+                  price: s.price,
+                });
                 update("openDialog", "service");
                 update("creating", false);
               }}
@@ -59,24 +60,7 @@ const ServicesTable = () => {
               <TableCell className="font-medium w-48">{s.name}</TableCell>
               <TableCell className="w-48">{toMoney(s.price)}</TableCell>
               <TableCell>
-                {deleting === `service-${s.id}` ? (
-                  <LoadingSpinner />
-                ) : (
-                  <Trash2
-                    className="text-red-700 hover:text-red-500 hover:cursor-pointer"
-                    onClick={async (e) => {
-                      e.stopPropagation();
-                      update("deleting", `service-${s.id}`);
-                      const result = await actions.deleteService(s.id);
-                      update("deleting", "");
-                      refetch();
-                      toast({
-                        title: "Operación exitosa",
-                        description: result.data?.message,
-                      });
-                    }}
-                  />
-                )}
+                <DeleteIcon id={s.id} entity="Service" queryKey={queryKey} />
               </TableCell>
             </TableRow>
           ))

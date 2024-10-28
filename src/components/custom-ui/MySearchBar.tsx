@@ -4,7 +4,8 @@ import { useStore } from "@/stores";
 import { navigate } from "astro/virtual-modules/transitions-router.js";
 
 const MySearchBar = () => {
-  const { update, globalSearchText } = useStore();
+  const globalSearchText = useStore((s) => s.globalSearchText);
+  const update = useStore((s) => s.update);
   return (
     <div className="relative  flex-1 w-full">
       <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />

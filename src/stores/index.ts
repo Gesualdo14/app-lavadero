@@ -4,11 +4,12 @@ import type { Sale } from "@/schemas/sale";
 import type { Service } from "@/schemas/service";
 import type { User } from "@/schemas/user";
 import { create } from "zustand";
+import { devtools } from "zustand/middleware";
 
-type Store = {
+export type Store = {
   user: User;
   brand: Partial<Brand>;
-  service: Partial<Service>;
+  service: Service;
   sale: Sale;
   panel: string;
   cashflow: Partial<Cashflow>;
@@ -49,32 +50,40 @@ export const EMPTY_BRAND = {
 export const EMPTY_SERVICE = {
   name: "",
   price: 0,
+  company_id: 1,
 };
 
-export const useStore = create<Store>((set) => ({
-  user: EMPTY_USER,
-  sale: EMPTY_SALE,
-  brand: EMPTY_BRAND,
-  service: EMPTY_SERVICE,
-  cashflow: {
-    sale_id: 0,
-    method: [],
-  },
-  panel: "ventas",
-  openDialog: "",
-  deleting: "",
-  openDatePicker: "",
-  openSelect: "",
-  loading: "",
-  searchText: "",
-  globalSearchText: "",
-  creating: false,
-  sheetOpen: false,
-  update: (prop, value) =>
-    set((state) => {
-      if (prop === "panel") {
-        localStorage.setItem(prop, value);
-      }
-      return { ...state, [prop]: value };
-    }),
-}));
+export const useStore = create<Store>()(
+  devtools((set) => ({
+    user: EMPTY_USER,
+    sale: EMPTY_SALE,
+    brand: EMPTY_BRAND,
+    service: EMPTY_SERVICE,
+    cashflow: {
+      sale_id: 0,
+      method: [],
+    },
+    panel: "ventas",
+    openDialog: "",
+    deleting: "",
+    openDatePicker: "",
+    openSelect: "",
+    loading: "",
+    searchText: "",
+    globalSearchText: "",
+    creating: false,
+    sheetOpen: false,
+    update: (prop, value) =>
+      set((state) => {
+        if (prop === "panel") {
+          localStorage.setItem(prop, value);
+        }
+        if (["user", "sale", "brand", "service", "cashflow"].includes(prop)) {
+          const currState = state[prop] as object;
+          return { ...state, [prop]: { ...currState, ...value } };
+        } else {
+          return { ...state, [prop]: value };
+        }
+      }),
+  }))
+);

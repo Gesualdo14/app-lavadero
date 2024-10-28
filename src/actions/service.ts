@@ -27,6 +27,7 @@ const service = {
         };
       } catch (error) {
         const my_error = error as Error;
+
         return { ok: false, data: [], message: my_error.message || "" };
       }
     },
@@ -54,14 +55,12 @@ const service = {
   }),
   updateService: defineAction({
     input: serviceFormSchema,
-    handler: async (data) => {
+    handler: async ({ id, name, price }) => {
       try {
-        console.log("UPDATING SERVICE", data);
-        const result = await updateService(data);
-        console.log(result);
+        console.log(name, price);
+        const result = await updateService({ id, name, price });
         return {
           ok: true,
-          data: { id: 1 },
           message: "Servicio editado con éxito",
         };
       } catch (error) {
