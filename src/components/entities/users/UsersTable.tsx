@@ -32,8 +32,6 @@ const UsersTable = () => {
     },
   });
 
-  console.log({ users });
-
   return (
     <Table>
       <TableHeader>

@@ -1,4 +1,4 @@
-import { Home, PanelLeft } from "lucide-react";
+import { PanelLeft } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import AsideItem from "./AsideItem";

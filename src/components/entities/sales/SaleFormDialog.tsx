@@ -27,7 +27,6 @@ import MultiSelect from "@/components/custom-ui/MultiSelect";
 import { EMPTY_SALE, useStore } from "@/stores";
 import { useQueryClient } from "@tanstack/react-query";
 import { DatePicker } from "@/components/custom-ui/DapePicker";
-import { Tabs, TabsContent, TabsTrigger, TabsList } from "@/components/ui/tabs";
 
 export function SaleFormDialog() {
   const queryClient = useQueryClient();

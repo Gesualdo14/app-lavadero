@@ -1,7 +1,5 @@
-"use client";
-
 import { Skeleton } from "@/components/ui/skeleton";
-import { TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { TableCell, TableRow } from "@/components/ui/table";
 
 export function TableSkeletonComponent({
   rows = 3,

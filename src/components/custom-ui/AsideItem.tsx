@@ -5,7 +5,6 @@ import {
   CircleDollarSign,
   Users,
   Tags,
-  User2,
   UserCog2,
 } from "lucide-react";
 
