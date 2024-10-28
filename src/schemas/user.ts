@@ -27,6 +27,7 @@ export const userFormSchema = z.object({
   firstname: z.string(),
   lastname: z.string(),
   email: z.string().email("Email inválido"),
+  avatar: z.string().optional(),
   phone: z.string().optional(),
   password: z.string().optional(),
   role: selectSchema,
