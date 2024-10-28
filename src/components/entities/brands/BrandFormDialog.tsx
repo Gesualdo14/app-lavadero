@@ -11,7 +11,6 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { actions } from "astro:actions";
 import { PlusCircle } from "lucide-react";
-import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -22,45 +21,67 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { LoadingSpinner } from "../../custom-ui/Spinner";
-import { navigate } from "astro:transitions/client";
 import { brandFormSchema, type Brand } from "@/schemas/brand";
 import { useQueryClient } from "@tanstack/react-query";
-import { useStore } from "@/stores";
-
-const defaultValues = {
-  name: "",
-  company_id: 1,
-};
+import { EMPTY_BRAND, useStore } from "@/stores";
+import { useEffect } from "react";
 
 export function BrandFormDialog() {
   const globalSearchText = useStore((s) => s.globalSearchText);
+  const openDialog = useStore((s) => s.openDialog);
+  const creating = useStore((s) => s.creating);
+  const brand = useStore((s) => s.brand);
+  const update = useStore((s) => s.update);
   const queryClient = useQueryClient();
   const form = useForm<Brand>({
     resolver: zodResolver(brandFormSchema),
-    defaultValues: defaultValues,
   });
 
   const { formState, reset, handleSubmit, control } = form;
-  const [open, setOpen] = useState(false);
 
   const onSubmit = async (values: Brand) => {
-    const result = await actions.createBrand(values);
-    reset(defaultValues);
+    let result;
+    if (creating) {
+      result = await actions.createBrand(values);
+    } else {
+      result = await actions.updateBrand({
+        name: values.name,
+        id: values.id as number,
+      });
+    }
+    reset(EMPTY_BRAND);
     queryClient.refetchQueries({ queryKey: ["brands", globalSearchText] });
+    update("openDialog", "");
     toast({
-      title: "Marca creada",
-      description: "Marca creada con éxito",
+      title: "Operación exitosa",
+      description: result.data?.message,
     });
-    setOpen(false);
   };
+
+  useEffect(() => {
+    form.setValue("name", brand?.name as string);
+    form.setValue("id", brand.id);
+  }, [brand]);
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={openDialog === "brand"}
+      onOpenChange={(open) => {
+        if (!open) {
+          update("openDialog", "");
+        }
+      }}
+    >
       <DialogTrigger asChild>
         <Button
           size="sm"
           variant="default"
           className="h-7 gap-1"
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            update("brand", {});
+            update("openDialog", "brand");
+            update("creating", true);
+          }}
         >
           <PlusCircle className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
@@ -70,10 +91,15 @@ export function BrandFormDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] top-[50px] translate-y-0">
         <DialogHeader>
-          <DialogTitle>Crear marca</DialogTitle>
+          <DialogTitle>{creating ? "Crear" : "Editar"} marca</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={handleSubmit(onSubmit, (e) => {
+              console.log(e);
+            })}
+            className="space-y-4"
+          >
             <FormField
               control={control}
               name="name"
@@ -88,7 +114,13 @@ export function BrandFormDialog() {
             />
             <DialogFooter>
               <Button type="submit">
-                {formState.isSubmitting ? <LoadingSpinner /> : "Crear"}
+                {formState.isSubmitting ? (
+                  <LoadingSpinner />
+                ) : creating ? (
+                  "Crear"
+                ) : (
+                  "Editar"
+                )}
               </Button>
             </DialogFooter>
           </form>

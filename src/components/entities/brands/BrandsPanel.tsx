@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/card.tsx";
 import { BrandFormDialog } from "./BrandFormDialog.tsx";
 import BrandsTable from "./BrandsTable.tsx";
+import { useStore } from "@/stores/index.ts";
 
 const BrandsPanel = () => {
   return (

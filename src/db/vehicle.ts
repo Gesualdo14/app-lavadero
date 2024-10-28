@@ -4,7 +4,15 @@ import {
   type SelectVehicle,
 } from "@/schemas/vehicle";
 import { db } from ".";
-import { and, desc, eq, like, or, type DBQueryConfig } from "drizzle-orm";
+import {
+  and,
+  desc,
+  eq,
+  isNull,
+  like,
+  or,
+  type DBQueryConfig,
+} from "drizzle-orm";
 import type { TSelect } from "@/schemas/sale";
 import { brands, type InsertBrand, type SelectBrand } from "@/schemas/brand";
 import type { LoggedUser } from "@/schemas/user";
@@ -56,14 +64,18 @@ export const getBrands = async <T extends boolean>(
   user: LoggedUser
 ): Promise<T extends true ? TSelect<"brand"> : SelectBrand[]> => {
   const searchConfig: DBQueryConfig = {
-    where: eq(brands.company_id, user.company_id),
+    where: and(
+      eq(brands.company_id, user.company_id),
+      isNull(brands.deleted_by)
+    ),
     limit: 5,
     orderBy: [desc(brands.id)],
   };
   if (!!searchText) {
     searchConfig.where = and(
       like(brands.name, `%${searchText}%`),
-      eq(brands.company_id, user.company_id)
+      eq(brands.company_id, user.company_id),
+      isNull(brands.deleted_by)
     );
   }
 
@@ -81,4 +93,18 @@ export const getBrands = async <T extends boolean>(
 
 export async function createBrand(data: InsertBrand) {
   return await db.insert(brands).values(data);
+}
+
+export async function updateBrand(brand_name: string, brand_id: number) {
+  return await db
+    .update(brands)
+    .set({ name: brand_name })
+    .where(eq(brands.id, brand_id));
+}
+
+export async function deleteBrand(brand_id: number, user_id: number) {
+  return await db
+    .update(brands)
+    .set({ deleted_by: user_id })
+    .where(eq(brands.id, brand_id));
 }

@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { actions } from "astro:actions";
 import { PlusCircle } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -33,6 +33,10 @@ const defaultValues = {
 
 export function ServiceFormDialog() {
   const globalSearchText = useStore((s) => s.globalSearchText);
+  const service = useStore((s) => s.service);
+  const update = useStore((s) => s.update);
+  const creating = useStore((s) => s.creating);
+  const openDialog = useStore((s) => s.openDialog);
   const queryClient = useQueryClient();
   const form = useForm<Service>({
     resolver: zodResolver(serviceFormSchema),
@@ -40,31 +44,47 @@ export function ServiceFormDialog() {
   });
 
   const { formState, reset, handleSubmit, control } = form;
-  const [open, setOpen] = useState(false);
 
   const onSubmit = async (values: Service) => {
-    const result = await actions.createService(values);
+    const result =
+      await actions[creating ? "createService" : "updateService"](values);
+
+    await actions.createService(values);
     reset(defaultValues);
 
     queryClient.refetchQueries({ queryKey: ["services", globalSearchText] });
     toast({
-      title: "Servicio creado",
-      description: "Servicio creado con éxito",
+      title: "Operación exitosa",
+      description: result.data?.message,
     });
-    setOpen(false);
+    update("openDialog", "");
   };
+
+  useEffect(() => {
+    form.setValue("id", service?.id as number);
+    form.setValue("name", service?.name as string);
+    form.setValue("price", service?.price as number);
+  }, [service]);
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={openDialog === "service"}
+      onOpenChange={(open) => {
+        if (!open) {
+          update("openDialog", "");
+        }
+      }}
+    >
       <DialogTrigger asChild>
         <Button
           size="sm"
           variant="default"
           className="h-7 gap-1"
-          onClick={() => setOpen(true)}
+          onClick={() => update("openDialog", "service")}
         >
           <PlusCircle className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Crear servicio
+            {creating ? "Crear" : "Editar"} servicio
           </span>
         </Button>
       </DialogTrigger>
@@ -107,7 +127,13 @@ export function ServiceFormDialog() {
             />
             <DialogFooter>
               <Button type="submit">
-                {formState.isSubmitting ? <LoadingSpinner /> : "Crear"}
+                {formState.isSubmitting ? (
+                  <LoadingSpinner />
+                ) : creating ? (
+                  "Crear"
+                ) : (
+                  "Editar"
+                )}
               </Button>
             </DialogFooter>
           </form>

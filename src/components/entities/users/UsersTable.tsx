@@ -11,10 +11,17 @@ import {
 } from "@/components/ui/table";
 import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
 import { Badge } from "@/components/ui/badge";
+import { Trash2 } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
+import { LoadingSpinner } from "@/components/custom-ui/Spinner";
 
 const UsersTable = () => {
-  const { update, globalSearchText } = useStore();
-  const { data: users, isPending } = useQuery({
+  const { update, globalSearchText, deleting } = useStore();
+  const {
+    data: users,
+    isPending,
+    refetch,
+  } = useQuery({
     queryKey: ["users", globalSearchText],
     queryFn: async () => {
       const data = await actions.getUsers({
@@ -34,9 +41,7 @@ const UsersTable = () => {
           <TableHead></TableHead>
           <TableHead>Usuario</TableHead>
           <TableHead className="min-w-24">Rol</TableHead>
-          <TableHead>
-            <span className="sr-only">Acciones</span>
-          </TableHead>
+          <TableHead>Acciones</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -81,7 +86,26 @@ const UsersTable = () => {
               <TableCell>
                 <Badge variant="outline">{u.role}</Badge>
               </TableCell>
-              <TableCell></TableCell>
+              <TableCell>
+                {deleting === "user" ? (
+                  <LoadingSpinner />
+                ) : (
+                  <Trash2
+                    className="text-red-700 hover:text-red-500 hover:cursor-pointer"
+                    onClick={async (e) => {
+                      e.stopPropagation();
+                      update("deleting", "user");
+                      const result = await actions.deleteUser(u.id);
+                      update("deleting", "");
+                      refetch();
+                      toast({
+                        title: "Operación exitosa",
+                        description: result.data?.message,
+                      });
+                    }}
+                  />
+                )}
+              </TableCell>
             </TableRow>
           ))
         )}

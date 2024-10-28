@@ -14,8 +14,9 @@ export const users = sqliteTable("Users", {
   lastname: text("lastname").notNull(),
   phone: text("phone"),
   email: text("email").unique().notNull(),
-  avatar: text("avatar"),
+  avatar: text("avatar_url"),
   password: text("password"),
+  deleted_by: integer("deleted_by"),
   role: text("role"),
   is_client: integer("is_client").default(1),
 });
@@ -26,7 +27,6 @@ export const userFormSchema = z.object({
   firstname: z.string(),
   lastname: z.string(),
   email: z.string().email("Email inválido"),
-  avatar: z.string().optional(),
   phone: z.string().optional(),
   password: z.string().optional(),
   role: selectSchema,
