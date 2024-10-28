@@ -1,19 +1,18 @@
 import { cashflows, type InsertCashflow } from "@/schemas/cashflow";
 import { db } from ".";
-import { and, eq, sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { sales } from "@/schemas/sale";
 import { cashflows_daily_report } from "@/schemas/report";
 
 export async function createCashflow(cashflow: InsertCashflow) {
   return await db.transaction(async (tx) => {
     try {
-      console.log({ cashflow });
       delete cashflow.id;
       const created = await tx.insert(cashflows).values(cashflow);
       const currentSale = await tx.query.sales.findFirst({
         where: eq(sales.id, cashflow.sale_id),
       });
-      console.log({ currentSale, created });
+
       await tx
         .update(sales)
         .set({ gathered: (currentSale?.gathered || 0) + cashflow.amount })
@@ -45,41 +44,47 @@ export async function createCashflow(cashflow: InsertCashflow) {
         });
     } catch (error) {
       console.log("ERROR AL CREAR EL COBRO", { error });
-      await tx.rollback();
+      tx.rollback();
     }
   });
 }
 
 export async function updateCashflow(cashflow: InsertCashflow) {
   return await db.transaction(async (tx) => {
-    const prevCashflow = await tx.query.cashflows.findFirst({
-      where: eq(cashflows.id, cashflow.id as number),
-    });
-    console.log({ prevCashflow });
-    await tx
-      .update(cashflows)
-      .set({
-        method: cashflow.method,
-        amount: cashflow.amount,
-        updated_at: new Date().toUTCString(),
-      })
-      .where(eq(cashflows.id, cashflow.id as number));
+    try {
+      const prevCashflow = await tx.query.cashflows.findFirst({
+        where: eq(cashflows.id, cashflow.id as number),
+      });
+      console.log({ prevCashflow });
+      await tx
+        .update(cashflows)
+        .set({
+          method: cashflow.method,
+          amount: cashflow.amount,
+          updated_at: new Date().toUTCString(),
+        })
+        .where(eq(cashflows.id, cashflow.id as number));
 
-    const prevSale = await tx.query.sales.findFirst({
-      where: eq(sales.id, cashflow.sale_id),
-    });
+      const prevSale = await tx.query.sales.findFirst({
+        where: eq(sales.id, cashflow.sale_id),
+      });
 
-    const gatheredAmount =
-      (prevSale?.gathered || 0) - (prevCashflow?.amount || 0) + cashflow.amount;
+      const gatheredAmount =
+        (prevSale?.gathered || 0) -
+        (prevCashflow?.amount || 0) +
+        cashflow.amount;
 
-    console.log({ prevSale, gatheredAmount });
-    const result = await tx
-      .update(sales)
-      .set({
-        gathered: gatheredAmount,
-      })
-      .where(eq(sales.id, cashflow.sale_id));
-    console.log({ result });
+      console.log({ prevSale, gatheredAmount });
+      const result = await tx
+        .update(sales)
+        .set({
+          gathered: gatheredAmount,
+        })
+        .where(eq(sales.id, cashflow.sale_id));
+      console.log({ result });
+    } catch (error) {
+      tx.rollback();
+    }
   });
 }
 

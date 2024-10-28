@@ -24,7 +24,6 @@ const blobs = {
         }
         return true;
       } catch (error) {
-        const my_error = error as Error;
         return false;
       }
     },

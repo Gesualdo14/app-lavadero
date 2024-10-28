@@ -10,10 +10,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   if (!!token) {
     try {
-      const user = (await jwt.verify(
+      const user = jwt.verify(
         token,
         import.meta.env.JWT_SECRET_KEY as string
-      )) as LoggedUser;
+      ) as LoggedUser;
       locals.user = user;
     } catch (error) {
       locals.user = null;

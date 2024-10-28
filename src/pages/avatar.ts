@@ -1,7 +1,7 @@
 import { getStore } from "@netlify/blobs";
 import type { APIRoute } from "astro";
 
-export const GET: APIRoute = async ({ request, locals, params }) => {
+export const GET: APIRoute = async ({ request, locals }) => {
   // Load the Netlify Blobs store called `UserUpload`
   const avatarsStore = getStore({
     name: "avatars",

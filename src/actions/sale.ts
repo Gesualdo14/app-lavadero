@@ -7,7 +7,7 @@ const sale = {
   getSales: defineAction({
     input: z.object({ searchText: z.string().nullish() }),
     handler: async ({ searchText }, { cookies }) => {
-      const token = await cookies.get("jwt")?.value;
+      const token = cookies.get("jwt")?.value;
       console.log({ token });
       try {
         const sales = await getSales(searchText);
@@ -27,7 +27,6 @@ const sale = {
     input: saleFormSchema,
     handler: async (data, { locals }) => {
       try {
-        console.log("VENTA", { data });
         const result = await createSale({
           ...data,
           company_id: locals.user?.company_id as number,
@@ -51,13 +50,10 @@ const sale = {
     input: saleFormSchema,
     handler: async (data) => {
       try {
-        console.log({ data });
-        const result = await updateSale(data);
-        console.log({ result });
+        await updateSale(data);
 
         return {
           ok: true,
-          data: [],
           message: "Venta actualizada con éxito",
         };
       } catch (error) {

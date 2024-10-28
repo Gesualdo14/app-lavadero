@@ -4,8 +4,7 @@ import { z } from "zod";
 
 const report = {
   getReports: defineAction({
-    input: z.object({ searchText: z.string().nullish() }),
-    handler: async ({ searchText }, { locals }) => {
+    handler: async () => {
       try {
         const sales = await getReports("sale");
         const cashflows = await getReports("cashflow");
