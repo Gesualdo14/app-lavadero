@@ -52,7 +52,9 @@ export function ServiceFormDialog() {
     await actions.createService(values);
     reset(defaultValues);
 
-    queryClient.refetchQueries({ queryKey: ["services", globalSearchText] });
+    await queryClient.refetchQueries({
+      queryKey: ["services", globalSearchText],
+    });
     toast({
       title: "Operación exitosa",
       description: result.data?.message,

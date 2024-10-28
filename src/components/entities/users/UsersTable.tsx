@@ -85,14 +85,14 @@ const UsersTable = () => {
                 <Badge variant="outline">{u.role}</Badge>
               </TableCell>
               <TableCell>
-                {deleting === "user" ? (
+                {deleting === `user-${u.id}` ? (
                   <LoadingSpinner />
                 ) : (
                   <Trash2
                     className="text-red-700 hover:text-red-500 hover:cursor-pointer"
                     onClick={async (e) => {
                       e.stopPropagation();
-                      update("deleting", "user");
+                      update("deleting", `user-${u.id}`);
                       const result = await actions.deleteUser(u.id);
                       update("deleting", "");
                       refetch();

@@ -59,14 +59,14 @@ const ServicesTable = () => {
               <TableCell className="font-medium w-48">{s.name}</TableCell>
               <TableCell className="w-48">{toMoney(s.price)}</TableCell>
               <TableCell>
-                {deleting === "brand" ? (
+                {deleting === `service-${s.id}` ? (
                   <LoadingSpinner />
                 ) : (
                   <Trash2
                     className="text-red-700 hover:text-red-500 hover:cursor-pointer"
                     onClick={async (e) => {
                       e.stopPropagation();
-                      update("deleting", "brand");
+                      update("deleting", `service-${s.id}`);
                       const result = await actions.deleteService(s.id);
                       update("deleting", "");
                       refetch();
