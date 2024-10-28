@@ -7,66 +7,44 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { actions } from "astro:actions";
 import { PlusCircle } from "lucide-react";
-import { useEffect } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import { LoadingSpinner } from "@/components/custom-ui/Spinner";
-import { serviceFormSchema, type Service } from "@/schemas/service";
-import { useQueryClient } from "@tanstack/react-query";
-import { useStore } from "@/stores";
+import { type FormEvent } from "react";
 
-const defaultValues = {
-  name: "",
-  company_id: 1,
-};
+import { LoadingSpinner } from "@/components/custom-ui/Spinner";
+import { useQueryClient } from "@tanstack/react-query";
+import { EMPTY_SERVICE, useStore } from "@/stores";
+import MyInput from "@/components/custom-ui/MyInput";
 
 export function ServiceFormDialog() {
   const globalSearchText = useStore((s) => s.globalSearchText);
-  const service = useStore((s) => s.service);
+  // const service = useStore((s) => s.service);
   const update = useStore((s) => s.update);
   const creating = useStore((s) => s.creating);
+  const loading = useStore((s) => s.loading);
   const openDialog = useStore((s) => s.openDialog);
   const queryClient = useQueryClient();
-  const form = useForm<Service>({
-    resolver: zodResolver(serviceFormSchema),
-    defaultValues: defaultValues,
-  });
 
-  const { formState, reset, handleSubmit, control } = form;
-
-  const onSubmit = async (values: Service) => {
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const values = useStore.getState().service;
+    console.log({ values });
+    update("loading", "service-form");
     const result =
       await actions[creating ? "createService" : "updateService"](values);
-
-    await actions.createService(values);
-    reset(defaultValues);
+    console.log({ result });
 
     await queryClient.refetchQueries({
       queryKey: ["services", globalSearchText],
     });
+    update("loading", "");
     toast({
       title: "Operación exitosa",
       description: result.data?.message,
     });
     update("openDialog", "");
   };
-
-  useEffect(() => {
-    form.setValue("id", service?.id as number);
-    form.setValue("name", service?.name as string);
-    form.setValue("price", service?.price as number);
-  }, [service]);
 
   return (
     <Dialog
@@ -82,11 +60,15 @@ export function ServiceFormDialog() {
           size="sm"
           variant="default"
           className="h-7 gap-1"
-          onClick={() => update("openDialog", "service")}
+          onClick={() => {
+            update("openDialog", "service");
+            update("service", EMPTY_SERVICE);
+            update("creating", true);
+          }}
         >
           <PlusCircle className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            {creating ? "Crear" : "Editar"} servicio
+            Crear servicio
           </span>
         </Button>
       </DialogTrigger>
@@ -94,52 +76,28 @@ export function ServiceFormDialog() {
         <DialogHeader>
           <DialogTitle>Crear servicio</DialogTitle>
         </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input placeholder="Nombre..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+
+        <form onSubmit={onSubmit} className="space-y-4">
+          <MyInput entity="service" field="name" placeholder="Nombre..." />
+          <MyInput
+            type="number"
+            entity="service"
+            field="price"
+            placeholder="Precio..."
+          />
+
+          <DialogFooter>
+            <Button type="submit">
+              {loading === "service-form" ? (
+                <LoadingSpinner />
+              ) : creating ? (
+                "Crear"
+              ) : (
+                "Editar"
               )}
-            />
-            <FormField
-              control={control}
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="Precio..."
-                      {...field}
-                      onChange={(value) =>
-                        field.onChange(value.target.valueAsNumber)
-                      }
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <DialogFooter>
-              <Button type="submit">
-                {formState.isSubmitting ? (
-                  <LoadingSpinner />
-                ) : creating ? (
-                  "Crear"
-                ) : (
-                  "Editar"
-                )}
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

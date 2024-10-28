@@ -25,7 +25,8 @@ interface Props {
 }
 
 const AsideItem = ({ text, panel, icon, tooltip = true }: Props) => {
-  const { update, panel: selectedPanel } = useStore();
+  const selectedPanel = useStore((s) => s.panel);
+  const update = useStore((s) => s.update);
 
   const iconsClasses =
     "h-5 w-5 transition-transform duration-300 cursor-pointer group-hover:scale-110";

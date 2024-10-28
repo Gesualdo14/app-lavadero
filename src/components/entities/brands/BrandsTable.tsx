@@ -11,8 +11,9 @@ import {
 } from "@/components/ui/table";
 import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
 import { LoadingSpinner } from "@/components/custom-ui/Spinner";
-import { Trash2 } from "lucide-react";
+import { Trash } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import DeleteIcon from "@/components/custom-ui/DeleteIcon";
 
 const BrandsTable = () => {
   const { update, globalSearchText, deleting } = useStore();
@@ -50,7 +51,6 @@ const BrandsTable = () => {
               onClick={() => {
                 console.log("CLICK");
                 update("brand", b);
-
                 update("openDialog", "brand");
                 update("creating", false);
               }}
@@ -58,24 +58,11 @@ const BrandsTable = () => {
             >
               <TableCell className="font-medium w-48">{b.name}</TableCell>
               <TableCell>
-                {deleting === `brand-${b.id}` ? (
-                  <LoadingSpinner />
-                ) : (
-                  <Trash2
-                    className="text-red-700 hover:text-red-500 hover:cursor-pointer"
-                    onClick={async (e) => {
-                      e.stopPropagation();
-                      update("deleting", `brand-${b.id}`);
-                      const result = await actions.deleteBrand(b.id);
-                      update("deleting", "");
-                      refetch();
-                      toast({
-                        title: "Operación exitosa",
-                        description: result.data?.message,
-                      });
-                    }}
-                  />
-                )}
+                <DeleteIcon
+                  id={b.id}
+                  entity="User"
+                  queryKey={["brands", globalSearchText]}
+                />
               </TableCell>
             </TableRow>
           ))
