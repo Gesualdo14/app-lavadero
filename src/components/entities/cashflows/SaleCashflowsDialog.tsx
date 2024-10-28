@@ -50,8 +50,8 @@ export function SaleCashflowsDialog() {
       sale_id: sale.id as number,
     });
     console.log({ result });
-    await queryClient.refetchQueries({ queryKey: ["cashflows", sale.id] });
     await queryClient.refetchQueries({ queryKey: ["sales", globalSearchText] });
+    await queryClient.refetchQueries({ queryKey: ["cashflows", sale.id] });
     reset({});
     toast({
       title: result.data?.message,
