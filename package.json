@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.3",
+    "@astrojs/netlify": "^5.5.4",
     "@astrojs/node": "^8.3.4",
     "@astrojs/react": "^3.6.2",
     "@astrojs/tailwind": "^5.1.1",
-    "@astrojs/vercel": "^7.8.2",
     "@hookform/resolvers": "^3.9.0",
     "@libsql/client": "^0.14.0",
     "@netlify/blobs": "^8.1.0",
