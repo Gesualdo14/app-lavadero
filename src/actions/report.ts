@@ -1,6 +1,5 @@
 import { getReports } from "@/db/report";
 import { defineAction } from "astro:actions";
-import { z } from "zod";
 
 const report = {
   getReports: defineAction({
