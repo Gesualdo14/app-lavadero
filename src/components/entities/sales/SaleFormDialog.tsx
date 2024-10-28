@@ -65,6 +65,7 @@ export function SaleFormDialog() {
     const result = await actions[action](values);
     console.log({ result });
     await queryClient.refetchQueries({ queryKey: ["sales", globalSearchText] });
+    await queryClient.invalidateQueries({ queryKey: ["reports"] });
 
     toast({
       title: result.data?.message,
