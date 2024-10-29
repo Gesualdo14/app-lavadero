@@ -8,26 +8,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { actions } from "astro:actions";
 import { PlusCircle } from "lucide-react";
-import { useEffect } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { userFormSchema, type User } from "@/schemas/user";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
+import { type FormEvent } from "react";
+import { userFormSchema } from "@/schemas/user";
 import { LoadingSpinner } from "../../custom-ui/Spinner";
 import { saleFormSchema } from "@/schemas/sale";
-import { QueryClientProvider, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import MultiSelect from "../../custom-ui/MultiSelect";
-import { useStore } from "@/stores";
+import { EMPTY_SALE, EMPTY_USER, useStore } from "@/stores";
+import MyInput from "@/components/custom-ui/MyInput";
+import { focusAfter } from "@/helpers/ui";
 
 export type Entities = "user" | "sale";
 
@@ -38,36 +30,49 @@ export const schemas = {
 
 export function ClientFormDialog() {
   const queryClient = useQueryClient();
-  const { update, openDialog, creating, user, globalSearchText } = useStore();
-  const form = useForm<User>({
-    resolver: zodResolver(userFormSchema),
-    defaultValues: user,
-  });
+  const searchText = useStore((s) => s.searchText);
+  const creating = useStore((s) => s.creating);
+  const globalSearchText = useStore((s) => s.globalSearchText);
+  const openDialog = useStore((s) => s.openDialog);
+  const loading = useStore((s) => s.openDialog);
+  const update = useStore((s) => s.update);
 
-  const { formState, handleSubmit, control } = form;
-
-  const onSubmit = async (values: User) => {
-    console.log({ values });
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const values = useStore.getState().user;
     const action = creating ? "createClient" : "updateClient";
+    update("loading", "client-form");
     const result = await actions[action](values);
+
+    update("loading", "");
     toast({
       title: "Operación exitosa",
       description: result.data?.message,
     });
     queryClient.refetchQueries({ queryKey: ["clients", globalSearchText] });
-    update("openDialog", "");
-  };
-
-  useEffect(() => {
-    if (openDialog === "user") {
-      form.setValue("id", user.id);
-      form.setValue("company_id", user.company_id);
-      form.setValue("firstname", user.firstname);
-      form.setValue("lastname", user.lastname);
-      form.setValue("email", user.email);
-      form.setValue("phone", user.phone);
+    queryClient.invalidateQueries({
+      queryKey: ["client", undefined, searchText],
+    });
+    if (creating) {
+      update("sale", {
+        ...EMPTY_SALE,
+        client: [
+          {
+            id: result.data?.data?.user_id,
+            name: `${values.firstname} ${values.lastname}`,
+          },
+        ],
+        vehicle: [
+          {
+            id: result.data?.data?.vehicle_id,
+            name: `${values.brand ? values.brand[0].name : ""} ${values.model}`,
+          },
+        ],
+      });
+      update("openDialog", "sale");
+      focusAfter("sale-service", 50, true);
     }
-  }, [openDialog]);
+  };
 
   return (
     <Dialog
@@ -80,8 +85,9 @@ export function ClientFormDialog() {
           variant="default"
           className="h-7 gap-1"
           onClick={() => {
-            update("openDialog", "user");
+            update("user", EMPTY_USER);
             update("creating", true);
+            update("openDialog", "user");
           }}
         >
           <PlusCircle className="h-3.5 w-3.5" />
@@ -97,128 +103,58 @@ export function ClientFormDialog() {
             Añade clientes para luego poder crear ventas que se asocien a ellos.
           </DialogDescription>
         </DialogHeader>
-        <Form {...form}>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="space-y-4"
-            onError={() => {
-              console.log("ERROR");
-            }}
-          >
-            <FormField
-              control={control}
-              name="firstname"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input placeholder="Nombre..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+
+        <form
+          onSubmit={onSubmit}
+          className="space-y-4"
+          onError={() => {
+            console.log("ERROR");
+          }}
+        >
+          <MyInput entity="user" field="firstname" placeholder="Nombre..." />
+          <MyInput entity="user" field="lastname" placeholder="Apellido..." />
+          <MyInput entity="user" field="phone" placeholder="Teléfono..." />
+          <MyInput
+            type="email"
+            entity="user"
+            field="email"
+            placeholder="Email..."
+          />
+
+          {creating && (
+            <>
+              <h2 className="block font-bold !-mb-2">Datos del vehículo</h2>
+
+              <MultiSelect
+                entity="brand"
+                form="user"
+                field="brand"
+                config="brand"
+                idToFocusAfterSelection="vehicle-model"
+                justOne
+              />
+
+              <MyInput
+                id="vehicle-model"
+                entity="user"
+                field="model"
+                placeholder="Modelo..."
+              />
+              <MyInput entity="user" field="patent" placeholder="Patente..." />
+            </>
+          )}
+          <DialogFooter>
+            <Button type="submit">
+              {loading === "user-form" ? (
+                <LoadingSpinner />
+              ) : creating ? (
+                "Crear"
+              ) : (
+                "Editar"
               )}
-            />
-            <FormField
-              control={control}
-              name="lastname"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input placeholder="Apellido..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input placeholder="Teléfono..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input placeholder="Email..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {creating && (
-              <>
-                <h2 className="block font-bold !-mb-2">Datos del vehículo</h2>
-                <FormField
-                  control={control}
-                  name="brand"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <QueryClientProvider client={queryClient}>
-                          <MultiSelect
-                            idToFocusAfterSelection="vehicle-model"
-                            form={form}
-                            field={field}
-                            entity={field.name}
-                            justOne
-                          />
-                        </QueryClientProvider>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={control}
-                  name="model"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          id="vehicle-model"
-                          placeholder="Modelo..."
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={control}
-                  name="patent"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input placeholder="Patente..." {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </>
-            )}
-            <DialogFooter>
-              <Button type="submit">
-                {formState.isSubmitting ? (
-                  <LoadingSpinner />
-                ) : creating ? (
-                  "Crear"
-                ) : (
-                  "Editar"
-                )}
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

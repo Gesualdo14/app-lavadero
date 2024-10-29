@@ -10,59 +10,11 @@ import {
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import type { ControllerRenderProps, UseFormReturn } from "react-hook-form";
 import { CheckIcon, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { User } from "@/schemas/user";
-import type { Sale } from "@/schemas/sale";
-import { useStore } from "@/stores";
-import type { Cashflow } from "@/schemas/cashflow";
+import { useStore, type Store } from "@/stores";
 import { DropdownSkeletonComponent } from "./Skeletons";
-
-type Props = {
-  id?: string;
-  idToFocusAfterSelection?: string;
-  filterId?: number;
-  justOne?: boolean;
-  autoFocus?: boolean;
-} & (
-  | {
-      entity: "vehicle";
-      form: UseFormReturn<Sale>;
-      field: ControllerRenderProps<Sale, "vehicle">;
-      resetOnSelect?: keyof Sale;
-    }
-  | {
-      entity: "client";
-      form: UseFormReturn<Sale>;
-      field: ControllerRenderProps<Sale, "client">;
-      resetOnSelect?: keyof Sale;
-    }
-  | {
-      entity: "service";
-      form: UseFormReturn<Sale>;
-      field: ControllerRenderProps<Sale, "services">;
-      resetOnSelect?: keyof Sale;
-    }
-  | {
-      entity: "brand";
-      form: any;
-      field: ControllerRenderProps<User, "brand">;
-      resetOnSelect?: keyof User;
-    }
-  | {
-      entity: "role";
-      form: any;
-      field: ControllerRenderProps<User, "role">;
-      resetOnSelect?: keyof User;
-    }
-  | {
-      entity: "method";
-      form: any;
-      field: ControllerRenderProps<Cashflow, "method">;
-      resetOnSelect?: keyof Cashflow;
-    }
-);
+import { focusAfter } from "@/helpers/ui";
 
 const CONFIG = {
   role: {
@@ -97,18 +49,54 @@ const CONFIG = {
   },
 };
 
-const MultiSelect = ({
+type SelectableStates = Pick<Store, "vehicle" | "service" | "user" | "sale">;
+
+type Props<E extends keyof SelectableStates> = {
+  form: E;
+  entity:
+    | "service"
+    | "vehicle"
+    | "client"
+    | "user"
+    | "brand"
+    | "method"
+    | "role"
+    | "sale";
+  config: keyof typeof CONFIG;
+  field: keyof SelectableStates[E];
+  filterIdField?: keyof SelectableStates[E];
+  resetOnSelect?: keyof SelectableStates["sale"];
+  id?: string;
+  idToFocusAfterSelection?: string;
+  filterId?: number;
+  justOne?: boolean;
+  autoFocus?: boolean;
+};
+
+const MultiSelect = <E extends keyof SelectableStates>({
   id,
   idToFocusAfterSelection,
   field,
+  filterIdField,
   form,
   entity,
-  filterId,
+  config,
   resetOnSelect,
   justOne = false,
   autoFocus = false,
-}: Props) => {
-  const { searchText, update, openSelect } = useStore();
+}: Props<E>) => {
+  const update = useStore((s) => s.update);
+  const openSelect = useStore((s) => s.openSelect);
+  const searchText = useStore((s) => s.searchText);
+  const filter = filterIdField
+    ? (useStore((s) => s[form][filterIdField]) as { id: number }[] | undefined)
+    : undefined;
+  const filterId = filter ? filter[0]?.id : undefined;
+  const selectedItems = useStore((s) => s[form][field]) as {
+    id: number;
+    name: string;
+  }[];
+
   const { data, refetch, isPending } = useQuery({
     queryKey: [entity, filterId, searchText],
     queryFn: async () => {
@@ -121,12 +109,9 @@ const MultiSelect = ({
     },
   });
 
-  const { singular, plural, placeholder } = CONFIG[entity];
+  const { singular, plural, placeholder } = CONFIG[config];
 
-  const isOpen = openSelect === field.name;
-  const quantitySelected = field.value?.length as number;
-
-  let selectedItems = form.watch(field.name as any) as any;
+  const isOpen = openSelect === field;
 
   const handleItemSelection = (item: { id: number; name: string }) => {
     const isSelected = selectedItems?.some((si: any) => si.id === item.id);
@@ -136,35 +121,31 @@ const MultiSelect = ({
         ? [item]
         : selectedItems.concat(item);
 
-    form.setValue(field.name, newValue);
+    update(form, { [field]: newValue });
 
     if (justOne) {
       update("openSelect", "");
       update("searchText", "");
     }
     if (!!resetOnSelect) {
-      console.log({ value: field.value, resetOnSelect });
-      form.setValue(resetOnSelect, []);
+      console.log({ value: field, resetOnSelect });
+      update(form, { [resetOnSelect]: [] });
     }
 
-    if (field.name === "services") {
+    if (field === "services") {
       const totalAmount = newValue.reduce(
         (p: number, c: any) => p + (c.value ?? 0),
         0
       );
-      form.setValue("total_amount", totalAmount);
+      update(form, { total_amount: totalAmount });
     }
 
-    form.clearErrors(field.name);
     if (!!idToFocusAfterSelection) {
-      const element = document.querySelector(
-        `#${idToFocusAfterSelection}`
-      ) as HTMLElement;
-      setTimeout(() => {
-        element.focus();
-      }, 2);
+      focusAfter(idToFocusAfterSelection, 2, justOne);
     }
   };
+
+  const quantitySelected = selectedItems.length;
 
   return (
     <Select
@@ -190,18 +171,14 @@ const MultiSelect = ({
         onKeyDown={(e) => {
           e.stopPropagation();
           if (["Enter", "ArrowDown"].includes(e.code)) {
-            update("openSelect", field.name);
+            update("openSelect", field);
           }
-          setTimeout(() => {
-            document.getElementById("my-input")?.focus();
-          }, 50);
+          focusAfter("my-input");
         }}
         onClick={(e) => {
           e.stopPropagation();
-          setTimeout(() => {
-            document.getElementById("my-input")?.focus();
-          }, 50);
-          update("openSelect", isOpen ? "" : field.name);
+          focusAfter("my-input");
+          update("openSelect", isOpen ? "" : field);
           update("searchText", "");
         }}
       >
@@ -211,9 +188,9 @@ const MultiSelect = ({
           <div className="flex items-start gap-2 max-w-[250px] overflow-hidden">
             {quantitySelected > 0 &&
               quantitySelected < 3 &&
-              field?.value?.map((fv) => (
-                <span key={fv.id} className="rounded-md bg-gray-100 px-3">
-                  {fv.name}
+              selectedItems?.map((fv) => (
+                <span key={fv?.id} className="rounded-md bg-gray-100 px-3">
+                  {fv?.name}
                 </span>
               ))}
             {quantitySelected > 2 && (
@@ -241,11 +218,7 @@ const MultiSelect = ({
                     refetch();
                   }
                   if (e.code === "ArrowDown") {
-                    console.log("FOCUS??");
-                    const element = document.querySelector(
-                      "#item-0"
-                    ) as HTMLElement;
-                    element.focus();
+                    focusAfter("item-0");
                   }
                 }}
                 onChange={(e) => {
@@ -280,16 +253,16 @@ const MultiSelect = ({
               <SelectItem
                 id={`item-${index}`}
                 onKeyDown={(e) => {
+                  let id;
                   if (["ArrowDown"].includes(e.code)) {
-                    update("openSelect", field.name);
-                    const id = index === data.length - 1 ? 0 : index + 1;
-                    document.getElementById(`item-${id}`)?.focus();
+                    update("openSelect", field);
+                    id = index === data.length - 1 ? 0 : index + 1;
                   }
                   if (["ArrowUp"].includes(e.code)) {
-                    update("openSelect", field.name);
+                    update("openSelect", field);
                     const id = index === 0 ? data.length - 1 : index - 1;
-                    document.getElementById(`item-${id}`)?.focus();
                   }
+                  focusAfter(`item-${id}`, 0);
                   if (e.code === "Enter") {
                     handleItemSelection(i);
                   }

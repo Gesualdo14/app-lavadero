@@ -97,7 +97,6 @@ const user = {
     input: userFormSchema,
     handler: async (data, { locals }) => {
       try {
-        console.log({ data });
         const result = await createUser(
           {
             firstname: data.firstname,
@@ -113,16 +112,14 @@ const user = {
             patent: data.patent as string,
           }
         );
-        console.log({ result });
 
         return {
           ok: true,
+          data: result,
           message: "Cliente creado con éxito",
         };
-      } catch (error) {
-        console.log({ error });
-        if (error instanceof Error)
-          return { ok: false, message: error.message };
+      } catch (error: any) {
+        return { ok: false, message: error?.message };
       }
     },
   }),
@@ -144,12 +141,11 @@ const user = {
 
         return {
           ok: true,
+          data: { user_id: 0, vehicle_id: 0 },
           message: "Cliente actualizado con éxito",
         };
-      } catch (error) {
-        console.log({ error });
-        if (error instanceof Error)
-          return { ok: false, message: error.message };
+      } catch (error: any) {
+        return { ok: false, message: error?.message };
       }
     },
   }),

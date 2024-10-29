@@ -22,13 +22,17 @@ export async function createUser(
   vehicle: Omit<InsertVehicle, "user_id"> | null
 ) {
   return await db.transaction(async (tx) => {
-    const { lastInsertRowid } = await tx.insert(users).values(user);
+    const createdUser = await tx.insert(users).values(user);
+    let createdVehicle;
     if (!!vehicle) {
-      await tx
+      createdVehicle = await tx
         .insert(vehicles)
-        .values({ ...vehicle, user_id: Number(lastInsertRowid) });
+        .values({ ...vehicle, user_id: Number(createdUser.lastInsertRowid) });
     }
-    return { user_id: Number(lastInsertRowid) };
+    return {
+      user_id: Number(createdUser.lastInsertRowid),
+      vehicle_id: Number(createdVehicle?.lastInsertRowid),
+    };
   });
 }
 

@@ -3,12 +3,14 @@ import type { HTMLInputTypeAttribute } from "react";
 import { Input } from "../ui/input";
 
 interface Props<E extends keyof Store> {
+  id?: string | number | undefined;
   type?: HTMLInputTypeAttribute;
   entity: E;
   field: keyof Store[E];
   placeholder?: string;
 }
 const MyInput = <E extends keyof Store>({
+  id,
   type = "text",
   entity,
   field,
@@ -18,6 +20,7 @@ const MyInput = <E extends keyof Store>({
   const update = useStore((s) => s.update);
   return (
     <Input
+      id={String(id)}
       type={type}
       value={value}
       placeholder={placeholder}

@@ -9,22 +9,26 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import type { ControllerRenderProps, UseFormReturn } from "react-hook-form";
-import type { Sale } from "@/schemas/sale";
-import { useStore } from "@/stores";
+import { useStore, type Store } from "@/stores";
 import { es } from "date-fns/locale";
 
-type Props = {
-  form: UseFormReturn<Sale>;
-  field: ControllerRenderProps<Sale, "sale_date">;
+type SelectableStates = Pick<Store, "vehicle" | "service" | "user" | "sale">;
+
+type Props<E extends keyof SelectableStates> = {
+  entity: E;
+  field: keyof SelectableStates[E];
 };
 
-export function DatePicker({ form, field }: Props) {
+export function DatePicker<E extends keyof SelectableStates>({
+  entity,
+  field,
+}: Props<E>) {
   const update = useStore((s) => s.update);
   const openDatePicker = useStore((s) => s.openDatePicker);
+  const value = useStore((s) => s[entity][field]) as Date;
 
-  const isOpen = openDatePicker === field.name;
-  console.log({ value: field.value });
+  const isOpen = openDatePicker === field;
+  console.log({ value });
 
   return (
     <Popover open={isOpen}>
@@ -33,16 +37,16 @@ export function DatePicker({ form, field }: Props) {
           variant={"outline"}
           onClick={(e) => {
             e.stopPropagation();
-            update("openDatePicker", isOpen ? "" : field.name);
+            update("openDatePicker", isOpen ? "" : field);
           }}
           className={cn(
             "justify-start text-left font-normal w-full",
-            !field.value && "text-muted-foreground"
+            !field && "text-muted-foreground"
           )}
         >
           <CalendarIcon />
-          {field.value ? (
-            format(field.value, "PPP", { locale: es })
+          {value ? (
+            format(value, "PPP", { locale: es })
           ) : (
             <span>Fecha de la venta</span>
           )}
@@ -53,10 +57,10 @@ export function DatePicker({ form, field }: Props) {
           className="w-full"
           mode="single"
           locale={es}
-          selected={new Date(field.value)}
+          selected={new Date(value)}
           onSelect={(date) => {
             console.log({ date });
-            form.setValue(field.name, date?.toUTCString() as string);
+            update(entity, { [field]: date?.toUTCString() as string });
             update("openDatePicker", "sale");
           }}
           initialFocus

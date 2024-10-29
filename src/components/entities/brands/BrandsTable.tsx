@@ -16,12 +16,9 @@ import { toast } from "@/hooks/use-toast";
 import DeleteIcon from "@/components/custom-ui/DeleteIcon";
 
 const BrandsTable = () => {
-  const { update, globalSearchText, deleting } = useStore();
-  const {
-    data: brands,
-    isPending,
-    refetch,
-  } = useQuery({
+  const update = useStore((s) => s.update);
+  const globalSearchText = useStore((s) => s.globalSearchText);
+  const { data: brands, isPending } = useQuery({
     queryKey: ["brands", globalSearchText],
     queryFn: async () => {
       const data = await actions.getBrands({
@@ -60,7 +57,7 @@ const BrandsTable = () => {
               <TableCell>
                 <DeleteIcon
                   id={b.id}
-                  entity="User"
+                  entity="Brand"
                   queryKey={["brands", globalSearchText]}
                 />
               </TableCell>
