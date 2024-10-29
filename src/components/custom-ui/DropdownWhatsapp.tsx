@@ -11,7 +11,12 @@ import { toMoney } from "@/helpers/fmt";
 const DropdownWhatsapp = ({ sale }: { sale: any }) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger
+        asChild
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <Button
           aria-haspopup="true"
           size="icon"

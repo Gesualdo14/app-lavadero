@@ -26,6 +26,15 @@ import { DollarSign, Users2, WashingMachine } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { actions } from "astro:actions";
 import { toMoney } from "@/helpers/fmt";
+import {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Table,
+} from "@/components/ui/table";
+import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
 
 export const description = "A collection of health charts.";
 
@@ -289,6 +298,37 @@ export function Dashboard() {
           </CardContent>
         </Card>
       </div>
+      <Card className="px-5 py-3">
+        <CardTitle className="text-sm font-medium mb-3">
+          Evolución ventas diarias
+        </CardTitle>
+        <Table className="">
+          <TableHeader>
+            <TableRow className="text-center">
+              <TableHead>Día</TableHead>
+              <TableHead className="min-w-24">Lavados</TableHead>
+              <TableHead className="min-w-24">Monto</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {isPending ? (
+              <TableSkeletonComponent />
+            ) : (
+              Array.isArray(sales) &&
+              sales?.map((s) => (
+                <TableRow key={s.id} className="cursor-pointer">
+                  <TableCell className="font-medium w-80">
+                    <span>{`${s.day}/${s.month}/${s.year}`}</span>
+                  </TableCell>
+
+                  <TableCell className="w-48">{s.quantity}</TableCell>
+                  <TableCell className="w-48">{toMoney(s.amount)}</TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </Card>
     </div>
   );
 }
