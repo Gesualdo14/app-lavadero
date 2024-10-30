@@ -1,0 +1,1433 @@
+[
+  {
+    "id": 1,
+    "entity": "Wash",
+    "entity_id": 498,
+    "amount": 80,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-03T00:32:30.717"
+  },
+  {
+    "id": 2,
+    "entity": "Wash",
+    "entity_id": 499,
+    "amount": 85,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-03T00:34:05.153"
+  },
+  {
+    "id": 3,
+    "entity": "Wash",
+    "entity_id": 500,
+    "amount": 87,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-03T00:37:09.313"
+  },
+  {
+    "id": 4,
+    "entity": "Wash",
+    "entity_id": 501,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-03T00:37:16.71"
+  },
+  {
+    "id": 5,
+    "entity": "Wash",
+    "entity_id": 502,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-03T00:37:37.223"
+  },
+  {
+    "id": 6,
+    "entity": "Wash",
+    "entity_id": 503,
+    "amount": 32,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-03T00:40:43.193"
+  },
+  {
+    "id": 7,
+    "entity": "Wash",
+    "entity_id": 504,
+    "amount": 65,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-03T00:43:02.27"
+  },
+  {
+    "id": 8,
+    "entity": "Wash",
+    "entity_id": 505,
+    "amount": 77,
+    "payment_method": "Tarjeta de crédito",
+    "is_active": "1",
+    "created_at": "2024-07-03T00:50:18.25"
+  },
+  {
+    "id": 9,
+    "entity": "Wash",
+    "entity_id": 506,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-05T14:25:28.637"
+  },
+  {
+    "id": 10,
+    "entity": "Wash",
+    "entity_id": 507,
+    "amount": 75,
+    "payment_method": "ATH Móvil",
+    "is_active": "1",
+    "created_at": "2024-07-05T14:51:00.543"
+  },
+  {
+    "id": 11,
+    "entity": "Wash",
+    "entity_id": 511,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-06T12:55:48.713"
+  },
+  {
+    "id": 12,
+    "entity": "Wash",
+    "entity_id": 513,
+    "amount": 97,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-06T14:30:49.207"
+  },
+  {
+    "id": 13,
+    "entity": "Wash",
+    "entity_id": 509,
+    "amount": 120,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-06T16:54:58.13"
+  },
+  {
+    "id": 14,
+    "entity": "Wash",
+    "entity_id": 510,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-06T17:14:31.083"
+  },
+  {
+    "id": 15,
+    "entity": "Wash",
+    "entity_id": 514,
+    "amount": 30,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-06T17:21:18.453"
+  },
+  {
+    "id": 16,
+    "entity": "Wash",
+    "entity_id": 519,
+    "amount": 206,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-06T21:37:24.163"
+  },
+  {
+    "id": 17,
+    "entity": "Wash",
+    "entity_id": 520,
+    "amount": 207,
+    "payment_method": "Tarjeta de crédito",
+    "is_active": "1",
+    "created_at": "2024-07-06T21:44:07.66"
+  },
+  {
+    "id": 18,
+    "entity": "Wash",
+    "entity_id": 525,
+    "amount": 37,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-08T13:49:25.953"
+  },
+  {
+    "id": 19,
+    "entity": "Wash",
+    "entity_id": 524,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-08T13:50:39.827"
+  },
+  {
+    "id": 20,
+    "entity": "Wash",
+    "entity_id": 525,
+    "amount": 19,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-08T13:51:58.56"
+  },
+  {
+    "id": 21,
+    "entity": "Wash",
+    "entity_id": 526,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-08T13:54:27.843"
+  },
+  {
+    "id": 22,
+    "entity": "Wash",
+    "entity_id": 527,
+    "amount": 60,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-08T13:56:12.623"
+  },
+  {
+    "id": 23,
+    "entity": "Wash",
+    "entity_id": 528,
+    "amount": 60,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-08T13:59:24.883"
+  },
+  {
+    "id": 24,
+    "entity": "Wash",
+    "entity_id": 518,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-09T13:53:38.227"
+  },
+  {
+    "id": 25,
+    "entity": "Wash",
+    "entity_id": 515,
+    "amount": 50,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-09T13:55:29.857"
+  },
+  {
+    "id": 26,
+    "entity": "Wash",
+    "entity_id": 512,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-09T13:55:46.75"
+  },
+  {
+    "id": 27,
+    "entity": "Wash",
+    "entity_id": 517,
+    "amount": 95,
+    "payment_method": "Tarjeta de crédito",
+    "is_active": "1",
+    "created_at": "2024-07-09T13:57:49.133"
+  },
+  {
+    "id": 28,
+    "entity": "Wash",
+    "entity_id": 530,
+    "amount": 105,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-09T14:15:30.27"
+  },
+  {
+    "id": 29,
+    "entity": "Wash",
+    "entity_id": 531,
+    "amount": 110,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-09T14:27:24.23"
+  },
+  {
+    "id": 30,
+    "entity": "Wash",
+    "entity_id": 533,
+    "amount": 100,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-11T13:42:40.727"
+  },
+  {
+    "id": 31,
+    "entity": "Wash",
+    "entity_id": 535,
+    "amount": 115,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-11T13:54:44.72"
+  },
+  {
+    "id": 32,
+    "entity": "Wash",
+    "entity_id": 537,
+    "amount": 8625,
+    "payment_method": "Tarjeta de crédito",
+    "is_active": "1",
+    "created_at": "2024-07-11T17:47:09.853"
+  },
+  {
+    "id": 33,
+    "entity": "Wash",
+    "entity_id": 539,
+    "amount": 86,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-11T17:50:10.687"
+  },
+  {
+    "id": 34,
+    "entity": "Wash",
+    "entity_id": 540,
+    "amount": 70,
+    "payment_method": "Tarjeta de crédito",
+    "is_active": "1",
+    "created_at": "2024-07-11T17:59:39.553"
+  },
+  {
+    "id": 35,
+    "entity": "Wash",
+    "entity_id": 532,
+    "amount": 275,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-11T18:12:30.173"
+  },
+  {
+    "id": 36,
+    "entity": "Wash",
+    "entity_id": 541,
+    "amount": 65,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-11T18:21:32.837"
+  },
+  {
+    "id": 37,
+    "entity": "Wash",
+    "entity_id": 536,
+    "amount": 225,
+    "payment_method": "ATH Móvil",
+    "is_active": "1",
+    "created_at": "2024-07-11T20:22:49.847"
+  },
+  {
+    "id": 38,
+    "entity": "Wash",
+    "entity_id": 542,
+    "amount": 75,
+    "payment_method": "ATH Móvil",
+    "is_active": "1",
+    "created_at": "2024-07-12T12:03:47.773"
+  },
+  {
+    "id": 39,
+    "entity": "Wash",
+    "entity_id": 543,
+    "amount": 75,
+    "payment_method": "Tarjeta de crédito",
+    "is_active": "1",
+    "created_at": "2024-07-12T12:04:35.307"
+  },
+  {
+    "id": 40,
+    "entity": "Wash",
+    "entity_id": 544,
+    "amount": 125,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-12T12:35:18.373"
+  },
+  {
+    "id": 41,
+    "entity": "Wash",
+    "entity_id": 545,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-12T20:16:20.573"
+  },
+  {
+    "id": 42,
+    "entity": "Wash",
+    "entity_id": 538,
+    "amount": 80,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-15T11:45:06.86"
+  },
+  {
+    "id": 43,
+    "entity": "Wash",
+    "entity_id": 548,
+    "amount": 70,
+    "payment_method": "Tarjeta de crédito",
+    "is_active": "1",
+    "created_at": "2024-07-17T13:54:32.983"
+  },
+  {
+    "id": 44,
+    "entity": "Wash",
+    "entity_id": 549,
+    "amount": 100,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-17T16:57:40.36"
+  },
+  {
+    "id": 45,
+    "entity": "Wash",
+    "entity_id": 547,
+    "amount": 287,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-17T19:34:00.393"
+  },
+  {
+    "id": 46,
+    "entity": "Wash",
+    "entity_id": 552,
+    "amount": 80,
+    "payment_method": "Tarjeta de crédito",
+    "is_active": "1",
+    "created_at": "2024-07-18T11:57:46.88"
+  },
+  {
+    "id": 47,
+    "entity": "Wash",
+    "entity_id": 551,
+    "amount": 80,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-18T11:58:31.06"
+  },
+  {
+    "id": 48,
+    "entity": "Wash",
+    "entity_id": 550,
+    "amount": 80,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-18T12:01:56.42"
+  },
+  {
+    "id": 49,
+    "entity": "Wash",
+    "entity_id": 555,
+    "amount": 80,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-18T12:43:32.437"
+  },
+  {
+    "id": 50,
+    "entity": "Wash",
+    "entity_id": 557,
+    "amount": 140,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-18T12:55:38.457"
+  },
+  {
+    "id": 51,
+    "entity": "Wash",
+    "entity_id": 556,
+    "amount": 225,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-18T16:19:32.663"
+  },
+  {
+    "id": 52,
+    "entity": "Wash",
+    "entity_id": 560,
+    "amount": 109,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-18T19:55:11.633"
+  },
+  {
+    "id": 53,
+    "entity": "Wash",
+    "entity_id": 559,
+    "amount": 80,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-18T22:15:45.523"
+  },
+  {
+    "id": 54,
+    "entity": "Wash",
+    "entity_id": 558,
+    "amount": 65,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-18T22:16:48.207"
+  },
+  {
+    "id": 1053,
+    "entity": "Wash",
+    "entity_id": 561,
+    "amount": 250,
+    "payment_method": "Tarjeta de crédito",
+    "is_active": "1",
+    "created_at": "2024-07-20T13:25:08.507"
+  },
+  {
+    "id": 1054,
+    "entity": "Wash",
+    "entity_id": 562,
+    "amount": 75,
+    "payment_method": "Tarjeta de crédito",
+    "is_active": "1",
+    "created_at": "2024-07-20T13:29:24.94"
+  },
+  {
+    "id": 1055,
+    "entity": "Wash",
+    "entity_id": 563,
+    "amount": 200,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-22T23:58:02.23"
+  },
+  {
+    "id": 1056,
+    "entity": "Wash",
+    "entity_id": 564,
+    "amount": 85,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-23T00:01:41.9"
+  },
+  {
+    "id": 1057,
+    "entity": "Wash",
+    "entity_id": 565,
+    "amount": 250,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-23T00:05:56.757"
+  },
+  {
+    "id": 1058,
+    "entity": "Wash",
+    "entity_id": 566,
+    "amount": 80,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-23T00:06:03.933"
+  },
+  {
+    "id": 1059,
+    "entity": "Wash",
+    "entity_id": 567,
+    "amount": 60,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-23T00:08:16.96"
+  },
+  {
+    "id": 1060,
+    "entity": "Wash",
+    "entity_id": 568,
+    "amount": 250,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-23T00:16:59.237"
+  },
+  {
+    "id": 1061,
+    "entity": "Wash",
+    "entity_id": 569,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-24T13:07:02.057"
+  },
+  {
+    "id": 1062,
+    "entity": "Wash",
+    "entity_id": 571,
+    "amount": 86,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-24T16:25:58.663"
+  },
+  {
+    "id": 1063,
+    "entity": "Wash",
+    "entity_id": 570,
+    "amount": 170,
+    "payment_method": "ATH Móvil",
+    "is_active": "1",
+    "created_at": "2024-07-24T18:44:04.29"
+  },
+  {
+    "id": 1064,
+    "entity": "Wash",
+    "entity_id": 573,
+    "amount": 105,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-25T16:19:10.607"
+  },
+  {
+    "id": 1065,
+    "entity": "Wash",
+    "entity_id": 574,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-25T16:22:37.213"
+  },
+  {
+    "id": 1066,
+    "entity": "Wash",
+    "entity_id": 575,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-25T16:54:28.24"
+  },
+  {
+    "id": 1067,
+    "entity": "Wash",
+    "entity_id": 577,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-25T17:14:45.823"
+  },
+  {
+    "id": 1068,
+    "entity": "Wash",
+    "entity_id": 578,
+    "amount": 85,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-25T17:47:51.05"
+  },
+  {
+    "id": 1069,
+    "entity": "Wash",
+    "entity_id": 579,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-25T20:04:52.11"
+  },
+  {
+    "id": 1070,
+    "entity": "Wash",
+    "entity_id": 579,
+    "amount": 5,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-25T20:05:02.86"
+  },
+  {
+    "id": 1071,
+    "entity": "Wash",
+    "entity_id": 584,
+    "amount": 75,
+    "payment_method": "ATH Móvil",
+    "is_active": "1",
+    "created_at": "2024-07-27T19:08:35.193"
+  },
+  {
+    "id": 1072,
+    "entity": "Wash",
+    "entity_id": 582,
+    "amount": 75,
+    "payment_method": "ATH Móvil",
+    "is_active": "1",
+    "created_at": "2024-07-27T19:09:20.77"
+  },
+  {
+    "id": 1073,
+    "entity": "Wash",
+    "entity_id": 581,
+    "amount": 240,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-27T19:09:35.79"
+  },
+  {
+    "id": 1074,
+    "entity": "Wash",
+    "entity_id": 580,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-27T19:09:58.69"
+  },
+  {
+    "id": 1075,
+    "entity": "Wash",
+    "entity_id": 585,
+    "amount": 225,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-27T23:00:52.62"
+  },
+  {
+    "id": 1076,
+    "entity": "Wash",
+    "entity_id": 583,
+    "amount": 100,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-27T23:01:16.527"
+  },
+  {
+    "id": 1077,
+    "entity": "Wash",
+    "entity_id": 586,
+    "amount": 95,
+    "payment_method": "Tarjeta de crédito",
+    "is_active": "1",
+    "created_at": "2024-07-28T01:56:00.153"
+  },
+  {
+    "id": 1078,
+    "entity": "Wash",
+    "entity_id": 587,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-28T01:59:22.263"
+  },
+  {
+    "id": 1079,
+    "entity": "Wash",
+    "entity_id": 588,
+    "amount": 65,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-28T02:10:44.58"
+  },
+  {
+    "id": 1080,
+    "entity": "Wash",
+    "entity_id": 589,
+    "amount": 60,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-28T03:15:25.627"
+  },
+  {
+    "id": 1081,
+    "entity": "Wash",
+    "entity_id": 590,
+    "amount": 80,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-28T03:17:10.183"
+  },
+  {
+    "id": 1082,
+    "entity": "Wash",
+    "entity_id": 576,
+    "amount": 65,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-28T03:17:52.31"
+  },
+  {
+    "id": 1085,
+    "entity": "Wash",
+    "entity_id": 596,
+    "amount": 25,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-31T17:37:39.473"
+  },
+  {
+    "id": 1086,
+    "entity": "Wash",
+    "entity_id": 595,
+    "amount": 25,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-31T17:37:53.143"
+  },
+  {
+    "id": 1087,
+    "entity": "Wash",
+    "entity_id": 594,
+    "amount": 270,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-07-31T23:15:39.763"
+  },
+  {
+    "id": 1089,
+    "entity": "Wash",
+    "entity_id": 599,
+    "amount": 90,
+    "payment_method": "ATH Móvil",
+    "is_active": "1",
+    "created_at": "2024-08-02T12:46:22.07"
+  },
+  {
+    "id": 1090,
+    "entity": "Wash",
+    "entity_id": 601,
+    "amount": 100,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-02T12:55:30.577"
+  },
+  {
+    "id": 1091,
+    "entity": "Wash",
+    "entity_id": 600,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-02T18:17:14.147"
+  },
+  {
+    "id": 1092,
+    "entity": "Wash",
+    "entity_id": 603,
+    "amount": 80,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-02T19:15:19.823"
+  },
+  {
+    "id": 1093,
+    "entity": "Wash",
+    "entity_id": 602,
+    "amount": 80,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-02T20:27:13.693"
+  },
+  {
+    "id": 1094,
+    "entity": "Wash",
+    "entity_id": 605,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-02T21:20:58.27"
+  },
+  {
+    "id": 1095,
+    "entity": "Wash",
+    "entity_id": 604,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-02T21:21:10.233"
+  },
+  {
+    "id": 1096,
+    "entity": "Wash",
+    "entity_id": 598,
+    "amount": 250,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-02T21:21:32.163"
+  },
+  {
+    "id": 1097,
+    "entity": "Wash",
+    "entity_id": 606,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-03T12:33:48.447"
+  },
+  {
+    "id": 1098,
+    "entity": "Wash",
+    "entity_id": 614,
+    "amount": 130,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-04T22:22:02.39"
+  },
+  {
+    "id": 1099,
+    "entity": "Wash",
+    "entity_id": 613,
+    "amount": 80,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-04T22:23:02.66"
+  },
+  {
+    "id": 1100,
+    "entity": "Wash",
+    "entity_id": 616,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-04T22:26:35.583"
+  },
+  {
+    "id": 1101,
+    "entity": "Wash",
+    "entity_id": 618,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-04T22:29:03.873"
+  },
+  {
+    "id": 1102,
+    "entity": "Wash",
+    "entity_id": 619,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-04T22:29:44.84"
+  },
+  {
+    "id": 1103,
+    "entity": "Wash",
+    "entity_id": 620,
+    "amount": 80,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-07T13:41:50.44"
+  },
+  {
+    "id": 1104,
+    "entity": "Wash",
+    "entity_id": 623,
+    "amount": 50,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-07T15:59:17.953"
+  },
+  {
+    "id": 1105,
+    "entity": "Wash",
+    "entity_id": 626,
+    "amount": 86,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-07T17:15:42.33"
+  },
+  {
+    "id": 1106,
+    "entity": "Wash",
+    "entity_id": 621,
+    "amount": 85,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-08T11:39:50.313"
+  },
+  {
+    "id": 1107,
+    "entity": "Wash",
+    "entity_id": 625,
+    "amount": 50,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-08T11:40:14.063"
+  },
+  {
+    "id": 1108,
+    "entity": "Wash",
+    "entity_id": 627,
+    "amount": 250,
+    "payment_method": "Tarjeta de crédito",
+    "is_active": "1",
+    "created_at": "2024-08-08T11:40:28.61"
+  },
+  {
+    "id": 1109,
+    "entity": "Wash",
+    "entity_id": 622,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-08T11:41:04.2"
+  },
+  {
+    "id": 1110,
+    "entity": "Wash",
+    "entity_id": 629,
+    "amount": 275,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-08T20:05:47.41"
+  },
+  {
+    "id": 1111,
+    "entity": "Wash",
+    "entity_id": 624,
+    "amount": 65,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-08T20:06:04.183"
+  },
+  {
+    "id": 1112,
+    "entity": "Wash",
+    "entity_id": 628,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-08T20:07:20.83"
+  },
+  {
+    "id": 1113,
+    "entity": "Wash",
+    "entity_id": 632,
+    "amount": 65,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-09T15:19:20.55"
+  },
+  {
+    "id": 1114,
+    "entity": "Wash",
+    "entity_id": 630,
+    "amount": 150,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-09T15:19:38.25"
+  },
+  {
+    "id": 1115,
+    "entity": "Wash",
+    "entity_id": 631,
+    "amount": 100,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-09T15:20:03.36"
+  },
+  {
+    "id": 1116,
+    "entity": "Wash",
+    "entity_id": 633,
+    "amount": 80,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-09T15:21:52.823"
+  },
+  {
+    "id": 1117,
+    "entity": "Wash",
+    "entity_id": 634,
+    "amount": 65,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-09T15:23:08.247"
+  },
+  {
+    "id": 1118,
+    "entity": "Wash",
+    "entity_id": 635,
+    "amount": 150,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-09T15:25:01.67"
+  },
+  {
+    "id": 1119,
+    "entity": "Wash",
+    "entity_id": 641,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-09T20:13:07.62"
+  },
+  {
+    "id": 1120,
+    "entity": "Wash",
+    "entity_id": 637,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-09T20:13:58.743"
+  },
+  {
+    "id": 1121,
+    "entity": "Wash",
+    "entity_id": 639,
+    "amount": 250,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-09T20:14:26.803"
+  },
+  {
+    "id": 1122,
+    "entity": "Wash",
+    "entity_id": 645,
+    "amount": 125,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-09T20:51:12.41"
+  },
+  {
+    "id": 1123,
+    "entity": "Wash",
+    "entity_id": 642,
+    "amount": 250,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-10T00:13:38.267"
+  },
+  {
+    "id": 1124,
+    "entity": "Wash",
+    "entity_id": 638,
+    "amount": 125,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-10T00:14:01.213"
+  },
+  {
+    "id": 1125,
+    "entity": "Wash",
+    "entity_id": 636,
+    "amount": 50,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-10T00:14:25.72"
+  },
+  {
+    "id": 1126,
+    "entity": "Wash",
+    "entity_id": 644,
+    "amount": 330,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-10T00:14:41.25"
+  },
+  {
+    "id": 1127,
+    "entity": "Wash",
+    "entity_id": 647,
+    "amount": 115,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-10T17:02:13.303"
+  },
+  {
+    "id": 1128,
+    "entity": "Wash",
+    "entity_id": 648,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-10T19:01:46.16"
+  },
+  {
+    "id": 1129,
+    "entity": "Wash",
+    "entity_id": 649,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-10T19:01:58.05"
+  },
+  {
+    "id": 1130,
+    "entity": "Wash",
+    "entity_id": 650,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-10T19:02:12.973"
+  },
+  {
+    "id": 1131,
+    "entity": "Wash",
+    "entity_id": 651,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-10T19:02:25.863"
+  },
+  {
+    "id": 1132,
+    "entity": "Wash",
+    "entity_id": 654,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-10T19:05:39.78"
+  },
+  {
+    "id": 1133,
+    "entity": "Wash",
+    "entity_id": 646,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-10T19:06:22.317"
+  },
+  {
+    "id": 1134,
+    "entity": "Wash",
+    "entity_id": 655,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-22T13:18:12.143"
+  },
+  {
+    "id": 1135,
+    "entity": "Wash",
+    "entity_id": 657,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-22T14:41:44.06"
+  },
+  {
+    "id": 1136,
+    "entity": "Wash",
+    "entity_id": 659,
+    "amount": 110,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-22T14:51:01.663"
+  },
+  {
+    "id": 1137,
+    "entity": "Wash",
+    "entity_id": 660,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-22T14:53:18.7"
+  },
+  {
+    "id": 1138,
+    "entity": "Wash",
+    "entity_id": 662,
+    "amount": 50,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-22T14:56:18.487"
+  },
+  {
+    "id": 1139,
+    "entity": "Wash",
+    "entity_id": 656,
+    "amount": 200,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-22T18:47:24.02"
+  },
+  {
+    "id": 1140,
+    "entity": "Wash",
+    "entity_id": 664,
+    "amount": 115,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-23T12:44:59.99"
+  },
+  {
+    "id": 1141,
+    "entity": "Wash",
+    "entity_id": 665,
+    "amount": 250,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-23T19:31:26.3"
+  },
+  {
+    "id": 1142,
+    "entity": "Wash",
+    "entity_id": 666,
+    "amount": 50,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-24T15:01:13.413"
+  },
+  {
+    "id": 1143,
+    "entity": "Wash",
+    "entity_id": 670,
+    "amount": 60,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-24T15:31:46.443"
+  },
+  {
+    "id": 1144,
+    "entity": "Wash",
+    "entity_id": 668,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-24T16:23:21.97"
+  },
+  {
+    "id": 1145,
+    "entity": "Wash",
+    "entity_id": 673,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-24T16:52:29.54"
+  },
+  {
+    "id": 1146,
+    "entity": "Wash",
+    "entity_id": 669,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-24T19:28:17.497"
+  },
+  {
+    "id": 1147,
+    "entity": "Wash",
+    "entity_id": 667,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-24T19:28:56.003"
+  },
+  {
+    "id": 1148,
+    "entity": "Wash",
+    "entity_id": 674,
+    "amount": 100,
+    "payment_method": "ATH Móvil",
+    "is_active": "1",
+    "created_at": "2024-08-31T11:44:40.283"
+  },
+  {
+    "id": 1149,
+    "entity": "Wash",
+    "entity_id": 675,
+    "amount": 100,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-31T11:48:40.24"
+  },
+  {
+    "id": 1150,
+    "entity": "Wash",
+    "entity_id": 676,
+    "amount": 200,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-31T11:56:07.443"
+  },
+  {
+    "id": 1151,
+    "entity": "Wash",
+    "entity_id": 677,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-31T12:04:37.02"
+  },
+  {
+    "id": 1152,
+    "entity": "Wash",
+    "entity_id": 680,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-31T18:15:15.94"
+  },
+  {
+    "id": 1153,
+    "entity": "Wash",
+    "entity_id": 679,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-08-31T18:16:59.34"
+  },
+  {
+    "id": 1154,
+    "entity": "Wash",
+    "entity_id": 693,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-09-21T20:55:31.75"
+  },
+  {
+    "id": 1155,
+    "entity": "Wash",
+    "entity_id": 690,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-09-21T22:47:53.573"
+  },
+  {
+    "id": 1156,
+    "entity": "Wash",
+    "entity_id": 689,
+    "amount": 300,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-09-21T22:48:21.543"
+  },
+  {
+    "id": 1157,
+    "entity": "Wash",
+    "entity_id": 687,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-09-21T22:48:38.727"
+  },
+  {
+    "id": 1158,
+    "entity": "Wash",
+    "entity_id": 688,
+    "amount": 60,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-09-21T22:48:52.123"
+  },
+  {
+    "id": 1159,
+    "entity": "Wash",
+    "entity_id": 686,
+    "amount": 75,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-09-21T22:49:08.227"
+  },
+  {
+    "id": 1160,
+    "entity": "Wash",
+    "entity_id": 684,
+    "amount": 70,
+    "payment_method": "Efectivo",
+    "is_active": "1",
+    "created_at": "2024-09-21T22:49:38.333"
+  }
+]

@@ -6,6 +6,7 @@ import { navigate } from "astro/virtual-modules/transitions-router.js";
 const MySearchBar = () => {
   const globalSearchText = useStore((s) => s.globalSearchText);
   const update = useStore((s) => s.update);
+  console.log({ globalSearchText });
   return (
     <div className="relative  flex-1 w-full">
       <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -13,7 +14,7 @@ const MySearchBar = () => {
         onSubmit={(e) => {
           e.preventDefault();
           const searchInput = document.getElementById(
-            "input"
+            "input-search"
           ) as HTMLInputElement;
 
           navigate(searchInput.value ? "?search=" + searchInput.value : "/");
@@ -21,9 +22,10 @@ const MySearchBar = () => {
         }}
       >
         <Input
-          id="input"
+          id="input-search"
           type="search"
           placeholder="Search..."
+          value={globalSearchText}
           defaultValue={globalSearchText}
           className="w-full rounded-lg bg-background pl-8"
           onChange={(e) => {

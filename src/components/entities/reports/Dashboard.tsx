@@ -39,10 +39,10 @@ import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
 export const description = "A collection of health charts.";
 
 const FILL_COLORS = {
-  PayPal: "var(--color-stand)",
+  "ATH Móvil": "var(--color-stand)",
   Transferencia: "#aaa",
   Efectivo: "var(--color-exercise)",
-  Tarjeta: "var(--color-move)",
+  "Tarjeta de crédito": "var(--color-move)",
 };
 
 export function Dashboard() {

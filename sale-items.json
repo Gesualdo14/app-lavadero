@@ -1,0 +1,1577 @@
+[
+  {
+    "id": 1,
+    "wash_id": 496,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 2,
+    "wash_id": 497,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 3,
+    "wash_id": 498,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 4,
+    "wash_id": 499,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 5,
+    "wash_id": 500,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 6,
+    "wash_id": 501,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 7,
+    "wash_id": 502,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 8,
+    "wash_id": 503,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 9,
+    "wash_id": 504,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 10,
+    "wash_id": 505,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 12,
+    "wash_id": 506,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "0"
+  },
+  {
+    "id": 13,
+    "wash_id": 507,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 14,
+    "wash_id": 508,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 19,
+    "wash_id": 204,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "0"
+  },
+  {
+    "id": 20,
+    "wash_id": 204,
+    "service_id": 3,
+    "price": 2500.0,
+    "is_active": "0"
+  },
+  {
+    "id": 23,
+    "wash_id": 510,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 25,
+    "wash_id": 512,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 29,
+    "wash_id": 515,
+    "service_id": 6,
+    "price": 5000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 30,
+    "wash_id": 516,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "0"
+  },
+  {
+    "id": 32,
+    "wash_id": 509,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 33,
+    "wash_id": 509,
+    "service_id": 3,
+    "price": 2500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 35,
+    "wash_id": 514,
+    "service_id": 5,
+    "price": 2500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 46,
+    "wash_id": 519,
+    "service_id": 7,
+    "price": 6000.0,
+    "is_active": "0"
+  },
+  {
+    "id": 47,
+    "wash_id": 519,
+    "service_id": 9,
+    "price": 12000.0,
+    "is_active": "0"
+  },
+  {
+    "id": 48,
+    "wash_id": 520,
+    "service_id": 9,
+    "price": 12000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 49,
+    "wash_id": 520,
+    "service_id": 7,
+    "price": 6000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 50,
+    "wash_id": 517,
+    "service_id": 8,
+    "price": 9500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 51,
+    "wash_id": 521,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 52,
+    "wash_id": 522,
+    "service_id": 3,
+    "price": 2500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 53,
+    "wash_id": 522,
+    "service_id": 5,
+    "price": 2500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 54,
+    "wash_id": 523,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 55,
+    "wash_id": 524,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 56,
+    "wash_id": 525,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 57,
+    "wash_id": 526,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 58,
+    "wash_id": 527,
+    "service_id": 7,
+    "price": 6000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 59,
+    "wash_id": 528,
+    "service_id": 7,
+    "price": 6000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 60,
+    "wash_id": 518,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 62,
+    "wash_id": 511,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 63,
+    "wash_id": 513,
+    "service_id": 4,
+    "price": 8500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 64,
+    "wash_id": 529,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 65,
+    "wash_id": 529,
+    "service_id": 3,
+    "price": 2500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 66,
+    "wash_id": 530,
+    "service_id": 5,
+    "price": 2500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 67,
+    "wash_id": 530,
+    "service_id": 7,
+    "price": 6000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 68,
+    "wash_id": 531,
+    "service_id": 8,
+    "price": 9500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 69,
+    "wash_id": 532,
+    "service_id": 11,
+    "price": 25000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 74,
+    "wash_id": 533,
+    "service_id": 12,
+    "price": 10000.0,
+    "is_active": "0"
+  },
+  {
+    "id": 75,
+    "wash_id": 534,
+    "service_id": 12,
+    "price": 10000.0,
+    "is_active": "0"
+  },
+  {
+    "id": 77,
+    "wash_id": 535,
+    "service_id": 12,
+    "price": 10000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 83,
+    "wash_id": 537,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "0"
+  },
+  {
+    "id": 84,
+    "wash_id": 539,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 87,
+    "wash_id": 540,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 88,
+    "wash_id": 541,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 89,
+    "wash_id": 536,
+    "service_id": 13,
+    "price": 20000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 90,
+    "wash_id": 536,
+    "service_id": 3,
+    "price": 2500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 91,
+    "wash_id": 542,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 92,
+    "wash_id": 543,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 93,
+    "wash_id": 544,
+    "service_id": 8,
+    "price": 12500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 95,
+    "wash_id": 545,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 96,
+    "wash_id": 538,
+    "service_id": 15,
+    "price": 8000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 100,
+    "wash_id": 546,
+    "service_id": 6,
+    "price": 5000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 101,
+    "wash_id": 547,
+    "service_id": 11,
+    "price": 25000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 102,
+    "wash_id": 548,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 103,
+    "wash_id": 549,
+    "service_id": 12,
+    "price": 10000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 106,
+    "wash_id": 552,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 107,
+    "wash_id": 553,
+    "service_id": 4,
+    "price": 8500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 108,
+    "wash_id": 554,
+    "service_id": 4,
+    "price": 8500.0,
+    "is_active": "0"
+  },
+  {
+    "id": 109,
+    "wash_id": 555,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 112,
+    "wash_id": 557,
+    "service_id": 12,
+    "price": 10000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 113,
+    "wash_id": 550,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 114,
+    "wash_id": 550,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 115,
+    "wash_id": 556,
+    "service_id": 13,
+    "price": 20000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 116,
+    "wash_id": 556,
+    "service_id": 3,
+    "price": 2500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 117,
+    "wash_id": 558,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 118,
+    "wash_id": 559,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 119,
+    "wash_id": 560,
+    "service_id": 4,
+    "price": 9500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 120,
+    "wash_id": 561,
+    "service_id": 11,
+    "price": 25000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 121,
+    "wash_id": 562,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 128,
+    "wash_id": 563,
+    "service_id": 13,
+    "price": 20000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 129,
+    "wash_id": 567,
+    "service_id": 10,
+    "price": 6000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 131,
+    "wash_id": 566,
+    "service_id": 15,
+    "price": 8000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 132,
+    "wash_id": 565,
+    "service_id": 11,
+    "price": 25000.0,
+    "is_active": "0"
+  },
+  {
+    "id": 133,
+    "wash_id": 565,
+    "service_id": 16,
+    "price": 8500.0,
+    "is_active": "0"
+  },
+  {
+    "id": 134,
+    "wash_id": 568,
+    "service_id": 11,
+    "price": 25000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 135,
+    "wash_id": 569,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 136,
+    "wash_id": 570,
+    "service_id": 12,
+    "price": 10000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 137,
+    "wash_id": 570,
+    "service_id": 3,
+    "price": 5500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 138,
+    "wash_id": 571,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 139,
+    "wash_id": 572,
+    "service_id": 13,
+    "price": 22500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 140,
+    "wash_id": 573,
+    "service_id": 4,
+    "price": 9500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 141,
+    "wash_id": 574,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 142,
+    "wash_id": 575,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 143,
+    "wash_id": 576,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 145,
+    "wash_id": 577,
+    "service_id": 2,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 146,
+    "wash_id": 578,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 147,
+    "wash_id": 579,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 148,
+    "wash_id": 580,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 149,
+    "wash_id": 581,
+    "service_id": 13,
+    "price": 22500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 150,
+    "wash_id": 582,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 151,
+    "wash_id": 583,
+    "service_id": 17,
+    "price": 10000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 152,
+    "wash_id": 584,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 153,
+    "wash_id": 585,
+    "service_id": 13,
+    "price": 22500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 154,
+    "wash_id": 586,
+    "service_id": 17,
+    "price": 9500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 156,
+    "wash_id": 587,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 158,
+    "wash_id": 588,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 159,
+    "wash_id": 589,
+    "service_id": 10,
+    "price": 6000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 160,
+    "wash_id": 590,
+    "service_id": 15,
+    "price": 8000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 165,
+    "wash_id": 594,
+    "service_id": 13,
+    "price": 22000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 166,
+    "wash_id": 594,
+    "service_id": 18,
+    "price": 5000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 167,
+    "wash_id": 595,
+    "service_id": 5,
+    "price": 2500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 168,
+    "wash_id": 596,
+    "service_id": 5,
+    "price": 2500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 171,
+    "wash_id": 598,
+    "service_id": 11,
+    "price": 25000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 172,
+    "wash_id": 599,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 173,
+    "wash_id": 600,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 174,
+    "wash_id": 601,
+    "service_id": 12,
+    "price": 10000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 175,
+    "wash_id": 602,
+    "service_id": 15,
+    "price": 8000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 176,
+    "wash_id": 603,
+    "service_id": 15,
+    "price": 8000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 179,
+    "wash_id": 605,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 180,
+    "wash_id": 606,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 181,
+    "wash_id": 607,
+    "service_id": 11,
+    "price": 25000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 182,
+    "wash_id": 608,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "0"
+  },
+  {
+    "id": 183,
+    "wash_id": 609,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 184,
+    "wash_id": 610,
+    "service_id": 15,
+    "price": 8000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 185,
+    "wash_id": 611,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 186,
+    "wash_id": 612,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 188,
+    "wash_id": 613,
+    "service_id": 15,
+    "price": 8000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 189,
+    "wash_id": 614,
+    "service_id": 15,
+    "price": 8000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 190,
+    "wash_id": 614,
+    "service_id": 10,
+    "price": 5000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 191,
+    "wash_id": 615,
+    "service_id": 7,
+    "price": 6000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 192,
+    "wash_id": 616,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 193,
+    "wash_id": 604,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 194,
+    "wash_id": 617,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 195,
+    "wash_id": 618,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 196,
+    "wash_id": 619,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 198,
+    "wash_id": 620,
+    "service_id": 15,
+    "price": 8000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 199,
+    "wash_id": 621,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 200,
+    "wash_id": 622,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 203,
+    "wash_id": 625,
+    "service_id": 18,
+    "price": 5000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 204,
+    "wash_id": 626,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 205,
+    "wash_id": 623,
+    "service_id": 10,
+    "price": 5000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 206,
+    "wash_id": 627,
+    "service_id": 11,
+    "price": 25000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 207,
+    "wash_id": 624,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 208,
+    "wash_id": 628,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 209,
+    "wash_id": 629,
+    "service_id": 19,
+    "price": 27500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 210,
+    "wash_id": 630,
+    "service_id": 12,
+    "price": 10000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 211,
+    "wash_id": 630,
+    "service_id": 10,
+    "price": 5000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 212,
+    "wash_id": 631,
+    "service_id": 16,
+    "price": 9000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 213,
+    "wash_id": 632,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 214,
+    "wash_id": 633,
+    "service_id": 15,
+    "price": 8000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 215,
+    "wash_id": 634,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 216,
+    "wash_id": 635,
+    "service_id": 9,
+    "price": 15000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 217,
+    "wash_id": 636,
+    "service_id": 10,
+    "price": 5000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 218,
+    "wash_id": 637,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 219,
+    "wash_id": 638,
+    "service_id": 8,
+    "price": 12500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 220,
+    "wash_id": 639,
+    "service_id": 11,
+    "price": 25000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 221,
+    "wash_id": 640,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "0"
+  },
+  {
+    "id": 222,
+    "wash_id": 641,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 223,
+    "wash_id": 642,
+    "service_id": 11,
+    "price": 25000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 224,
+    "wash_id": 643,
+    "service_id": 11,
+    "price": 25000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 225,
+    "wash_id": 643,
+    "service_id": 18,
+    "price": 5000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 228,
+    "wash_id": 644,
+    "service_id": 11,
+    "price": 25000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 229,
+    "wash_id": 644,
+    "service_id": 18,
+    "price": 8000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 230,
+    "wash_id": 645,
+    "service_id": 8,
+    "price": 12500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 231,
+    "wash_id": 646,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 232,
+    "wash_id": 647,
+    "service_id": 12,
+    "price": 10000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 233,
+    "wash_id": 648,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 234,
+    "wash_id": 649,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 235,
+    "wash_id": 650,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 237,
+    "wash_id": 652,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 238,
+    "wash_id": 653,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 240,
+    "wash_id": 651,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 241,
+    "wash_id": 654,
+    "service_id": 3,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 242,
+    "wash_id": 656,
+    "service_id": 13,
+    "price": 20000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 243,
+    "wash_id": 657,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 244,
+    "wash_id": 658,
+    "service_id": 11,
+    "price": 22500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 245,
+    "wash_id": 659,
+    "service_id": 12,
+    "price": 11000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 246,
+    "wash_id": 660,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 247,
+    "wash_id": 661,
+    "service_id": 8,
+    "price": 12500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 248,
+    "wash_id": 662,
+    "service_id": 10,
+    "price": 5000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 249,
+    "wash_id": 663,
+    "service_id": 20,
+    "price": 10000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 250,
+    "wash_id": 664,
+    "service_id": 3,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 251,
+    "wash_id": 664,
+    "service_id": 5,
+    "price": 2500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 252,
+    "wash_id": 665,
+    "service_id": 11,
+    "price": 22500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 253,
+    "wash_id": 665,
+    "service_id": 5,
+    "price": 2500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 254,
+    "wash_id": 666,
+    "service_id": 10,
+    "price": 5000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 255,
+    "wash_id": 667,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 256,
+    "wash_id": 668,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 257,
+    "wash_id": 669,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 258,
+    "wash_id": 670,
+    "service_id": 7,
+    "price": 6000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 259,
+    "wash_id": 671,
+    "service_id": 11,
+    "price": 22500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 260,
+    "wash_id": 672,
+    "service_id": 15,
+    "price": 8000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 261,
+    "wash_id": 673,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 263,
+    "wash_id": 674,
+    "service_id": 21,
+    "price": 10000.0,
+    "is_active": "0"
+  },
+  {
+    "id": 264,
+    "wash_id": 675,
+    "service_id": 21,
+    "price": 10000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 265,
+    "wash_id": 676,
+    "service_id": 9,
+    "price": 15000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 266,
+    "wash_id": 676,
+    "service_id": 10,
+    "price": 5000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 267,
+    "wash_id": 677,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 268,
+    "wash_id": 678,
+    "service_id": 13,
+    "price": 20000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 269,
+    "wash_id": 678,
+    "service_id": 22,
+    "price": 4000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 270,
+    "wash_id": 679,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 271,
+    "wash_id": 680,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 272,
+    "wash_id": 681,
+    "service_id": 11,
+    "price": 22500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 273,
+    "wash_id": 682,
+    "service_id": 10,
+    "price": 5000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 274,
+    "wash_id": 683,
+    "service_id": 10,
+    "price": 5000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 275,
+    "wash_id": 684,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 276,
+    "wash_id": 685,
+    "service_id": 6,
+    "price": 5000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 277,
+    "wash_id": 686,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 278,
+    "wash_id": 687,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 279,
+    "wash_id": 688,
+    "service_id": 7,
+    "price": 6000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 280,
+    "wash_id": 689,
+    "service_id": 11,
+    "price": 22500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 281,
+    "wash_id": 689,
+    "service_id": 22,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 282,
+    "wash_id": 690,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 283,
+    "wash_id": 691,
+    "service_id": 2,
+    "price": 6500.0,
+    "is_active": "0"
+  },
+  {
+    "id": 284,
+    "wash_id": 692,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 285,
+    "wash_id": 693,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 286,
+    "wash_id": 694,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 287,
+    "wash_id": 695,
+    "service_id": 11,
+    "price": 22500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 288,
+    "wash_id": 696,
+    "service_id": 11,
+    "price": 22500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 289,
+    "wash_id": 697,
+    "service_id": 9,
+    "price": 15000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 290,
+    "wash_id": 698,
+    "service_id": 7,
+    "price": 6000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 291,
+    "wash_id": 699,
+    "service_id": 11,
+    "price": 22500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 292,
+    "wash_id": 700,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 293,
+    "wash_id": 701,
+    "service_id": 7,
+    "price": 6000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 294,
+    "wash_id": 702,
+    "service_id": 1,
+    "price": 7500.0,
+    "is_active": "1"
+  },
+  {
+    "id": 295,
+    "wash_id": 703,
+    "service_id": 14,
+    "price": 7000.0,
+    "is_active": "1"
+  },
+  {
+    "id": 296,
+    "wash_id": 704,
+    "service_id": 15,
+    "price": 8000.0,
+    "is_active": "1"
+  }
+]

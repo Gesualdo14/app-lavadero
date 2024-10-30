@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "denomination": "Volkswagen"
+  },
+  {
+    "id": 2,
+    "denomination": "Volvo"
+  },
+  {
+    "id": 3,
+    "denomination": "Tucson "
+  },
+  {
+    "id": 4,
+    "denomination": "Toyota "
+  },
+  {
+    "id": 5,
+    "denomination": "Tesla"
+  },
+  {
+    "id": 6,
+    "denomination": "Suburvan"
+  },
+  {
+    "id": 7,
+    "denomination": "Subaru"
+  },
+  {
+    "id": 8,
+    "denomination": "RDX"
+  },
+  {
+    "id": 9,
+    "denomination": "Range Rover"
+  },
+  {
+    "id": 10,
+    "denomination": "RAM"
+  },
+  {
+    "id": 11,
+    "denomination": "Porsche"
+  },
+  {
+    "id": 12,
+    "denomination": "Placa JTY154"
+  },
+  {
+    "id": 13,
+    "denomination": "Nissan"
+  },
+  {
+    "id": 14,
+    "denomination": "Navigator"
+  },
+  {
+    "id": 15,
+    "denomination": "Motora"
+  },
+  {
+    "id": 16,
+    "denomination": "Mini Cooper"
+  },
+  {
+    "id": 17,
+    "denomination": "Mercedes Benz"
+  },
+  {
+    "id": 18,
+    "denomination": "Lincon"
+  },
+  {
+    "id": 19,
+    "denomination": "Lexus"
+  },
+  {
+    "id": 20,
+    "denomination": "Land Rover"
+  },
+  {
+    "id": 21,
+    "denomination": "KIA"
+  },
+  {
+    "id": 22,
+    "denomination": "JZO665"
+  },
+  {
+    "id": 23,
+    "denomination": "Jeep"
+  },
+  {
+    "id": 24,
+    "denomination": "Jaguar"
+  },
+  {
+    "id": 25,
+    "denomination": "Infinity"
+  },
+  {
+    "id": 26,
+    "denomination": "Hyundai"
+  },
+  {
+    "id": 27,
+    "denomination": "Honda"
+  },
+  {
+    "id": 28,
+    "denomination": "Highlander"
+  },
+  {
+    "id": 29,
+    "denomination": "Golf Car"
+  },
+  {
+    "id": 30,
+    "denomination": "GMC"
+  },
+  {
+    "id": 31,
+    "denomination": "Genesis"
+  },
+  {
+    "id": 32,
+    "denomination": "Ford"
+  },
+  {
+    "id": 33,
+    "denomination": "F150"
+  },
+  {
+    "id": 34,
+    "denomination": "Dodge "
+  },
+  {
+    "id": 35,
+    "denomination": "Defender"
+  },
+  {
+    "id": 36,
+    "denomination": "Chevy"
+  },
+  {
+    "id": 37,
+    "denomination": "Cherokee"
+  },
+  {
+    "id": 38,
+    "denomination": "Cadillac"
+  },
+  {
+    "id": 39,
+    "denomination": "BMW"
+  },
+  {
+    "id": 40,
+    "denomination": "Audi"
+  },
+  {
+    "id": 41,
+    "denomination": "Aston Martin"
+  },
+  {
+    "id": 42,
+    "denomination": "Alfa Romeo"
+  },
+  {
+    "id": 43,
+    "denomination": "Acura"
+  },
+  {
+    "id": 44,
+    "denomination": "LICOLN"
+  },
+  {
+    "id": 45,
+    "denomination": "EQS"
+  }
+]

@@ -145,7 +145,7 @@ const MultiSelect = <E extends keyof SelectableStates>({
     }
   };
 
-  const quantitySelected = selectedItems.length;
+  const quantitySelected = selectedItems?.length;
 
   return (
     <Select
@@ -256,11 +256,11 @@ const MultiSelect = <E extends keyof SelectableStates>({
                   let id;
                   if (["ArrowDown"].includes(e.code)) {
                     update("openSelect", field);
-                    id = index === data.length - 1 ? 0 : index + 1;
+                    id = index === data?.length - 1 ? 0 : index + 1;
                   }
                   if (["ArrowUp"].includes(e.code)) {
                     update("openSelect", field);
-                    const id = index === 0 ? data.length - 1 : index - 1;
+                    const id = index === 0 ? data?.length - 1 : index - 1;
                   }
                   focusAfter(`item-${id}`, 0);
                   if (e.code === "Enter") {

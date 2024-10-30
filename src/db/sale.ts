@@ -21,7 +21,7 @@ export const getSales = async (searchText: string | null | undefined) => {
       .select()
       .from(view_sales)
       .where(where)
-      .limit(8)
+      .limit(20)
       .orderBy(desc(view_sales.id));
 
     return result;
@@ -32,6 +32,7 @@ export const getSales = async (searchText: string | null | undefined) => {
 
 export async function createSale(data: Sale) {
   const {
+    id,
     sale_date,
     services,
     client,
@@ -43,10 +44,11 @@ export async function createSale(data: Sale) {
 
   return await db.transaction(async (tx) => {
     const date = new Date(sale_date);
-    console.log({ data, sale_date });
+    console.log({ data, client, services, vehicle });
     const timestamp = +date;
     try {
       const { lastInsertRowid } = await tx.insert(sales).values({
+        id,
         sale_date: timestamp,
         day: date.getDate(),
         month: date.getMonth() + 1,
@@ -57,11 +59,13 @@ export async function createSale(data: Sale) {
         client_id: client[0].id,
         total_amount,
       });
+      console.log("VENTA OKKKK");
       await tx
         .insert(sales_daily_report)
         .values({
           company_id: 1,
           day: date.getDate(),
+          week: date.getDay(),
           month: date.getMonth() + 1,
           year: date.getFullYear(),
           amount: total_amount,
@@ -79,6 +83,7 @@ export async function createSale(data: Sale) {
             quantity: sql`${sales_daily_report.quantity} + 1`,
           },
         });
+      console.log("REPORT OKKKK");
 
       await tx.insert(saleItems).values(
         services.map((s) => ({

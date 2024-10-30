@@ -20,6 +20,7 @@ import MultiSelect from "../../custom-ui/MultiSelect";
 import { EMPTY_SALE, EMPTY_USER, useStore } from "@/stores";
 import MyInput from "@/components/custom-ui/MyInput";
 import { focusAfter } from "@/helpers/ui";
+import { isValidPhone } from "@/helpers/validations";
 
 export type Entities = "user" | "sale";
 
@@ -41,10 +42,18 @@ export function ClientFormDialog() {
     e.preventDefault();
     const values = useStore.getState().user;
     const action = creating ? "createClient" : "updateClient";
+    const validPhone = isValidPhone(values.phone || "");
+    if (!validPhone) {
+      toast({
+        title: "Teléfono inválido",
+        description:
+          "Debe empezar con +1, tener 1 dígitos y utilizar un código de área válido",
+      });
+      return;
+    }
     update("loading", "client-form");
     const result = await actions[action](values);
 
-    update("loading", "");
     toast({
       title: "Operación exitosa",
       description: result.data?.message,
@@ -72,6 +81,7 @@ export function ClientFormDialog() {
       update("openDialog", "sale");
       focusAfter("sale-service", 50, true);
     }
+    update("loading", "");
   };
 
   return (
@@ -126,8 +136,8 @@ export function ClientFormDialog() {
               <h2 className="block font-bold !-mb-2">Datos del vehículo</h2>
 
               <MultiSelect
-                entity="brand"
                 form="user"
+                entity="brand"
                 field="brand"
                 config="brand"
                 idToFocusAfterSelection="vehicle-model"

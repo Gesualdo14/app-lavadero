@@ -21,6 +21,7 @@ const MyInput = <E extends keyof Store>({
   return (
     <Input
       id={String(id)}
+      name={field as string}
       type={type}
       value={value}
       placeholder={placeholder}

@@ -1,3 +1,4 @@
+import { migrate } from "@/db/migrate";
 import { createBrand, deleteBrand, getBrands, updateBrand } from "@/db/vehicle";
 import { brandFormSchema } from "@/schemas/brand";
 import type { LoggedUser } from "@/schemas/user";
@@ -5,6 +6,11 @@ import { defineAction } from "astro:actions";
 import { z } from "zod";
 
 const brand = {
+  migrate: defineAction({
+    handler: () => {
+      migrate();
+    },
+  }),
   getBrands: defineAction({
     input: z.object({ searchText: z.string().nullish() }),
     handler: async ({ searchText }, { locals }) => {

@@ -4,7 +4,7 @@ import {
   type InsertService,
   type SelectService,
 } from "@/schemas/service";
-import { and, desc, eq, isNull, like, type DBQueryConfig } from "drizzle-orm";
+import { and, asc, eq, isNull, like, type DBQueryConfig } from "drizzle-orm";
 import { db } from ".";
 import type { LoggedUser } from "@/schemas/user";
 
@@ -18,8 +18,7 @@ export const getServices = async <T extends boolean>(
       eq(services.company_id, user.company_id),
       isNull(services.deleted_by)
     ),
-    limit: 5,
-    orderBy: [desc(services.id)],
+    orderBy: [asc(services.name)],
   };
   if (!!searchText) {
     searchConfig.where = and(

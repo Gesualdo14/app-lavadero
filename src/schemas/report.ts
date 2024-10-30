@@ -11,6 +11,7 @@ export const sales_daily_report = sqliteTable(
   {
     id: integer("id").primaryKey(),
     day: integer("day").notNull(),
+    week: integer("week").notNull(),
     month: integer("month").notNull(),
     year: integer("year").notNull(),
     company_id: integer("company_id").notNull(),
@@ -37,6 +38,7 @@ export const cashflows_daily_report = sqliteTable(
   {
     id: integer("id").primaryKey(),
     day: integer("day").notNull(),
+    week: integer("week").notNull(),
     month: integer("month").notNull(),
     year: integer("year").notNull(),
     company_id: integer("company_id").notNull(),

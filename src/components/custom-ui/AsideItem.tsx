@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 
 import { useStore } from "@/stores";
+import { navigate } from "astro:transitions/client";
 
 interface Props {
   text: string;
@@ -26,6 +27,7 @@ interface Props {
 
 const AsideItem = ({ text, panel, icon, tooltip = true }: Props) => {
   const selectedPanel = useStore((s) => s.panel);
+  const globalSearchText = useStore((s) => s.globalSearchText);
   const update = useStore((s) => s.update);
 
   const iconsClasses =
@@ -47,6 +49,10 @@ const AsideItem = ({ text, panel, icon, tooltip = true }: Props) => {
         onClick={() => {
           update("panel", text.toLocaleLowerCase());
           update("sheetOpen", false);
+          if (!!globalSearchText) {
+            update("globalSearchText", null);
+            navigate("/");
+          }
           localStorage.setItem("selectedPanel", panel);
         }}
         className="flex gap-3 items-center  cursor-pointer justify-center rounded-md text-muted-foreground transition-bg hover:text-foreground md:h-8 md:w-8"
@@ -63,6 +69,14 @@ const AsideItem = ({ text, panel, icon, tooltip = true }: Props) => {
       onClick={() => {
         update("panel", panel.toLocaleLowerCase());
         update("sheetOpen", false);
+        if (!!globalSearchText) {
+          update("globalSearchText", null);
+          const search_input = document.getElementById(
+            "input-search"
+          ) as HTMLInputElement;
+          search_input.value = "";
+          navigate("/");
+        }
       }}
       className={`group flex h-9 w-9 shrink-0 items-center justify-center md:h-8 md:w-8 md:text-base ${isSelected ? "gap-2 rounded-lg bg-primary text-lg font-semibold text-primary-foreground" : ""}`}
     >
