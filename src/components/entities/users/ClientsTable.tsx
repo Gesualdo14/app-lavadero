@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
+import DeleteIcon from "@/components/custom-ui/DeleteIcon";
 
 const ClientsTable = () => {
   const { update, globalSearchText } = useStore();
@@ -58,7 +59,13 @@ const ClientsTable = () => {
               <TableCell className="text-ellipsis max-w-1 sm:text-inherit md:overflow-visible overflow-hidden">
                 {u.email}
               </TableCell>
-              <TableCell></TableCell>
+              <TableCell>
+                <DeleteIcon
+                  id={u.id}
+                  entity="User"
+                  queryKey={["clients", globalSearchText]}
+                />
+              </TableCell>
             </TableRow>
           ))
         )}

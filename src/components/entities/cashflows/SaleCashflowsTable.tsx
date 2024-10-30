@@ -15,18 +15,19 @@ import { Edit2Icon } from "lucide-react";
 import { TableSkeletonComponent } from "../../custom-ui/Skeletons";
 import { toMoney } from "@/helpers/fmt";
 
-const SaleCashflowsTable = ({ sale_id }: { sale_id: number }) => {
+const SaleCashflowsTable = () => {
   const { update, cashflow } = useStore();
+  const sale_id = useStore((s) => s.sale.id);
+  const selectedId = useStore((s) => s.cashflow.id);
   const { data: cashflows, isPending } = useQuery({
     queryKey: ["cashflows", sale_id],
     queryFn: async () => {
       const data = await actions.getCashflows({
-        saleId: sale_id,
+        saleId: sale_id as number,
       });
       return data?.data?.data || [];
     },
   });
-  console.log({ cashflows });
 
   if (cashflows?.length === 0)
     return (
@@ -73,7 +74,7 @@ const SaleCashflowsTable = ({ sale_id }: { sale_id: number }) => {
               <TableCell className="w-24">{toMoney(c.amount)}</TableCell>
               <TableCell>
                 <Edit2Icon
-                  className={`h-4 w-4 ${c.id === cashflow.id ? "text-blue-500" : "text-gray-900"} hover:text-blue-500`}
+                  className={`h-4 w-4 ${c.id === selectedId ? "text-blue-500" : "text-gray-900"} hover:text-blue-500`}
                   onClick={() => {
                     update("cashflow", {
                       id: c.id,

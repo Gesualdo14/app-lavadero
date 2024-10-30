@@ -115,6 +115,7 @@ const SalesTable = () => {
                         e.stopPropagation();
                         update("creating", true);
                         update("openDialog", "cashflow");
+                        update("cashflow", { method: [], amount: "" });
                         update("sale", s);
                       }}
                     />

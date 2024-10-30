@@ -8,7 +8,13 @@ import { devtools } from "zustand/middleware";
 
 export type Store = {
   user: User;
-  brand: Partial<Brand>;
+  vehicle: {
+    brand: [{ id: number; name: string }] | [];
+    model: string;
+    patent: string;
+    user_id: number;
+  };
+  brand: Brand;
   service: Service;
   sale: Sale;
   panel: string;
@@ -45,6 +51,8 @@ export const EMPTY_USER = {
   patent: "",
 };
 export const EMPTY_BRAND = {
+  id: undefined,
+  company_id: 1,
   name: "",
 };
 export const EMPTY_SERVICE = {
@@ -57,8 +65,14 @@ export const useStore = create<Store>()(
   devtools((set) => ({
     user: EMPTY_USER,
     sale: EMPTY_SALE,
-    brand: EMPTY_BRAND,
+    vehicle: {
+      brand: [],
+      model: "",
+      patent: "",
+      user_id: 0,
+    },
     service: EMPTY_SERVICE,
+    brand: EMPTY_BRAND,
     cashflow: {
       sale_id: 0,
       method: [],
@@ -78,7 +92,11 @@ export const useStore = create<Store>()(
         if (prop === "panel") {
           localStorage.setItem(prop, value);
         }
-        if (["user", "sale", "brand", "service", "cashflow"].includes(prop)) {
+        if (
+          ["user", "sale", "vehicle", "service", "cashflow", "brand"].includes(
+            prop
+          )
+        ) {
           const currState = state[prop] as object;
           return { ...state, [prop]: { ...currState, ...value } };
         } else {

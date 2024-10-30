@@ -23,13 +23,17 @@ export const getVehicles = async <T extends boolean>(
   filterId?: number
 ): Promise<T extends true ? TSelect<"vehicle"> : SelectVehicle[]> => {
   const searchConfig: DBQueryConfig = {
+    where: isNull(vehicles.deleted_by),
     limit: 5,
     orderBy: [desc(vehicles.id)],
   };
 
   let filterByIdQuery, findQuery;
   if (!!filterId) {
-    filterByIdQuery = eq(vehicles.user_id, filterId as number);
+    filterByIdQuery = and(
+      isNull(vehicles.deleted_by),
+      eq(vehicles.user_id, filterId as number)
+    );
   }
   if (!!searchText) {
     findQuery = or(
@@ -40,9 +44,9 @@ export const getVehicles = async <T extends boolean>(
   }
 
   searchConfig.where = and(filterByIdQuery, findQuery);
-  console.log({ filterId, searchText });
+
   const result = await db.query.vehicles.findMany(searchConfig);
-  console.log({ result, searchConfig });
+
   if (asItems) {
     return result.map((v) => ({
       id: v.id,
@@ -107,4 +111,11 @@ export async function deleteBrand(brand_id: number, user_id: number) {
     .update(brands)
     .set({ deleted_by: user_id })
     .where(eq(brands.id, brand_id));
+}
+
+export async function deleteVehicle(vehicle_id: number, user_id: number) {
+  return await db
+    .update(vehicles)
+    .set({ deleted_by: user_id })
+    .where(eq(vehicles.id, vehicle_id));
 }

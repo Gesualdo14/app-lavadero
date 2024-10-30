@@ -22,10 +22,12 @@ export async function createCashflow(cashflow: InsertCashflow) {
         .insert(cashflows_daily_report)
         .values({
           day: now.getDate(),
+          week: now.getDay(),
           month: now.getMonth() + 1,
           year: now.getFullYear(),
           company_id: currentSale?.company_id as number,
           amount: cashflow.amount,
+          date: new Date().toUTCString(),
           quantity: 1,
           method: cashflow.method,
         })
@@ -98,10 +100,11 @@ export const getPaymentMethods = async (
   searchText: string | null | undefined
 ) => {
   const payment_methods = [
-    { id: 1, name: "PayPal" },
+    { id: 1, name: "ATH Móvil" },
     { id: 2, name: "Transferencia" },
     { id: 3, name: "Efectivo" },
-    { id: 4, name: "Tarjeta" },
+    { id: 4, name: "Tarjeta de crédito" },
+    { id: 5, name: "Tarjeta de débito" },
   ];
 
   if (!!searchText) {

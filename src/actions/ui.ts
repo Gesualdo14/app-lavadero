@@ -19,6 +19,7 @@ const ui = {
         "brand",
         "method",
         "role",
+        "sale",
       ]),
       filterId: z.number().optional(),
     }),

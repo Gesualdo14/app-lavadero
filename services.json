@@ -1,0 +1,178 @@
+[
+  {
+    "id": 1,
+    "denomination": "Lavado Full Detallado ",
+    "price": 7500.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-06-24T00:00:00",
+    "updated_at": "2024-06-24T00:00:00"
+  },
+  {
+    "id": 2,
+    "denomination": "Lavado auto compacto",
+    "price": 6500.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-03T00:00:00",
+    "updated_at": "2024-07-03T00:00:00"
+  },
+  {
+    "id": 3,
+    "denomination": "Cera Quarzo",
+    "price": 7500.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-06T00:00:00",
+    "updated_at": "2024-07-06T00:00:00"
+  },
+  {
+    "id": 4,
+    "denomination": "SUV 3 FILAS",
+    "price": 9500.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-06T00:00:00",
+    "updated_at": "2024-07-06T00:00:00"
+  },
+  {
+    "id": 5,
+    "denomination": "Golf car",
+    "price": 2500.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-06T00:00:00",
+    "updated_at": "2024-07-06T00:00:00"
+  },
+  {
+    "id": 6,
+    "denomination": "COMPACTO 2 PUERTAS",
+    "price": 5000.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-06T00:00:00",
+    "updated_at": "2024-07-06T00:00:00"
+  },
+  {
+    "id": 7,
+    "denomination": "COMPACTO 4 PUERTAS",
+    "price": 6000.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-06T00:00:00",
+    "updated_at": "2024-07-06T00:00:00"
+  },
+  {
+    "id": 8,
+    "denomination": "PICK UP",
+    "price": 12500.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-06T00:00:00",
+    "updated_at": "2024-07-06T00:00:00"
+  },
+  {
+    "id": 9,
+    "denomination": "Ceramica Wax",
+    "price": 15000.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-06T00:00:00",
+    "updated_at": "2024-07-06T00:00:00"
+  },
+  {
+    "id": 10,
+    "denomination": "Servicio precio especial ",
+    "price": 5000.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-08T00:00:00",
+    "updated_at": "2024-07-08T00:00:00"
+  },
+  {
+    "id": 11,
+    "denomination": "Ceramica",
+    "price": 22500.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-11T00:00:00",
+    "updated_at": "2024-07-11T00:00:00"
+  },
+  {
+    "id": 12,
+    "denomination": "Full Detailing Mini Van",
+    "price": 11000.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-11T00:00:00",
+    "updated_at": "2024-07-11T00:00:00"
+  },
+  {
+    "id": 13,
+    "denomination": "Ceramica auto Compacto",
+    "price": 20000.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-11T00:00:00",
+    "updated_at": "2024-07-11T00:00:00"
+  },
+  {
+    "id": 14,
+    "denomination": "Precio socio SUV",
+    "price": 7000.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-11T00:00:00",
+    "updated_at": "2024-07-11T00:00:00"
+  },
+  {
+    "id": 15,
+    "denomination": "Lavado full Detallado Suv",
+    "price": 8000.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-15T00:00:00",
+    "updated_at": "2024-07-15T00:00:00"
+  },
+  {
+    "id": 16,
+    "denomination": "Lavado full Detallado 3 filas ",
+    "price": 9000.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-23T00:00:00",
+    "updated_at": "2024-07-23T00:00:00"
+  },
+  {
+    "id": 17,
+    "denomination": "Pickup Basica ",
+    "price": 9500.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-27T00:00:00",
+    "updated_at": "2024-07-27T00:00:00"
+  },
+  {
+    "id": 18,
+    "denomination": "Limpieza y tratamiento asiento en Leather",
+    "price": 8000.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-07-31T00:00:00",
+    "updated_at": "2024-07-31T00:00:00"
+  },
+  {
+    "id": 19,
+    "denomination": "Ceramica Hybrid Wax",
+    "price": 27500.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-08-08T00:00:00",
+    "updated_at": "2024-08-08T00:00:00"
+  },
+  {
+    "id": 20,
+    "denomination": "Full Detallado Pickup compacta ",
+    "price": 10000.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-08-22T00:00:00",
+    "updated_at": "2024-08-22T00:00:00"
+  },
+  {
+    "id": 21,
+    "denomination": "Brillo a mano SUV",
+    "price": 10000.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-08-31T00:00:00",
+    "updated_at": "2024-08-31T00:00:00"
+  },
+  {
+    "id": 22,
+    "denomination": "Cristalizado cristales ",
+    "price": 7500.0,
+    "creator_email": "hcarrion@AutoSpaPalmasdelMar.onmicrosoft.com",
+    "created_at": "2024-08-31T00:00:00",
+    "updated_at": "2024-08-31T00:00:00"
+  }
+]

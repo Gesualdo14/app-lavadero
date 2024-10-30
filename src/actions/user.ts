@@ -94,14 +94,13 @@ const user = {
     },
   }),
   createClient: defineAction({
-    input: userFormSchema,
+    input: userFormSchema.omit({ avatar: true, password: true, role: true }),
     handler: async (data, { locals }) => {
       try {
-        console.log({ data });
         const result = await createUser(
           {
             firstname: data.firstname,
-            lastname: data.lastname,
+            lastname: data.lastname || "",
             email: data.email,
             phone: data.phone,
             company_id: locals.user?.company_id as number,
@@ -113,21 +112,25 @@ const user = {
             patent: data.patent as string,
           }
         );
-        console.log({ result });
 
         return {
           ok: true,
+          data: result,
           message: "Cliente creado con éxito",
         };
-      } catch (error) {
-        console.log({ error });
-        if (error instanceof Error)
-          return { ok: false, message: error.message };
+      } catch (error: any) {
+        return { ok: false, message: error?.message };
       }
     },
   }),
   updateClient: defineAction({
-    input: userFormSchema,
+    input: z.object({
+      firstname: z.string().optional(),
+      lastname: z.string().optional(),
+      email: z.string().optional(),
+      phone: z.string().optional(),
+      id: z.number(),
+    }),
     handler: async (data) => {
       try {
         console.log("UPDATE", { data });
@@ -144,12 +147,11 @@ const user = {
 
         return {
           ok: true,
+          data: { user_id: 0, vehicle_id: 0 },
           message: "Cliente actualizado con éxito",
         };
-      } catch (error) {
-        console.log({ error });
-        if (error instanceof Error)
-          return { ok: false, message: error.message };
+      } catch (error: any) {
+        return { ok: false, message: error?.message };
       }
     },
   }),

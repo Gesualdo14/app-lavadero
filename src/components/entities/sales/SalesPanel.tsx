@@ -2,6 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SaleFormDialog } from "./SaleFormDialog";
 import SalesTable from "./SalesTable";
 import { SaleCashflowsDialog } from "@/components/entities/cashflows/SaleCashflowsDialog";
+import { ClientFormDialog } from "../users/ClientFormDialog";
+import { VehicleFormDialog } from "../vehicles/VehicleFormDialog";
 
 const SalesPanel = () => {
   return (
@@ -12,8 +14,12 @@ const SalesPanel = () => {
       <CardHeader className="pb-2">
         <div className="flex justify-between">
           <CardTitle>Ventas</CardTitle>
-          <SaleFormDialog />
+          <div className="flex gap-2">
+            <ClientFormDialog hidden dialogToOpen="sale" />
+            <SaleFormDialog />
+          </div>
           <SaleCashflowsDialog />
+          <VehicleFormDialog dialogToOpen="sale" />
         </div>
       </CardHeader>
       <CardContent>

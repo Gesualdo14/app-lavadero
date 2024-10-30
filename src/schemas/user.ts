@@ -13,7 +13,7 @@ export const users = sqliteTable("Users", {
   firstname: text("firstname").notNull(),
   lastname: text("lastname").notNull(),
   phone: text("phone"),
-  email: text("email").unique().notNull(),
+  email: text("email"),
   avatar: text("avatar_url"),
   password: text("password"),
   deleted_by: integer("deleted_by"),
@@ -25,8 +25,8 @@ export const userFormSchema = z.object({
   id: z.number().optional(),
   company_id: z.number(),
   firstname: z.string(),
-  lastname: z.string(),
-  email: z.string().email("Email inválido"),
+  lastname: z.string().optional(),
+  email: z.string().optional(),
   avatar: z.string().optional(),
   phone: z.string().optional(),
   password: z.string().optional(),
@@ -42,4 +42,6 @@ export type User = z.infer<typeof userFormSchema>;
 export type LoggedUser = Omit<User, "role" & "id"> & {
   id: number;
   role: string;
+  email: string;
+  lastname: string;
 };

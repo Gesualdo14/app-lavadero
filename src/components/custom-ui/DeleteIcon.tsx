@@ -7,7 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   id: number;
-  entity: "User" | "Service" | "Brand";
+  entity: "User" | "Service" | "Brand" | "Vehicle";
   queryKey: string[];
 }
 
