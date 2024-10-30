@@ -249,6 +249,7 @@ export const isValidPhone = (numero: string) => {
     "781",
     "785",
     "786",
+    "787",
     "801",
     "802",
     "803",

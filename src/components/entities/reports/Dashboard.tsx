@@ -2,11 +2,9 @@ import {
   Bar,
   BarChart,
   Label,
-  LabelList,
   Rectangle,
   ReferenceLine,
   XAxis,
-  YAxis,
 } from "recharts";
 
 import {
@@ -22,7 +20,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { DollarSign, Users2, WashingMachine } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { actions } from "astro:actions";
 import { toMoney } from "@/helpers/fmt";
@@ -63,8 +60,8 @@ export function Dashboard() {
 
   return (
     <div className="chart-wrapper flex max-w-6xl flex-col flex-wrap items-start gap-6 sm:flex-row p-4">
-      <div className="grid w-full gap-6 sm:grid-cols-2 lg:max-w-[28rem] md:grid-cols-1">
-        <Card x-chunk="charts-01-chunk-0">
+      <div className="grid w-full gap-6 sm:grid-cols-2 md:grid-cols-1 ">
+        <Card x-chunk="charts-01-chunk-0 ">
           <CardHeader className="space-y-0 pb-2">
             <CardDescription>Hoy</CardDescription>
             <CardTitle className="text-4xl tabular-nums">
@@ -84,6 +81,7 @@ export function Dashboard() {
                   color: "hsl(var(--chart-1))",
                 },
               }}
+              className="max-h-48 w-full"
             >
               <BarChart
                 accessibilityLayer
@@ -92,7 +90,7 @@ export function Dashboard() {
                   right: -4,
                 }}
                 data={sales
-                  ?.sort((a, b) => a.day - b.day)
+                  ?.sort((a, b) => a.date - b.date)
                   .map((r) => ({
                     date: `${r.year}/${r.month}/${r.day}`,
                     ventas: r.amount,
@@ -168,7 +166,8 @@ export function Dashboard() {
           </CardContent>
           <CardFooter className="flex-col items-start gap-1">
             <CardDescription>
-              En últimos 7 días, hubieron ventas por un total de{" "}
+              En las últimas {sales.length} semanas, hubieron ventas por un
+              total de{" "}
               <span className="font-medium text-foreground">
                 {toMoney(
                   sales?.reduce((acc, curr) => acc + (curr?.amount || 0), 0) ||
@@ -177,23 +176,10 @@ export function Dashboard() {
               </span>
               .
             </CardDescription>
-            <CardDescription>
-              Necesitás{" "}
-              <span className="font-medium text-foreground">
-                {toMoney(
-                  700_000 -
-                    (sales?.reduce(
-                      (acc, curr) => acc + (curr?.amount || 0),
-                      0
-                    ) || 1)
-                )}
-              </span>{" "}
-              para alcanzar tu objetivo.
-            </CardDescription>
           </CardFooter>
         </Card>
       </div>
-      <div className="grid w-full gap-6 lg:max-w-[24rem]">
+      {/* <div className="grid w-full gap-6 lg:max-w-[24rem]">
         <Card className="max-w-xl w-full" x-chunk="charts-01-chunk-4">
           <CardContent className="flex gap-6 p-4 pb-2">
             <ChartContainer
@@ -253,52 +239,8 @@ export function Dashboard() {
             </ChartContainer>
           </CardContent>
         </Card>
-      </div>
-      <div className="grid w-full sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <Card x-chunk="dashboard-01-chunk-0">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Ventas Totales
-            </CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">$45.231,27</div>
-            <p className="text-xs text-muted-foreground">
-              +20.1% que el mes pasado
-            </p>
-          </CardContent>
-        </Card>
-        <Card x-chunk="dashboard-01-chunk-2">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Lavados realizados
-            </CardTitle>
-            <WashingMachine className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">+600</div>
-            <p className="text-xs text-muted-foreground">
-              +19% que el mes pasado
-            </p>
-          </CardContent>
-        </Card>
-        <Card x-chunk="dashboard-01-chunk-3">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Nuevos clientes
-            </CardTitle>
-            <Users2 className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">+374</div>
-            <p className="text-xs text-muted-foreground">
-              +89 en la última semana
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-      <Card className="px-5 py-3">
+      </div> */}
+      <Card className="px-5 py-3 w-full">
         <CardTitle className="text-sm font-medium mb-3">
           Evolución ventas diarias
         </CardTitle>
@@ -315,16 +257,18 @@ export function Dashboard() {
               <TableSkeletonComponent />
             ) : (
               Array.isArray(sales) &&
-              sales?.map((s) => (
-                <TableRow key={s.id} className="cursor-pointer">
-                  <TableCell className="font-medium w-80">
-                    <span>{`${s.day}/${s.month}/${s.year}`}</span>
-                  </TableCell>
+              sales
+                ?.sort((a, b) => b.date - a.date)
+                .map((s) => (
+                  <TableRow key={s.id} className="cursor-pointer">
+                    <TableCell className="font-medium w-80">
+                      <span>{`${s.day}/${s.month}/${s.year}`}</span>
+                    </TableCell>
 
-                  <TableCell className="w-48">{s.quantity}</TableCell>
-                  <TableCell className="w-48">{toMoney(s.amount)}</TableCell>
-                </TableRow>
-              ))
+                    <TableCell className="w-48">{s.quantity}</TableCell>
+                    <TableCell className="w-48">{toMoney(s.amount)}</TableCell>
+                  </TableRow>
+                ))
             )}
           </TableBody>
         </Table>

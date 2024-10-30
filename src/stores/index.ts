@@ -8,7 +8,12 @@ import { devtools } from "zustand/middleware";
 
 export type Store = {
   user: User;
-  vehicle: { brand: Partial<Brand> };
+  vehicle: {
+    brand: [{ id: number; name: string }] | [];
+    model: string;
+    patent: string;
+    user_id: number;
+  };
   brand: Brand;
   service: Service;
   sale: Sale;
@@ -60,7 +65,12 @@ export const useStore = create<Store>()(
   devtools((set) => ({
     user: EMPTY_USER,
     sale: EMPTY_SALE,
-    vehicle: { brand: EMPTY_BRAND },
+    vehicle: {
+      brand: [],
+      model: "",
+      patent: "",
+      user_id: 0,
+    },
     service: EMPTY_SERVICE,
     brand: EMPTY_BRAND,
     cashflow: {

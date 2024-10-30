@@ -25,7 +25,6 @@ const MySearchBar = () => {
           id="input-search"
           type="search"
           placeholder="Search..."
-          value={globalSearchText}
           defaultValue={globalSearchText}
           className="w-full rounded-lg bg-background pl-8"
           onChange={(e) => {

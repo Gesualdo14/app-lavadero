@@ -27,6 +27,7 @@ export async function createCashflow(cashflow: InsertCashflow) {
           year: now.getFullYear(),
           company_id: currentSale?.company_id as number,
           amount: cashflow.amount,
+          date: new Date().toUTCString(),
           quantity: 1,
           method: cashflow.method,
         })

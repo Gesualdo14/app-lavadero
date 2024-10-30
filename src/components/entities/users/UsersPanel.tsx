@@ -3,6 +3,7 @@ import UsersTable from "./UsersTable";
 import { ClientFormDialog } from "./ClientFormDialog";
 import { UserFormDialog } from "./UserFormDialog";
 import ClientsTable from "./ClientsTable";
+import { VehicleFormDialog } from "../vehicles/VehicleFormDialog";
 
 const UsersPanel = ({ justClients = false }: { justClients?: boolean }) => {
   return (
@@ -14,6 +15,7 @@ const UsersPanel = ({ justClients = false }: { justClients?: boolean }) => {
         <div className="flex justify-between">
           <CardTitle>{justClients ? "Clientes" : "Usuarios"}</CardTitle>
           {justClients ? <ClientFormDialog /> : <UserFormDialog />}
+          <VehicleFormDialog dialogToOpen="user" />
         </div>
       </CardHeader>
       <CardContent>

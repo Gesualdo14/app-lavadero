@@ -3,6 +3,7 @@ import { SaleFormDialog } from "./SaleFormDialog";
 import SalesTable from "./SalesTable";
 import { SaleCashflowsDialog } from "@/components/entities/cashflows/SaleCashflowsDialog";
 import { ClientFormDialog } from "../users/ClientFormDialog";
+import { VehicleFormDialog } from "../vehicles/VehicleFormDialog";
 
 const SalesPanel = () => {
   return (
@@ -18,6 +19,7 @@ const SalesPanel = () => {
             <SaleFormDialog />
           </div>
           <SaleCashflowsDialog />
+          <VehicleFormDialog dialogToOpen="sale" />
         </div>
       </CardHeader>
       <CardContent>

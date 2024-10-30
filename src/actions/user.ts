@@ -100,7 +100,7 @@ const user = {
         const result = await createUser(
           {
             firstname: data.firstname,
-            lastname: data.lastname,
+            lastname: data.lastname || "",
             email: data.email,
             phone: data.phone,
             company_id: locals.user?.company_id as number,
@@ -124,7 +124,13 @@ const user = {
     },
   }),
   updateClient: defineAction({
-    input: userFormSchema,
+    input: z.object({
+      firstname: z.string().optional(),
+      lastname: z.string().optional(),
+      email: z.string().optional(),
+      phone: z.string().optional(),
+      id: z.number(),
+    }),
     handler: async (data) => {
       try {
         console.log("UPDATE", { data });

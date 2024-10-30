@@ -95,6 +95,7 @@ export function SaleFormDialog() {
             resetOnSelect="vehicle"
             justOne
           />
+
           <MultiSelect
             id="sale-vehicle"
             entity="vehicle"

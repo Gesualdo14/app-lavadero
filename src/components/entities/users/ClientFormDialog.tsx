@@ -21,13 +21,9 @@ import { EMPTY_SALE, EMPTY_USER, useStore } from "@/stores";
 import MyInput from "@/components/custom-ui/MyInput";
 import { focusAfter } from "@/helpers/ui";
 import { isValidPhone } from "@/helpers/validations";
+import VehiclesTable from "../vehicles/VehiclesTable";
 
 export type Entities = "user" | "sale";
-
-export const schemas = {
-  user: userFormSchema,
-  sale: saleFormSchema,
-} as const;
 
 export function ClientFormDialog() {
   const queryClient = useQueryClient();
@@ -42,6 +38,7 @@ export function ClientFormDialog() {
     e.preventDefault();
     const values = useStore.getState().user;
     const action = creating ? "createClient" : "updateClient";
+    console.log({ action });
     const validPhone = isValidPhone(values.phone || "");
     if (!validPhone) {
       toast({
@@ -52,7 +49,18 @@ export function ClientFormDialog() {
       return;
     }
     update("loading", "client-form");
-    const result = await actions[action](values);
+    let result;
+    if (creating) {
+      result = await actions.createClient(values);
+    } else {
+      result = await actions.updateClient({
+        id: values.id as number,
+        firstname: values.firstname,
+        lastname: values.lastname,
+        email: values.email,
+        phone: values.phone,
+      });
+    }
 
     toast({
       title: "Operación exitosa",
@@ -164,6 +172,7 @@ export function ClientFormDialog() {
               )}
             </Button>
           </DialogFooter>
+          {!creating && <VehiclesTable />}
         </form>
       </DialogContent>
     </Dialog>

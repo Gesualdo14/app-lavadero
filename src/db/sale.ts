@@ -68,6 +68,7 @@ export async function createSale(data: Sale) {
           week: date.getDay(),
           month: date.getMonth() + 1,
           year: date.getFullYear(),
+          date: new Date(timestamp).toUTCString(),
           amount: total_amount,
           quantity: 1,
         })

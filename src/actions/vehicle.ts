@@ -1,4 +1,4 @@
-import { createVehicle, getVehicles } from "@/db/vehicle";
+import { createVehicle, deleteVehicle, getVehicles } from "@/db/vehicle";
 import { defineAction } from "astro:actions";
 import { z } from "zod";
 
@@ -34,14 +34,29 @@ const vehicle = {
     }),
     handler: async (vehicle) => {
       try {
-        const vehicles = await createVehicle(vehicle);
-
-        console.log(vehicles);
+        const { lastInsertRowid } = await createVehicle(vehicle);
 
         return {
           ok: true,
-          data: vehicles,
+          data: lastInsertRowid,
           message: "",
+        };
+      } catch (error) {
+        const my_error = error as Error;
+        return { ok: false, data: [], message: my_error.message || "" };
+      }
+    },
+  }),
+  deleteVehicle: defineAction({
+    input: z.number(),
+
+    handler: async (vehicle_id, { locals }) => {
+      try {
+        await deleteVehicle(vehicle_id, locals.user?.id as number);
+
+        return {
+          ok: true,
+          message: "Vehículo eliminado con éxito",
         };
       } catch (error) {
         const my_error = error as Error;

@@ -230,7 +230,7 @@ const MultiSelect = <E extends keyof SelectableStates>({
                 onClick={(e) => e.stopPropagation()}
                 id="my-input"
                 className="focus-visible:ring-0 border-0 outline-none pl-8 shadow-none <placeholder:text-gray-4></placeholder:text-gray-4>00"
-                placeholder={"Buscar..."}
+                placeholder={`Buscar ${singular}...`}
               />
 
               {!!searchText && (
@@ -284,6 +284,28 @@ const MultiSelect = <E extends keyof SelectableStates>({
               </SelectItem>
             );
           })}
+          {entity === "vehicle" && (
+            <div className="w-full items-start flex text-sm mb-2 mt-2">
+              <span
+                className="text-xs text-blue-500 hover:cursor-pointer hover:underline text-center w-full"
+                onClick={(e) => {
+                  const userId = useStore.getState().sale.client[0].id;
+                  console.log("NUEVO");
+                  update("vehicle", {
+                    user_id: userId,
+                    brand: [],
+                    model: "",
+                    patent: "",
+                  });
+                  update("openDialog", "vehicle");
+                  update("creating", true);
+                  focusAfter("vehicle-brand", 50, true);
+                }}
+              >
+                Nuevo vehículo
+              </span>
+            </div>
+          )}
           {data?.length === 0 && (
             <span className="block text-muted-foreground p-4 text-sm">
               No se encontró ningún {singular}

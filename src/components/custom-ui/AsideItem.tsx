@@ -70,7 +70,7 @@ const AsideItem = ({ text, panel, icon, tooltip = true }: Props) => {
         update("panel", panel.toLocaleLowerCase());
         update("sheetOpen", false);
         if (!!globalSearchText) {
-          update("globalSearchText", null);
+          update("globalSearchText", "");
           const search_input = document.getElementById(
             "input-search"
           ) as HTMLInputElement;
