@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { CheckIcon, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useStore, type Store } from "@/stores";
+import { EMPTY_USER, useStore, type Store } from "@/stores";
 import { DropdownSkeletonComponent } from "./Skeletons";
 import { focusAfter } from "@/helpers/ui";
 
@@ -49,7 +49,10 @@ const CONFIG = {
   },
 };
 
-type SelectableStates = Pick<Store, "vehicle" | "service" | "user" | "sale">;
+type SelectableStates = Pick<
+  Store,
+  "vehicle" | "service" | "user" | "sale" | "cashflow"
+>;
 
 type Props<E extends keyof SelectableStates> = {
   form: E;
@@ -169,6 +172,7 @@ const MultiSelect = <E extends keyof SelectableStates>({
         autoFocus={autoFocus}
         className="w-full"
         onKeyDown={(e) => {
+          console.log("KEY", e.code);
           e.stopPropagation();
           if (["Enter", "ArrowDown"].includes(e.code)) {
             update("openSelect", field);
@@ -201,7 +205,7 @@ const MultiSelect = <E extends keyof SelectableStates>({
           </div>
         )}
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent onEscapeKeyDown={(e) => update("openSelect", "")}>
         <SelectGroup>
           <div className="relative flex-1 w-full">
             <MagnifyingGlassIcon className="absolute left-1.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -303,6 +307,20 @@ const MultiSelect = <E extends keyof SelectableStates>({
                 }}
               >
                 Nuevo vehículo
+              </span>
+            </div>
+          )}
+          {entity === "client" && (
+            <div className="w-full items-start flex text-sm mb-2 mt-2">
+              <span
+                className="text-xs text-blue-500 hover:cursor-pointer hover:underline text-center w-full"
+                onClick={(e) => {
+                  update("user", EMPTY_USER);
+                  update("creating", true);
+                  update("openDialog", "user");
+                }}
+              >
+                Nuevo cliente
               </span>
             </div>
           )}

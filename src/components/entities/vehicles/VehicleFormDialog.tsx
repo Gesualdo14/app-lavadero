@@ -66,7 +66,15 @@ export function VehicleFormDialog({ dialogToOpen }: { dialogToOpen: string }) {
         }
       }}
     >
-      <DialogContent className="sm:max-w-[425px] top-[50px] translate-y-0">
+      <DialogContent
+        className="sm:max-w-[425px] top-[50px] translate-y-0"
+        onEscapeKeyDown={(e) => {
+          const openSelect = useStore.getState().openSelect;
+          if (!!openSelect) {
+            e.preventDefault();
+          }
+        }}
+      >
         <DialogHeader>
           <DialogTitle>{creating ? "Crear" : "Editar"} marca</DialogTitle>
         </DialogHeader>

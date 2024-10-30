@@ -12,9 +12,7 @@ import { toast } from "@/hooks/use-toast";
 import { actions } from "astro:actions";
 import { PlusCircle } from "lucide-react";
 import { type FormEvent } from "react";
-import { userFormSchema } from "@/schemas/user";
 import { LoadingSpinner } from "../../custom-ui/Spinner";
-import { saleFormSchema } from "@/schemas/sale";
 import { useQueryClient } from "@tanstack/react-query";
 import MultiSelect from "../../custom-ui/MultiSelect";
 import { EMPTY_SALE, EMPTY_USER, useStore } from "@/stores";
@@ -25,7 +23,13 @@ import VehiclesTable from "../vehicles/VehiclesTable";
 
 export type Entities = "user" | "sale";
 
-export function ClientFormDialog() {
+export function ClientFormDialog({
+  hidden = false,
+  dialogToOpen,
+}: {
+  hidden?: boolean;
+  dialogToOpen?: string;
+}) {
   const queryClient = useQueryClient();
   const searchText = useStore((s) => s.searchText);
   const creating = useStore((s) => s.creating);
@@ -70,7 +74,7 @@ export function ClientFormDialog() {
     queryClient.invalidateQueries({
       queryKey: ["client", undefined, searchText],
     });
-    if (creating) {
+    if (creating && dialogToOpen) {
       update("sale", {
         ...EMPTY_SALE,
         client: [
@@ -86,7 +90,10 @@ export function ClientFormDialog() {
           },
         ],
       });
-      update("openDialog", "sale");
+      queryClient.invalidateQueries({
+        queryKey: ["vehicles"],
+      });
+      update("openDialog", dialogToOpen);
       focusAfter("sale-service", 50, true);
     }
     update("loading", "");
@@ -97,24 +104,34 @@ export function ClientFormDialog() {
       open={openDialog === "user"}
       onOpenChange={(open) => update("openDialog", !open ? "" : "user")}
     >
-      <DialogTrigger asChild>
-        <Button
-          size="sm"
-          variant="default"
-          className="h-7 gap-1"
-          onClick={() => {
-            update("user", EMPTY_USER);
-            update("creating", true);
-            update("openDialog", "user");
-          }}
-        >
-          <PlusCircle className="h-3.5 w-3.5" />
-          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Crear cliente
-          </span>
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] top-[50px] translate-y-0">
+      {!hidden && (
+        <DialogTrigger asChild>
+          <Button
+            size="sm"
+            variant="default"
+            className="h-7 gap-1"
+            onClick={() => {
+              update("user", EMPTY_USER);
+              update("creating", true);
+              update("openDialog", "user");
+            }}
+          >
+            <PlusCircle className="h-3.5 w-3.5" />
+            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+              Crear cliente
+            </span>
+          </Button>
+        </DialogTrigger>
+      )}
+      <DialogContent
+        className="sm:max-w-[425px] top-[50px] translate-y-0"
+        onEscapeKeyDown={(e) => {
+          const openSelect = useStore.getState().openSelect;
+          if (!!openSelect) {
+            e.preventDefault();
+          }
+        }}
+      >
         <DialogHeader>
           <DialogTitle>Datos del cliente</DialogTitle>
           <DialogDescription>

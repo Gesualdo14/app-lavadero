@@ -74,6 +74,12 @@ export function SaleFormDialog() {
         </Button>
       </DialogTrigger>
       <DialogContent
+        onEscapeKeyDown={(e) => {
+          const openSelect = useStore.getState().openSelect;
+          if (!!openSelect) {
+            e.preventDefault();
+          }
+        }}
         className="sm:max-w-[425px] top-[50px] translate-y-0"
         onClick={() => {
           update("openSelect", "");

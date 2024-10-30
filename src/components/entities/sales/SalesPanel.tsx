@@ -15,7 +15,7 @@ const SalesPanel = () => {
         <div className="flex justify-between">
           <CardTitle>Ventas</CardTitle>
           <div className="flex gap-2">
-            <ClientFormDialog />
+            <ClientFormDialog hidden dialogToOpen="sale" />
             <SaleFormDialog />
           </div>
           <SaleCashflowsDialog />

@@ -94,7 +94,7 @@ const user = {
     },
   }),
   createClient: defineAction({
-    input: userFormSchema,
+    input: userFormSchema.omit({ avatar: true, password: true, role: true }),
     handler: async (data, { locals }) => {
       try {
         const result = await createUser(

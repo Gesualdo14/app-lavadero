@@ -25,11 +25,13 @@ const MyInput = <E extends keyof Store>({
       type={type}
       value={value}
       placeholder={placeholder}
-      onChange={(e) =>
+      onChange={(e) => {
+        console.log({ value: e.target.value });
+        const value = e.target.value === "" ? "" : +e.target.value;
         update(entity, {
-          [field]: type === "number" ? +e.target.value : e.target.value,
-        })
-      }
+          [field]: type === "number" ? value : e.target.value,
+        });
+      }}
     />
   );
 };
