@@ -1,16 +1,15 @@
-import { getReports } from "@/db/report";
+import { getSalesReport } from "@/db/report";
 import { defineAction } from "astro:actions";
 
 const report = {
   getReports: defineAction({
     handler: async () => {
       try {
-        const sales = await getReports("sale");
-        const cashflows = await getReports("cashflow");
-
+        const sales = await getSalesReport();
+        console.log({ sales });
         return {
           ok: true,
-          data: [sales, cashflows],
+          data: sales,
           message: "",
         };
       } catch (error) {

@@ -7,7 +7,6 @@ import { vehicles } from "@/schemas/vehicle";
 import { eq } from "drizzle-orm";
 import { actions } from "astro:actions";
 import { saleItems } from "@/schemas/sale-item";
-import { cashflows_daily_report, sales_daily_report } from "@/schemas/report";
 import { sales } from "@/schemas/sale";
 import { cashflows } from "@/schemas/cashflow";
 
@@ -28809,7 +28808,6 @@ export const migrate = async () => {
   // const result = await db.delete(saleItems).execute();
   // const result5 = await db.delete(cashflows).execute();
   // const result2 = await db.delete(sales_daily_report).execute();
-  // const result4 = await db.delete(cashflows_daily_report).execute();
   // const result3 = await db.delete(sales).execute();
   // console.log({ result, result2, result3 });
   // sales_db

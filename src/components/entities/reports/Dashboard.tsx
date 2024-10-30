@@ -32,6 +32,7 @@ import {
   Table,
 } from "@/components/ui/table";
 import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
+import { getWeekOfYear } from "@/helpers/date";
 
 export const description = "A collection of health charts.";
 
@@ -42,21 +43,55 @@ const FILL_COLORS = {
   "Tarjeta de crédito": "var(--color-move)",
 };
 
+function agruparPorSemanaYSumar(array: any[]) {
+  return Object.values(
+    array.reduce((acumulador, objeto) => {
+      // Obtiene la clave de semana actual
+      const semana = objeto.week;
+
+      // Si no existe aún esa semana en el acumulador, inicializa un objeto para esa semana
+      if (!acumulador[semana]) {
+        acumulador[semana] = {
+          week: semana,
+          year: objeto.year, // Asigna el año para referencia
+          totalAmount: 0,
+        };
+      }
+
+      // Suma el amount actual al total de esa semana
+      acumulador[semana].totalAmount += objeto.amount;
+
+      return acumulador;
+    }, {})
+  );
+}
+
+function obtenerPrimerDiaDeLaSemana(year: number, week: number) {
+  const firstDayOfYear = new Date(year, 0, 1);
+  const dayOffset =
+    (week - 1) * 7 +
+    (firstDayOfYear.getDay() <= 4
+      ? -firstDayOfYear.getDay() + 1
+      : 8 - firstDayOfYear.getDay());
+  return new Date(year, 0, 1 + dayOffset).toUTCString();
+}
+
 export function Dashboard() {
-  const { data, isPending } = useQuery({
+  const { data: sales, isPending } = useQuery({
     queryKey: ["reports"],
     queryFn: async () => {
       const data = await actions.getReports({
         searchText: "",
       });
+      console.log({ data });
       return data?.data?.data || [];
     },
   });
 
-  if (isPending || !Array.isArray(data)) return "Loading sales...";
+  if (isPending || !Array.isArray(sales)) return "Loading sales...";
 
-  const [sales, cashflows] = data;
-  console.log({ cashflows });
+  const weeklySales = agruparPorSemanaYSumar(sales);
+  console.log({ weeklySales, sales });
 
   return (
     <div className="chart-wrapper flex max-w-6xl flex-col flex-wrap items-start gap-6 sm:flex-row p-4">
@@ -89,11 +124,11 @@ export function Dashboard() {
                   left: -4,
                   right: -4,
                 }}
-                data={sales
-                  ?.sort((a, b) => a.date - b.date)
-                  .map((r) => ({
-                    date: `${r.year}/${r.month}/${r.day}`,
-                    ventas: r.amount,
+                data={weeklySales
+                  ?.sort((a: any, b: any) => a.week - b.week)
+                  .map((r: any) => ({
+                    date: obtenerPrimerDiaDeLaSemana(r.year, r.week),
+                    ventas: r.totalAmount,
                   }))}
               >
                 <Bar
@@ -109,9 +144,7 @@ export function Dashboard() {
                   axisLine={false}
                   tickMargin={4}
                   tickFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("es-AR", {
-                      weekday: "short",
-                    });
+                    return `Sem ${getWeekOfYear(new Date(value))}`;
                   }}
                 />
                 <ChartTooltip
@@ -133,7 +166,7 @@ export function Dashboard() {
                 <ReferenceLine
                   y={
                     (sales?.reduce(
-                      (acc, curr) => acc + (curr?.amount || 0),
+                      (acc, curr) => acc + ((curr?.amount as number) || 0),
                       0
                     ) || 1) / (sales?.length || 1)
                   }
@@ -151,7 +184,7 @@ export function Dashboard() {
                     position="insideTopLeft"
                     value={toMoney(
                       (sales?.reduce(
-                        (acc, curr) => acc + (curr?.amount || 0),
+                        (acc, curr) => acc + ((curr?.amount as number) || 0),
                         0
                       ) || 1) / (sales?.length || 1)
                     )}
@@ -170,8 +203,10 @@ export function Dashboard() {
               total de{" "}
               <span className="font-medium text-foreground">
                 {toMoney(
-                  sales?.reduce((acc, curr) => acc + (curr?.amount || 0), 0) ||
-                    1
+                  sales?.reduce(
+                    (acc, curr) => acc + ((curr?.amount as number) || 0),
+                    0
+                  ) || 1
                 )}
               </span>
               .
@@ -258,15 +293,21 @@ export function Dashboard() {
             ) : (
               Array.isArray(sales) &&
               sales
-                ?.sort((a, b) => b.date - a.date)
-                .map((s) => (
-                  <TableRow key={s.id} className="cursor-pointer">
+                ?.sort(
+                  (a, b) =>
+                    Number(b.day) - Number(a?.day) &&
+                    Number(b.week) - Number(a?.week)
+                )
+                .map((s, index) => (
+                  <TableRow key={index} className="cursor-pointer">
                     <TableCell className="font-medium w-80">
                       <span>{`${s.day}/${s.month}/${s.year}`}</span>
                     </TableCell>
 
-                    <TableCell className="w-48">{s.quantity}</TableCell>
-                    <TableCell className="w-48">{toMoney(s.amount)}</TableCell>
+                    <TableCell className="w-48">{s.count as number}</TableCell>
+                    <TableCell className="w-48">
+                      {toMoney(s.amount as number)}
+                    </TableCell>
                   </TableRow>
                 ))
             )}

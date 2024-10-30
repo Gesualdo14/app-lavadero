@@ -2,7 +2,6 @@ import { cashflows, type InsertCashflow } from "@/schemas/cashflow";
 import { db } from ".";
 import { eq, sql } from "drizzle-orm";
 import { sales } from "@/schemas/sale";
-import { cashflows_daily_report } from "@/schemas/report";
 
 export async function createCashflow(cashflow: InsertCashflow) {
   return await db.transaction(async (tx) => {
@@ -17,33 +16,6 @@ export async function createCashflow(cashflow: InsertCashflow) {
         .update(sales)
         .set({ gathered: (currentSale?.gathered || 0) + cashflow.amount })
         .where(eq(sales.id, cashflow.sale_id));
-      const now = new Date();
-      await tx
-        .insert(cashflows_daily_report)
-        .values({
-          day: now.getDate(),
-          week: now.getDay(),
-          month: now.getMonth() + 1,
-          year: now.getFullYear(),
-          company_id: currentSale?.company_id as number,
-          amount: cashflow.amount,
-          date: new Date().toUTCString(),
-          quantity: 1,
-          method: cashflow.method,
-        })
-        .onConflictDoUpdate({
-          target: [
-            cashflows_daily_report.day,
-            cashflows_daily_report.month,
-            cashflows_daily_report.year,
-            cashflows_daily_report.method,
-            cashflows_daily_report.company_id,
-          ],
-          set: {
-            amount: sql`${cashflows_daily_report.amount} + ${cashflow.amount}`,
-            quantity: sql`${cashflows_daily_report.quantity} + 1`,
-          },
-        });
     } catch (error) {
       console.log("ERROR AL CREAR EL COBRO", { error });
       tx.rollback();
