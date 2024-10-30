@@ -17,6 +17,7 @@ export const sales = sqliteTable("Sales", {
   id: integer("id").primaryKey(),
   sale_date: integer("sale_date"),
   day: integer("day"),
+  week: integer("week"),
   month: integer("month"),
   year: integer("year"),
   total_amount: integer("total_amount").notNull(),

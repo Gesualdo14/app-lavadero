@@ -1,8 +1,8 @@
 import { sales, view_sales, type Sale } from "@/schemas/sale";
 import { desc, eq, like, or, sql } from "drizzle-orm";
 import { db } from ".";
-import { sales_daily_report } from "@/schemas/report";
 import { saleItems, type SelectSaleItem } from "@/schemas/sale-item";
+import { getWeekOfYear } from "@/helpers/date";
 
 export const getSales = async (searchText: string | null | undefined) => {
   try {
@@ -48,9 +48,10 @@ export async function createSale(data: Sale) {
     const timestamp = +date;
     try {
       const { lastInsertRowid } = await tx.insert(sales).values({
-        id,
+        id, // OJOOOO
         sale_date: timestamp,
         day: date.getDate(),
+        week: getWeekOfYear(date),
         month: date.getMonth() + 1,
         year: date.getFullYear(),
         vehicle_id: vehicle[0].id,
@@ -59,32 +60,6 @@ export async function createSale(data: Sale) {
         client_id: client[0].id,
         total_amount,
       });
-      console.log("VENTA OKKKK");
-      await tx
-        .insert(sales_daily_report)
-        .values({
-          company_id: 1,
-          day: date.getDate(),
-          week: date.getDay(),
-          month: date.getMonth() + 1,
-          year: date.getFullYear(),
-          date: new Date(timestamp).toUTCString(),
-          amount: total_amount,
-          quantity: 1,
-        })
-        .onConflictDoUpdate({
-          target: [
-            sales_daily_report.day,
-            sales_daily_report.month,
-            sales_daily_report.year,
-            sales_daily_report.company_id,
-          ],
-          set: {
-            amount: sql`${sales_daily_report.amount} + ${total_amount}`,
-            quantity: sql`${sales_daily_report.quantity} + 1`,
-          },
-        });
-      console.log("REPORT OKKKK");
 
       await tx.insert(saleItems).values(
         services.map((s) => ({

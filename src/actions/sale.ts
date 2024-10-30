@@ -29,8 +29,8 @@ const sale = {
       try {
         const result = await createSale({
           ...data,
-          company_id: locals.user?.company_id as number,
-          created_by: locals.user?.id as number,
+          company_id: 1, //locals.user?.company_id as number,
+          created_by: 545, //locals.user?.id as number,
         });
         console.log(result);
 

@@ -1,26 +1,17 @@
-import { cashflows_daily_report } from "@/schemas/report";
+import { sales } from "@/schemas/sale";
 import { db } from ".";
 import { sql } from "drizzle-orm";
 
-export const getReports = async (
-  report: "sale" | "cashflow"
-): Promise<any[]> => {
-  if (report === "sale") return await db.query.sales_daily_report.findMany();
-
-  if (report === "cashflow")
-    return await db
-      .select({
-        amount: sql`SUM(${cashflows_daily_report.amount})`,
-        method: cashflows_daily_report.method,
-      })
-      .from(cashflows_daily_report)
-      .groupBy(cashflows_daily_report.method);
-
+export const getSalesReport = async () => {
   return await db
     .select({
-      amount: sql`SUM(${cashflows_daily_report.amount})`,
-      method: cashflows_daily_report.method,
+      day: sales.day,
+      week: sales.week,
+      month: sales.month,
+      year: sales.year,
+      amount: sql`SUM(${sales.total_amount})`,
+      count: sql`COUNT(${sales.id})`,
     })
-    .from(cashflows_daily_report)
-    .groupBy(cashflows_daily_report.method);
+    .from(sales)
+    .groupBy(sales.company_id, sales.day, sales.week, sales.month, sales.year);
 };
