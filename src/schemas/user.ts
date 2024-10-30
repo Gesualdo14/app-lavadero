@@ -42,4 +42,6 @@ export type User = z.infer<typeof userFormSchema>;
 export type LoggedUser = Omit<User, "role" & "id"> & {
   id: number;
   role: string;
+  email: string;
+  lastname: string;
 };
