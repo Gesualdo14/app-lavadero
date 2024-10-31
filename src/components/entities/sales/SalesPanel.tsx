@@ -15,13 +15,13 @@ const SalesPanel = () => {
       x-chunk="dashboard-06-chunk-0"
       className="rounded-none sm:rounded-xl m-0 mt-0 h-full sm:h-auto border-0"
     >
-      <Button
+      {/* <Button
         onClick={() => {
           actions.migrate();
         }}
       >
         MIGRATE
-      </Button>
+      </Button> */}
       <CardHeader className="pb-2">
         <div className="flex justify-between">
           <CardTitle>Ventas</CardTitle>
