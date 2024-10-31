@@ -28807,16 +28807,25 @@ const cashflows_db = [
 export const migrate = async () => {
   // const result = await db.delete(saleItems).execute();
   // const result5 = await db.delete(cashflows).execute();
-  // const result2 = await db.delete(sales_daily_report).execute();
+  // const result4 = await db.delete(services).execute();
   // const result3 = await db.delete(sales).execute();
   // console.log({ result, result2, result3 });
+
+  // await db.insert(services).values(
+  //   services_db.map((s) => ({
+  //     id: s.id,
+  //     name: s.denomination,
+  //     price: +(s.price / 100).toFixed(0),
+  //     company_id: 1,
+  //   }))
+  // );
+
   // sales_db
   //   .filter((s) => s.wash_date !== null && s.vehicle_id !== null)
   //   .forEach(async (s, index) => {
   //     const items = sale_items_db.filter((si) => si.wash_id === s.id);
   //     const userExists = clients_db.some((c) => c.id === s.client_id);
   //     const vehicleExists = vehicles_db.some((v) => v.id === s.vehicle_id);
-  //     let i = 0;
   //     if (userExists && vehicleExists) {
   //       console.log({ items, s });
   //       if (items.length > 0) {
@@ -28834,23 +28843,22 @@ export const migrate = async () => {
   //           total_amount: +(s.total_price / 100).toFixed(2),
   //           created_by: 545,
   //         });
-  //         console.log("Created SALE", i);
-  //         i++;
+  //         console.log("Created SALE", index);
   //       }
   //     }
   //   });
-  // cashflows_db.forEach(async (c, index) => {
-  //   const sale = await db.query.sales.findFirst({
-  //     where: eq(sales.id, c.entity_id),
-  //   });
-  //   if (!!sale) {
-  //     await actions.createCashflow({
-  //       sale_id: c.entity_id,
-  //       amount: c.amount,
-  //       method: [{ id: 1, name: c.payment_method }],
-  //       created_at: c.created_at,
-  //     });
-  //     console.log("Created CASHFLOW", index);
-  //   }
-  // });
+  cashflows_db.forEach(async (c, index) => {
+    const sale = await db.query.sales.findFirst({
+      where: eq(sales.id, c.entity_id),
+    });
+    if (!!sale) {
+      await actions.createCashflow({
+        sale_id: c.entity_id,
+        amount: c.amount,
+        method: [{ id: 1, name: c.payment_method }],
+        created_at: c.created_at,
+      });
+      console.log("Created CASHFLOW", index);
+    }
+  });
 };

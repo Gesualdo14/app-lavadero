@@ -1,8 +1,9 @@
 import { sales, view_sales, type Sale } from "@/schemas/sale";
-import { desc, eq, like, or, sql } from "drizzle-orm";
+import { desc, eq, gt, like, or, sql } from "drizzle-orm";
 import { db } from ".";
 import { saleItems, type SelectSaleItem } from "@/schemas/sale-item";
 import { getWeekOfYear } from "@/helpers/date";
+import { addDays } from "date-fns";
 
 export const getSales = async (searchText: string | null | undefined) => {
   try {
@@ -15,6 +16,8 @@ export const getSales = async (searchText: string | null | undefined) => {
         like(view_sales.vehicle.model, `%${searchText}%`),
         like(view_sales.vehicle.patent, `%${searchText}%`)
       );
+    } else {
+      where = gt(view_sales.sale_date, +addDays(new Date(), -1));
     }
 
     const result = await db

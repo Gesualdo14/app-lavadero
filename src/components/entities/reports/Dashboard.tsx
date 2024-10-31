@@ -335,7 +335,7 @@ export function Dashboard() {
                 .map((s, index) => (
                   <TableRow key={index} className="cursor-pointer text-center">
                     <TableCell className="font-medium w-20">
-                      <span>{`${format(new Date(s.year, s.month, s.day), "d MMM")}`}</span>
+                      <span>{`${format(new Date(s.year, s.month - 1, s.day), "d MMM")}`}</span>
                     </TableCell>
 
                     <TableCell className="w-20">{s.count}</TableCell>

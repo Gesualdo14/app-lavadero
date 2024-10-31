@@ -15,6 +15,6 @@ export const getSalesReport = async () => {
       count: sql`COUNT(${sales.id})`,
     })
     .from(sales)
-    .where(gt(sales.sale_date, +addDays(new Date(), -60)))
+    .where(gt(sales.sale_date, +addDays(new Date(), -90)))
     .groupBy(sales.company_id, sales.day, sales.week, sales.month, sales.year);
 };
