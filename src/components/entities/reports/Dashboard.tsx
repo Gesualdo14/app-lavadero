@@ -159,9 +159,8 @@ export function Dashboard() {
                   fill={"var(--color-steps)"}
                   radius={5}
                   fillOpacity={0.6}
-                  onMouseEnter={(data) => {
-                    setHoveredWeek(data.week);
-                  }}
+                  onMouseEnter={(data) => setHoveredWeek(data.week)}
+                  onMouseLeave={() => setHoveredWeek(0)}
                   onClick={(data) => {
                     setSelectedWeek(data.week);
                   }}
