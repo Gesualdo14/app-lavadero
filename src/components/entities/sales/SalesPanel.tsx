@@ -24,10 +24,10 @@ const SalesPanel = () => {
         MIGRATE
       </Button> */}
       <CardHeader className="pb-4">
-        <div className="flex justify-between">
-          <div className="flex gap-6 items-center">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-4 items-center">
             <CardTitle>Ventas</CardTitle>
-            <DatePicker entity="filter" field="date" />
+            <DatePicker entity="filter" field="date" format="PP" />
           </div>
           <div className="flex gap-2">
             <ClientFormDialog hidden dialogToOpen="sale" />

@@ -20,11 +20,13 @@ type SelectableStates = Pick<
 type Props<E extends keyof SelectableStates> = {
   entity: E;
   field: keyof SelectableStates[E];
+  dateFormat?: "PP" | "PPP";
 };
 
 export function DatePicker<E extends keyof SelectableStates>({
   entity,
   field,
+  dateFormat = "PP",
 }: Props<E>) {
   const update = useStore((s) => s.update);
   const openDatePicker = useStore((s) => s.openDatePicker);
@@ -49,7 +51,7 @@ export function DatePicker<E extends keyof SelectableStates>({
         >
           <CalendarIcon />
           {value ? (
-            format(value, "PPP", { locale: es })
+            format(value, dateFormat, { locale: es })
           ) : (
             <span>
               {entity === "filter" ? "Filtro de fecha" : "Fecha de la venta"}
