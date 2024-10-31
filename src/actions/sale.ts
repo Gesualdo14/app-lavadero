@@ -5,12 +5,15 @@ import { z } from "zod";
 
 const sale = {
   getSales: defineAction({
-    input: z.object({ searchText: z.string().nullish() }),
-    handler: async ({ searchText }, { cookies }) => {
+    input: z.object({
+      searchText: z.string().nullish(),
+      dateToFilter: z.string().nullish(),
+    }),
+    handler: async ({ searchText, dateToFilter }, { cookies }) => {
       const token = cookies.get("jwt")?.value;
-      console.log({ token });
+
       try {
-        const sales = await getSales(searchText);
+        const sales = await getSales(searchText, dateToFilter);
 
         return {
           ok: true,
@@ -18,6 +21,7 @@ const sale = {
           message: "",
         };
       } catch (error) {
+        console.log({ error });
         const my_error = error as Error;
         return { ok: false, data: [], message: my_error.message || "" };
       }

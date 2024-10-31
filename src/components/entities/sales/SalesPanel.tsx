@@ -7,6 +7,7 @@ import { VehicleFormDialog } from "../vehicles/VehicleFormDialog";
 import { getWeekOfYear } from "@/helpers/date";
 import { Button } from "@/components/ui/button";
 import { actions } from "astro:actions";
+import { DatePicker } from "@/components/custom-ui/DapePicker";
 
 const SalesPanel = () => {
   console.log({ week: getWeekOfYear(new Date()) });
@@ -22,9 +23,12 @@ const SalesPanel = () => {
       >
         MIGRATE
       </Button> */}
-      <CardHeader className="pb-2">
+      <CardHeader className="pb-4">
         <div className="flex justify-between">
-          <CardTitle>Ventas</CardTitle>
+          <div className="flex gap-6 items-center">
+            <CardTitle>Ventas</CardTitle>
+            <DatePicker entity="filter" field="date" />
+          </div>
           <div className="flex gap-2">
             <ClientFormDialog hidden dialogToOpen="sale" />
             <SaleFormDialog />
