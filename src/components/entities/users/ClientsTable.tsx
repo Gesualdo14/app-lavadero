@@ -34,9 +34,6 @@ const ClientsTable = () => {
           <TableHead>Nombre</TableHead>
           <TableHead>Apellido</TableHead>
           <TableHead className="min-w-24">Email</TableHead>
-          <TableHead>
-            <span className="sr-only">Acciones</span>
-          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -58,13 +55,6 @@ const ClientsTable = () => {
               <TableCell>{u.lastname}</TableCell>
               <TableCell className="text-ellipsis max-w-1 sm:text-inherit md:overflow-visible overflow-hidden">
                 {u.email}
-              </TableCell>
-              <TableCell>
-                <DeleteIcon
-                  id={u.id}
-                  entity="User"
-                  queryKey={["clients", globalSearchText]}
-                />
               </TableCell>
             </TableRow>
           ))
