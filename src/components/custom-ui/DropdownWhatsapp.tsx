@@ -40,7 +40,7 @@ const DropdownWhatsapp = ({ sale }: { sale: any }) => {
           onClick={(e) => {
             e.stopPropagation();
             window.open(
-              `https://api.whatsapp.com/send/?phone=${sale.client.phone}&text=${encodeURI(`Hola ${sale.client.firstname}, `)}`,
+              `https://api.whatsapp.com/send/?phone=${sale.client.phone}&text=${encodeURI(`Hi *${sale.client.firstname}*, `)}`,
               "_blank"
             );
           }}
@@ -52,28 +52,55 @@ const DropdownWhatsapp = ({ sale }: { sale: any }) => {
           onClick={(e) => {
             e.stopPropagation();
             window.open(
-              `https://api.whatsapp.com/send/?phone=${sale.client.phone}&text=${encodeURI(`${sale.client.firstname}, te enviamos este mensaje como comprobate de que ya has abonado *${toMoney(sale.gathered)}*.
+              `https://api.whatsapp.com/send/?phone=${sale.client.phone}&text=${encodeURI(`*${sale.client.firstname}*, you are very welcome to Auto Spa Palmas del Mar, we are happy to have you here.
 
-En cuanto esté listo tu vehículo te vamos a contactar para que vengas a retirarlo.
-                
-¡Saludos! 🙋🏻‍♂️`)}`,
+We have received your car. You will be texted again when your vehicle is ready to pick up.
+
+*IMPORTANT DISCLAIMER*
+We want you to know we are not responsible for articles left in locked or unlocked compartments in your vehicle or for damage and claims made after vehicle leaves premises.
+
+We will always do everything possible to protect all property but ask that you help us by removing all visible articles.
+
+¡THANK YOU! 🙋🏻‍♂️
+
+
+Auto SPA Palmas del Mar.`)}`,
               "_blank"
             );
           }}
         >
-          Cobro recibido
+          Disclaimer
         </DropdownMenuItem>
+        {sale.gathered > 0 && (
+          <DropdownMenuItem
+            className="cursor-pointer hover:!bg-gray-100"
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open(
+                `https://api.whatsapp.com/send/?phone=${sale.client.phone}&text=${encodeURI(`*${sale.client.firstname}*, we've succesfully received your payment of *${toMoney(sale?.gathered)}*.
+
+Remember, you will be emailed you when your vehicle is ready to pick up.
+
+¡THANK YOU!
+Auto SPA Palmas del Mar.`)}`,
+                "_blank"
+              );
+            }}
+          >
+            Cobro recibido
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem
           className="cursor-pointer hover:!bg-gray-100"
           onClick={(e) => {
             e.stopPropagation();
             window.open(
-              `https://api.whatsapp.com/send/?phone=${sale.client.phone}&text=${encodeURI(`${sale.client.firstname}.
+              `https://api.whatsapp.com/send/?phone=${sale.client.phone}&text=${encodeURI(`*${sale.client.firstname}*, we've already finished to wash your vehicle, we wait for you to pick it up.
 
-Ya podes pasar a retirar tu vehículo.
-Recordá que cerramos a las 18 hs.
-                
-¡Te esperamos! 🙋🏻‍♂️`)}`,
+We have our doors opened until *5:30 p.m*.
+
+See you soon!
+Auto SPA Palmas del Mar.`)}`,
               "_blank"
             );
           }}
