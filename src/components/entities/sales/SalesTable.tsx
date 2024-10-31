@@ -16,12 +16,16 @@ import DropdownWhatsapp from "@/components/custom-ui/DropdownWhatsapp";
 import { toMoney } from "@/helpers/fmt";
 
 const SalesTable = () => {
-  const { update, globalSearchText } = useStore();
+  const update = useStore((s) => s.update);
+  const globalSearchText = useStore((s) => s.globalSearchText);
+  const dateToFilter = useStore((s) => s.filter.date);
+  console.log({ dateToFilter });
   const { data: sales, isPending } = useQuery({
-    queryKey: ["sales", globalSearchText],
+    queryKey: ["sales", globalSearchText, dateToFilter],
     queryFn: async () => {
       const data = await actions.getSales({
         searchText: globalSearchText || "",
+        dateToFilter: dateToFilter,
       });
       return data?.data?.data || [];
     },

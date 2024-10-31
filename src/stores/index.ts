@@ -17,6 +17,7 @@ export type Store = {
   brand: Brand;
   service: Service;
   sale: Sale;
+  filter: { date: string };
   panel: string;
   cashflow: Partial<Cashflow>;
   openDialog: string;
@@ -77,12 +78,14 @@ export const useStore = create<Store>()(
       sale_id: 0,
       method: [],
     },
+    filter: { date: new Date().toUTCString() },
     panel: "ventas",
     openDialog: "",
     deleting: "",
     openDatePicker: "",
     openSelect: "",
     loading: "",
+    filterDate: "",
     searchText: "",
     globalSearchText: "",
     creating: false,
@@ -93,9 +96,15 @@ export const useStore = create<Store>()(
           localStorage.setItem(prop, value);
         }
         if (
-          ["user", "sale", "vehicle", "service", "cashflow", "brand"].includes(
-            prop
-          )
+          [
+            "user",
+            "sale",
+            "vehicle",
+            "service",
+            "cashflow",
+            "brand",
+            "filter",
+          ].includes(prop)
         ) {
           const currState = state[prop] as object;
           return { ...state, [prop]: { ...currState, ...value } };

@@ -12,16 +12,21 @@ import {
 import { useStore, type Store } from "@/stores";
 import { es } from "date-fns/locale";
 
-type SelectableStates = Pick<Store, "vehicle" | "service" | "user" | "sale">;
+type SelectableStates = Pick<
+  Store,
+  "vehicle" | "service" | "user" | "sale" | "filter"
+>;
 
 type Props<E extends keyof SelectableStates> = {
   entity: E;
   field: keyof SelectableStates[E];
+  dateFormat?: "PP" | "PPP";
 };
 
 export function DatePicker<E extends keyof SelectableStates>({
   entity,
   field,
+  dateFormat = "PP",
 }: Props<E>) {
   const update = useStore((s) => s.update);
   const openDatePicker = useStore((s) => s.openDatePicker);
@@ -46,9 +51,11 @@ export function DatePicker<E extends keyof SelectableStates>({
         >
           <CalendarIcon />
           {value ? (
-            format(value, "PPP", { locale: es })
+            format(value, dateFormat, { locale: es })
           ) : (
-            <span>Fecha de la venta</span>
+            <span>
+              {entity === "filter" ? "Filtro de fecha" : "Fecha de la venta"}
+            </span>
           )}
         </Button>
       </PopoverTrigger>
@@ -61,7 +68,7 @@ export function DatePicker<E extends keyof SelectableStates>({
           onSelect={(date) => {
             console.log({ date });
             update(entity, { [field]: date?.toUTCString() as string });
-            update("openDatePicker", "sale");
+            update("openDatePicker", "");
           }}
           initialFocus
         />

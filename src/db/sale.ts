@@ -1,11 +1,14 @@
 import { sales, view_sales, type Sale } from "@/schemas/sale";
-import { desc, eq, gt, like, or, sql } from "drizzle-orm";
+import { and, desc, eq, gt, like, lt, lte, or, sql } from "drizzle-orm";
 import { db } from ".";
 import { saleItems, type SelectSaleItem } from "@/schemas/sale-item";
 import { getWeekOfYear } from "@/helpers/date";
 import { addDays } from "date-fns";
 
-export const getSales = async (searchText: string | null | undefined) => {
+export const getSales = async (
+  searchText: string | null | undefined,
+  dateToFilter: string | null | undefined
+) => {
   try {
     let where;
     if (!!searchText) {
@@ -17,8 +20,14 @@ export const getSales = async (searchText: string | null | undefined) => {
         like(view_sales.vehicle.patent, `%${searchText}%`)
       );
     } else {
-      where = gt(view_sales.sale_date, +addDays(new Date(), -1));
+      if (!!dateToFilter) {
+        where = and(
+          gt(view_sales.sale_date, +addDays(dateToFilter, -1)),
+          lt(view_sales.sale_date, +addDays(dateToFilter, +1))
+        );
+      }
     }
+    console.log({ where: where?.queryChunks, dateToFilter });
 
     const result = await db
       .select()
