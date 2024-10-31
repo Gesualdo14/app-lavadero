@@ -24,7 +24,7 @@ export function SaleFormDialog() {
   const creating = useStore((s) => s.creating);
   const globalSearchText = useStore((s) => s.globalSearchText);
   const openDialog = useStore((s) => s.openDialog);
-  const loading = useStore((s) => s.openDialog);
+  const loading = useStore((s) => s.loading);
   const update = useStore((s) => s.update);
 
   const onSubmit = async (e: FormEvent) => {
@@ -130,7 +130,7 @@ export function SaleFormDialog() {
           />
 
           <DialogFooter>
-            <Button type="submit">
+            <Button type="submit" disabled={loading === "sale-form"}>
               {loading === "sale-form" ? (
                 <LoadingSpinner />
               ) : creating ? (
