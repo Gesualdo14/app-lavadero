@@ -33,17 +33,16 @@ import {
 } from "@/components/ui/table";
 import { TableSkeletonComponent } from "@/components/custom-ui/Skeletons";
 import { getWeekOfYear } from "@/helpers/date";
+import { useEffect, useState } from "react";
+import { format } from "date-fns";
 
 export const description = "A collection of health charts.";
 
-const FILL_COLORS = {
-  "ATH Móvil": "var(--color-stand)",
-  Transferencia: "#aaa",
-  Efectivo: "var(--color-exercise)",
-  "Tarjeta de crédito": "var(--color-move)",
-};
-
-function agruparPorSemanaYSumar(array: any[]) {
+function groupByWeek(array: any[]): {
+  week: number;
+  year: number;
+  amount: number;
+}[] {
   return Object.values(
     array.reduce((acumulador, objeto) => {
       // Obtiene la clave de semana actual
@@ -54,12 +53,12 @@ function agruparPorSemanaYSumar(array: any[]) {
         acumulador[semana] = {
           week: semana,
           year: objeto.year, // Asigna el año para referencia
-          totalAmount: 0,
+          amount: 0,
         };
       }
 
       // Suma el amount actual al total de esa semana
-      acumulador[semana].totalAmount += objeto.amount;
+      acumulador[semana].amount += objeto.amount;
 
       return acumulador;
     }, {})
@@ -77,6 +76,9 @@ function obtenerPrimerDiaDeLaSemana(year: number, week: number) {
 }
 
 export function Dashboard() {
+  const [selectedWeek, setSelectedWeek] = useState(0);
+  const [weeklySales, setWeeklySales] = useState<any[]>([]);
+  const [filteredSales, setFilteredSales] = useState<any[]>([]);
   const { data: sales, isPending } = useQuery({
     queryKey: ["reports"],
     queryFn: async () => {
@@ -84,24 +86,43 @@ export function Dashboard() {
         searchText: "",
       });
       console.log({ data });
+
       return data?.data?.data || [];
     },
   });
 
-  if (isPending || !Array.isArray(sales)) return "Loading sales...";
+  useEffect(() => {
+    if (Array.isArray(sales) && Array.isArray(weeklySales)) {
+      setFilteredSales(sales.filter((s) => s.week === selectedWeek));
+    }
+  }, [selectedWeek, weeklySales]);
 
-  const weeklySales = agruparPorSemanaYSumar(sales);
-  console.log({ weeklySales, sales });
+  useEffect(() => {
+    console.log("sales", sales);
+    if (Array.isArray(sales) && sales.length > 0) {
+      const processedSales = groupByWeek(sales);
+      setWeeklySales(processedSales);
+      const lastWeek = processedSales?.sort(
+        (a: any, b: any) => a.week - b.week
+      )[processedSales.length - 1]?.week;
+      console.log({ lastWeek, processedSales });
+      setSelectedWeek(lastWeek as number);
+    }
+  }, [sales]);
 
   return (
     <div className="chart-wrapper flex max-w-6xl flex-col flex-wrap items-start gap-6 sm:flex-row p-4">
-      <div className="grid w-full gap-6 sm:grid-cols-2 md:grid-cols-1 ">
+      <div className="grid w-full gap-6  grid-cols-1 ">
         <Card x-chunk="charts-01-chunk-0 ">
           <CardHeader className="space-y-0 pb-2">
-            <CardDescription>Hoy</CardDescription>
+            <CardDescription>Última semana</CardDescription>
             <CardTitle className="text-4xl tabular-nums">
               {toMoney(
-                Array.isArray(sales) ? sales[sales.length - 1].amount || 0 : 0
+                Array.isArray(weeklySales)
+                  ? weeklySales?.sort((a: any, b: any) => a.week - b.week)[
+                      weeklySales.length - 1
+                    ]?.amount || 0
+                  : 0
               )}{" "}
               <span className="font-sans text-sm font-normal tracking-normal text-muted-foreground">
                 en ventas
@@ -128,15 +149,29 @@ export function Dashboard() {
                   ?.sort((a: any, b: any) => a.week - b.week)
                   .map((r: any) => ({
                     date: obtenerPrimerDiaDeLaSemana(r.year, r.week),
-                    ventas: r.totalAmount,
+                    ventas: r.amount,
+                    week: r.week,
                   }))}
               >
                 <Bar
                   dataKey="ventas"
-                  fill="var(--color-steps)"
+                  fill={"var(--color-steps)"}
                   radius={5}
                   fillOpacity={0.6}
-                  activeBar={<Rectangle fillOpacity={0.8} />}
+                  onClick={(data) => {
+                    setSelectedWeek(data.week);
+                  }}
+                  shape={(props: any) => (
+                    <Rectangle
+                      {...props}
+                      fill={
+                        !!selectedWeek && selectedWeek === props.week
+                          ? "#4589cc"
+                          : "var(--color-steps)"
+                      }
+                    />
+                  )}
+                  activeBar={<Rectangle fillOpacity={0.8} fill="#4589cc" />}
                 />
                 <XAxis
                   dataKey="date"
@@ -165,10 +200,11 @@ export function Dashboard() {
                 />
                 <ReferenceLine
                   y={
-                    (sales?.reduce(
-                      (acc, curr) => acc + ((curr?.amount as number) || 0),
+                    (weeklySales?.reduce(
+                      (acc: number, curr: any) =>
+                        acc + ((curr?.amount as number) || 0),
                       0
-                    ) || 1) / (sales?.length || 1)
+                    ) || 1) / (weeklySales?.length || 1)
                   }
                   stroke="hsl(var(--muted-foreground))"
                   strokeDasharray="3 3"
@@ -183,10 +219,11 @@ export function Dashboard() {
                   <Label
                     position="insideTopLeft"
                     value={toMoney(
-                      (sales?.reduce(
-                        (acc, curr) => acc + ((curr?.amount as number) || 0),
+                      (weeklySales?.reduce(
+                        (acc: number, curr: any) =>
+                          acc + ((curr?.amount as number) || 0),
                         0
-                      ) || 1) / (sales?.length || 1)
+                      ) || 1) / (weeklySales?.length || 1)
                     )}
                     className="text-lg"
                     fill="hsl(var(--foreground))"
@@ -199,7 +236,7 @@ export function Dashboard() {
           </CardContent>
           <CardFooter className="flex-col items-start gap-1">
             <CardDescription>
-              En las últimas {sales.length} semanas, hubieron ventas por un
+              En las últimas {sales?.length} semanas, hubieron ventas por un
               total de{" "}
               <span className="font-medium text-foreground">
                 {toMoney(
@@ -276,37 +313,39 @@ export function Dashboard() {
         </Card>
       </div> */}
       <Card className="px-5 py-3 w-full">
-        <CardTitle className="text-sm font-medium mb-3">
-          Evolución ventas diarias
+        <CardTitle className="text-md font-medium mb-3">
+          Ventas por día
         </CardTitle>
         <Table className="">
           <TableHeader>
-            <TableRow className="text-center">
-              <TableHead>Día</TableHead>
-              <TableHead className="min-w-24">Lavados</TableHead>
-              <TableHead className="min-w-24">Monto</TableHead>
+            <TableRow>
+              <TableHead className="w-20 text-center">Día</TableHead>
+              <TableHead className="min-w-20 text-center">Lavados</TableHead>
+              <TableHead className="min-w-20 text-center">Monto</TableHead>
+              <TableHead className="min-w-20 text-center">Propina</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {isPending ? (
               <TableSkeletonComponent />
             ) : (
-              Array.isArray(sales) &&
-              sales
-                ?.sort(
-                  (a, b) =>
-                    Number(b.day) - Number(a?.day) &&
-                    Number(b.week) - Number(a?.week)
-                )
+              Array.isArray(filteredSales) &&
+              filteredSales
+                ?.sort((a, b) => Number(b.day) - Number(a?.day))
                 .map((s, index) => (
-                  <TableRow key={index} className="cursor-pointer">
-                    <TableCell className="font-medium w-80">
-                      <span>{`${s.day}/${s.month}/${s.year}`}</span>
+                  <TableRow key={index} className="cursor-pointer text-center">
+                    <TableCell className="font-medium w-20">
+                      <span>{`${format(new Date(s.year, s.month, s.day), "d MMM")}`}</span>
                     </TableCell>
 
-                    <TableCell className="w-48">{s.count as number}</TableCell>
-                    <TableCell className="w-48">
+                    <TableCell className="w-20">{s.count}</TableCell>
+                    <TableCell className="w-20">
                       {toMoney(s.amount as number)}
+                    </TableCell>
+                    <TableCell className="w-20">
+                      {s.gathered - s.amount > 0
+                        ? toMoney(s.gathered - s.amount)
+                        : null}
                     </TableCell>
                   </TableRow>
                 ))
