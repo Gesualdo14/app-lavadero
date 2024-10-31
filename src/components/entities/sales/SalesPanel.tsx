@@ -27,7 +27,7 @@ const SalesPanel = () => {
         <div className="flex justify-between items-center">
           <div className="flex gap-4 items-center">
             <CardTitle>Ventas</CardTitle>
-            <DatePicker entity="filter" field="date" format="PP" />
+            <DatePicker entity="filter" field="date" dateFormat="PP" />
           </div>
           <div className="flex gap-2">
             <ClientFormDialog hidden dialogToOpen="sale" />
