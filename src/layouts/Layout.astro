@@ -11,6 +11,7 @@ interface Props {
 }
 
 const { title } = Astro.props;
+const { user } = Astro.locals;
 ---
 
 <!doctype html>
@@ -58,24 +59,32 @@ const { title } = Astro.props;
             icon="services"
             client:visible
           />
-          <AsideItem
-            panel="usuarios"
-            text="Usuarios"
-            icon="users"
-            client:visible
-          />
+          {
+            user?.role === "Owner" && (
+              <AsideItem
+                panel="usuarios"
+                text="Usuarios"
+                icon="users"
+                client:visible
+              />
+            )
+          }
           <AsideItem
             panel="marcas"
             text="Marcas"
             icon="brands"
             client:visible
           />
-          <AsideItem
-            panel="informes"
-            text="Informes"
-            icon="dashboard"
-            client:visible
-          />
+          {
+            user?.role === "Owner" && (
+              <AsideItem
+                panel="informes"
+                text="Informes"
+                icon="dashboard"
+                client:visible
+              />
+            )
+          }
         </nav>
         <nav class="mt-auto flex flex-col items-center gap-4 px-2 py-4">
           <AsideItem
