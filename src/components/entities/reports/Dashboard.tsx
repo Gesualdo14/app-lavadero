@@ -77,6 +77,7 @@ function obtenerPrimerDiaDeLaSemana(year: number, week: number) {
 
 export function Dashboard() {
   const [selectedWeek, setSelectedWeek] = useState(0);
+  const [hoveredWeek, setHoveredWeek] = useState(0);
   const [weeklySales, setWeeklySales] = useState<any[]>([]);
   const [filteredSales, setFilteredSales] = useState<any[]>([]);
   const { data: sales, isPending } = useQuery({
@@ -158,6 +159,9 @@ export function Dashboard() {
                   fill={"var(--color-steps)"}
                   radius={5}
                   fillOpacity={0.6}
+                  onMouseEnter={(data) => {
+                    setHoveredWeek(data.week);
+                  }}
                   onClick={(data) => {
                     setSelectedWeek(data.week);
                   }}
@@ -165,13 +169,14 @@ export function Dashboard() {
                     <Rectangle
                       {...props}
                       fill={
-                        !!selectedWeek && selectedWeek === props.week
+                        (!!selectedWeek && selectedWeek === props.week) ||
+                        (!!hoveredWeek && hoveredWeek === props.week)
                           ? "#4589cc"
                           : "var(--color-steps)"
                       }
                     />
                   )}
-                  activeBar={<Rectangle fillOpacity={0.8} fill="#4589cc" />}
+                  // activeBar={<Rectangle fillOpacity={0.8} fill="#4589cc" />}
                 />
                 <XAxis
                   dataKey="date"
